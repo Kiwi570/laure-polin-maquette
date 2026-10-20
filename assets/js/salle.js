@@ -47,6 +47,7 @@ const cle = SALLES[q.get('s')] ? q.get('s') : 'ardoise';
 const S = SALLES[cle];
 const OEUVRES = LP.serie(cle);
 document.title = `Salle ${S.nom} — Laure Polin, sculptures`;
+document.querySelector('meta[name="description"]')?.setAttribute('content', `${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`);
 
 /* ---------- entree ---------- */
 const fondImg = $('[data-fond-salle]');
@@ -89,7 +90,7 @@ if (!calme) {
 }
 
 /* ---------- filtres ---------- */
-const etat = { dispo: false, taille: null, prix: null, vue: memo('vue') || (bureau() ? 'salle' : 'grille') };
+const etat = { dispo: false, taille: null, prix: null, vue: cle === 'collection' ? 'grille' : (memo('vue') || (bureau() ? 'salle' : 'grille')) };
 function memo(k, v) { const m = LP.memo.lire('lp-salle', {}); if (v === undefined) return m[k]; m[k] = v; LP.memo.ecrire('lp-salle', m); return v; }
 const filtrer = () => OEUVRES.filter((o) => {
   if (etat.dispo && o.statut !== 'disponible') return false;
@@ -172,19 +173,40 @@ function salleHorizontale(liste) {
     zone.style.display = 'flex';
     zone.style.flexDirection = 'column';
     $('.piste-scroll', zone).style.cssText = 'flex:1;display:flex;min-height:0';
-    piste.style.cssText = `height:100%;padding-top:${80}px;padding-bottom:60px`;
+    piste.style.cssText = 'height:100%;padding-top:80px;padding-bottom:104px';
     if (LP.gl) fond = fondArdoise(zone, { teinte: 0.3 });
     if (fond) zone.style.background = 'transparent';
     const distance = () => piste.scrollWidth - innerWidth;
     const tw = gsap.to(piste, { x: () => -distance(), ease: 'none' });
+    zone.insertAdjacentHTML('beforeend', `<div class="hud-salle" aria-hidden="false">
+      <button class="outil" type="button" data-hud="-1" aria-label="Œuvre précédente"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+      <p><span class="chiffres" data-hud-n>1 / ${cartes.length}</span><span data-hud-t></span></p>
+      <button class="outil" type="button" data-hud="1" aria-label="Œuvre suivante"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+      <span class="hud-barre" aria-hidden="true"><i data-hud-barre></i></span></div>`);
+    const hudN = $('[data-hud-n]', zone); const hudT = $('[data-hud-t]', zone); const hudB = $('[data-hud-barre]', zone);
+    const majHud = (c) => { const k = cartes.indexOf(c); hudN.textContent = `${k + 1} / ${cartes.length}`; hudT.textContent = LP.parId[c.dataset.id]?.titre || ''; };
     st = ScrollTrigger.create({
       trigger: zone, start: 'top top', end: () => `+=${Math.max(distance(), 10)}`, pin: true, scrub: 0.6, animation: tw, invalidateOnRefresh: true, anticipatePin: 1,
-      onUpdate: () => {
+      onUpdate: (self) => {
+        hudB.style.transform = `scaleX(${self.progress})`;
         const mid = innerWidth / 2; let best = null; let bd = 1e9;
         cartes.forEach((c) => { const r = c.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = c; } });
-        if (best && best !== zone._active) { zone._active = best; teinter(best); }
+        if (best && best !== zone._active) { zone._active = best; teinter(best); majHud(best); }
       },
     });
+    majHud(cartes[0]);
+    const allerA = (c) => {
+      const centre = c.offsetLeft + c.offsetWidth / 2 - innerWidth / 2;
+      const p = Math.max(0, Math.min(1, centre / Math.max(1, distance())));
+      const y = st.start + (st.end - st.start) * p;
+      if (LP.lenis) LP.lenis.scrollTo(y, { duration: 1.1 }); else scrollTo(0, y);
+    };
+    $$('[data-hud]', zone).forEach((b) => b.addEventListener('click', () => {
+      const k = Math.max(0, cartes.indexOf(zone._active || cartes[0]));
+      allerA(cartes[Math.max(0, Math.min(cartes.length - 1, k + parseInt(b.dataset.hud, 10)))]);
+    }));
+    // clavier : une oeuvre recoit le focus, la salle la centre
+    cartes.forEach((c) => c.addEventListener('focusin', () => { if (zone._active !== c) allerA(c); }));
     cartes.forEach((c) => {
       gsap.fromTo($('img, .oeuvre-absente', c), { y: 70, opacity: 0.15 }, { y: 0, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: c, containerAnimation: tw, start: 'left 96%', end: 'left 60%', scrub: true } });
       gsap.fromTo($('.cartel', c), { opacity: 0, y: 14 }, { opacity: 1, y: 0, ease: 'none', scrollTrigger: { trigger: c, containerAnimation: tw, start: 'left 85%', end: 'left 65%', scrub: true } });
@@ -219,3 +241,4 @@ LP.inclinaison();
 
 const lancer = () => rendre(false);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(lancer); else lancer();
+document.documentElement.classList.remove('attente');

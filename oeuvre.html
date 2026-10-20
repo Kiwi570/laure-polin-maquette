@@ -6,10 +6,20 @@
   <title>L'Ardoisier — Laure Polin, sculptures</title>
   <meta name="description" content="Fiche d'œuvre de Laure Polin : photos, technique, dimensions, prix, vue à l'échelle et demande d'acquisition.">
   <meta name="theme-color" content="#171b20">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Laure Polin, sculptures">
+  <meta property="og:title" content="Laure Polin, sculptures en ardoise, bronze et pneu recyclé">
+  <meta property="og:description" content="Sculptures mi-figuratives, mi-abstraites nées dans l'atelier de Bagnolet. Œuvres disponibles, livre Dialogues sculptés, visite de l'atelier.">
+  <meta property="og:image" content="assets/img/partage-laure-polin.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="assets/vendor/lenis.css">
   <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add('attente');</script>
 </head>
 <body data-page="oeuvre">
 <main id="principal">
@@ -66,16 +76,31 @@
     </div>
   </section>
 
-  <section class="section acquerir" id="acquerir" aria-labelledby="titre-acquerir" style="padding-top:0">
-    <div class="contenu rang" style="align-items:end">
+  <section class="section acquerir" id="acquerir" aria-labelledby="titre-acquerir">
+    <div class="contenu rang">
       <div class="acq-texte">
-        <h2 id="titre-acquerir" style="font-size:var(--t-2xl)" data-titre-acquerir>Acquérir cette œuvre</h2>
-        <p class="petit" style="max-width:52ch;margin-top:14px" data-texte-acquerir></p>
-        <p class="mini" style="margin-top:10px">Livraison, emballage ou retrait à l'atelier de Bagnolet : <span class="a-completer">conditions à compléter</span></p>
+        <h2 id="titre-acquerir" data-titre-acquerir>Acquérir cette œuvre</h2>
+        <p class="petit" data-texte-acquerir></p>
+        <div class="actions" data-actions-bas></div>
+        <p class="mini">Livraison, emballage ou retrait à l'atelier de Bagnolet : <span class="a-completer">conditions à compléter</span></p>
+        <p class="mini">Vous pouvez aussi joindre Laure Polin au <span class="chiffres tel">+33 6 77 80 59 60</span> ou à contact@sculptures-fr.com.</p>
       </div>
-      <div class="actions acq-actions" data-actions-bas></div>
+      <form class="formulaire acq-form" data-formulaire-fiche novalidate aria-labelledby="titre-form-fiche">
+        <h3 id="titre-form-fiche">Écrire à Laure Polin</h3>
+        <div class="deux">
+          <div class="champ"><label for="ff-nom">Nom</label><input id="ff-nom" name="nom" autocomplete="name" required></div>
+          <div class="champ"><label for="ff-email">E-mail</label><input id="ff-email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="champ"><label for="ff-tel">Téléphone (facultatif)</label><input id="ff-tel" name="tel" type="tel" autocomplete="tel"></div>
+        <div class="champ"><label for="ff-msg">Message</label><textarea id="ff-msg" name="message" required data-message-fiche></textarea></div>
+        <p class="mini" data-erreur role="alert"></p>
+        <div><button class="bouton bouton--plein" type="submit"><span>Envoyer la demande</span></button></div>
+        <p class="mini">Maquette : le message n'est pas envoyé.</p>
+      </form>
     </div>
   </section>
+
+  <nav class="suite-oeuvres" aria-label="Œuvres précédente et suivante" data-suite></nav>
 
   <section class="voisines" aria-labelledby="titre-voisines" style="padding-bottom:clamp(80px,12vh,140px)">
     <div class="contenu intertitre"><h2 id="titre-voisines" data-clive data-titre-voisines>Dans la même salle</h2><a class="lien petit" data-lien-salle href="salle.html?s=ardoise">Toute la salle</a></div>
@@ -91,7 +116,7 @@
 <footer class="pied">
   <div class="grand-nom" data-grand-nom aria-label="Laure Polin"></div>
   <div class="bas">
-    <span>Laure Polin, sculptures — Bagnolet</span>
+    <address class="pied-coord">Laure Polin, sculptures<br>51 rue Lénine, 93170 Bagnolet<br><a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a><br><a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a><span class="reseaux"><a class="lien" href="https://www.instagram.com/laurepolin/" target="_blank" rel="noopener">Instagram</a><a class="lien" href="https://www.facebook.com/sculptureslaure/" target="_blank" rel="noopener">Facebook</a></span></address>
     <nav aria-label="Liens de pied de page">
       <a class="lien" href="salle.html?s=ardoise">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats">Petits formats</a><a class="lien" href="salle.html?s=collection">Collection privée</a><a class="lien" href="mentions.html">Mentions légales et CGV</a>
     </nav>

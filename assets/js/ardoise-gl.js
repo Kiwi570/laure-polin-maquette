@@ -18,15 +18,16 @@ vec2 couvre(vec2 uv){ float ra=uRes.x/uRes.y, ta=uTexRes.x/uTexRes.y; vec2 s = r
 float relief(vec2 uv){
   vec3 c = texture2D(tTex, uv).rgb;
   float l = dot(c, vec3(.299,.587,.114));
-  float strates = fbm(uv*vec2(2.2, 46.)) * .55 + fbm(uv*vec2(9., 120.))*.18;
-  return l*1.4 + strates*.35;
+  float strates = fbm(uv*vec2(1.6, 22.)) * .6 + fbm(uv*vec2(5., 64.))*.14;
+  float clive = smoothstep(.62, .66, fbm(uv*vec2(.9, 7.) + 3.1)) * .35;
+  return l*1.1 + strates*.32 + clive;
 }
 void main(){
   vec2 uv = couvre(vUv);
   vec2 e = vec2(1.5/uRes.x, 1.5/uRes.y);
   float hx = relief(uv+vec2(e.x,0.)) - relief(uv-vec2(e.x,0.));
   float hy = relief(uv+vec2(0.,e.y)) - relief(uv-vec2(0.,e.y));
-  vec3 n = normalize(vec3(-hx*5.5, -hy*5.5, 1.));
+  vec3 n = normalize(vec3(-hx*3.6, -hy*3.6, 1.));
   vec3 alb = texture2D(tTex, uv).rgb * 1.15;
   alb = mix(alb, alb*uCouleur*2.2, uTeinte);
   vec2 frag = vUv*uRes;
@@ -34,12 +35,12 @@ void main(){
   vec3 L = normalize(lp - vec3(frag, 0.));
   float diff = max(dot(n, L), 0.);
   float d = length(uLum - frag)/max(uRes.x, uRes.y);
-  float att = 1./(1. + d*d*10.);
+  float att = 1./(1. + d*d*7.);
   vec3 H = normalize(L + vec3(0.,0.,1.));
-  float spec = pow(max(dot(n,H),0.), 42.) * .55;
-  float mica = step(.9965, hash(floor(frag/2.))) * pow(max(dot(n,H),0.), 6.) * att * 2.4;
+  float spec = pow(max(dot(n,H),0.), 36.) * .38;
+  float mica = step(.9993, hash(floor(frag/2.5))) * pow(max(dot(n,H),0.), 10.) * att * 1.6;
   vec3 chaud = vec3(1., .9, .78);
-  vec3 col = alb*(.30 + diff*att*1.75*chaud) + spec*att*chaud + mica*vec3(.82,.88,.95);
+  vec3 col = alb*(.34 + diff*att*1.55*chaud) + spec*att*chaud + mica*vec3(.82,.88,.95);
   col *= smoothstep(1.35, .2, length((vUv-.5)*vec2(1.25, 1.)));
   col *= uRevele;
   gl_FragColor = vec4(col, 1.);

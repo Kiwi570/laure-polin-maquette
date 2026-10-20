@@ -92,7 +92,22 @@ LP.ICO = ICO;
 
 LP.monoSVG = (cls = '') => `<svg class="${cls}" viewBox="0 0 ${MONO.w} ${MONO.h}" aria-hidden="true"><path d="${MONO.d}" fill-rule="evenodd"/></svg>`;
 
+/* ---------- dialogues : le reste de la page devient inerte ---------- */
+LP.isoler = (dialogue, on) => {
+  [...document.body.children].forEach((el) => {
+    if (el === dialogue || el.contains(dialogue) || el.matches('script, .curseur, .curseur-anneau, .toast, .voile, .rideau')) return;
+    if (on) { if (!el.inert) { el.inert = true; el.dataset.inertLp = '1'; } } else if (el.dataset.inertLp) { el.inert = false; delete el.dataset.inertLp; }
+  });
+};
 /* ---------- chrome : en-tete, menu, panier, curseur ---------- */
+const VEDETTES = { ardoise: 'a-contre-courant', bronze: 'la-danse-du-voile', pneu: 'le-de-du-chaos', 'petits-formats': 'profil', collection: 'cheveux-au-vent' };
+function salles() {
+  return ['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => {
+    const v = LP.parId[VEDETTES[k]];
+    const im = v ? (v.detoure || v.photos[0]) : null;
+    return `<a class="salle-lien" href="salle.html?s=${k}"><span class="vig">${im ? `<img src="${LP.src(im, 300)}" alt="" loading="lazy">` : ''}</span><span class="t">${LP.NOMS_SERIES[k]}</span><span class="n chiffres">${LP.serie(k).length} œuvres</span></a>`;
+  }).join('');
+}
 function monterChrome() {
   const page = document.body.dataset.page || '';
   const cur = (p) => (p === page ? ' aria-current="page"' : '');
@@ -101,7 +116,10 @@ function monterChrome() {
   entete.innerHTML = `
     <a class="marque" href="index.html" aria-label="Laure Polin, accueil">${LP.monoSVG()}<span>Laure Polin</span></a>
     <nav class="nav" aria-label="Navigation principale">
-      <a href="salle.html?s=ardoise"${cur('salle')}>Les œuvres</a>
+      <div class="nav-oeuvres">
+        <button type="button" class="nav-bouton"${page === 'salle' || page === 'oeuvre' ? ' aria-current="page"' : ''} aria-expanded="false" aria-controls="panneau-oeuvres">Les œuvres<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        <div class="panneau-oeuvres" id="panneau-oeuvres" hidden>${salles()}</div>
+      </div>
       <a href="index.html#ardoisier">L'Ardoisier</a>
       <a href="index.html#livre">Le livre</a>
       <a href="index.html#ou-voir">Expositions</a>
@@ -114,22 +132,41 @@ function monterChrome() {
       <button class="outil menu-bouton" type="button" data-menu aria-expanded="false" aria-controls="menu-plein" aria-label="Ouvrir le menu">${ICO.menu}</button>
     </div>`;
   document.body.prepend(entete);
+  // menu deroulant des salles
+  const navO = entete.querySelector('.nav-oeuvres');
+  const btnO = navO.querySelector('button'); const panO = navO.querySelector('.panneau-oeuvres');
+  let tempo;
+  const ouvrirO = (on) => {
+    clearTimeout(tempo);
+    btnO.setAttribute('aria-expanded', String(on));
+    if (on) { panO.hidden = false; requestAnimationFrame(() => panO.classList.add('ouvert')); }
+    else { panO.classList.remove('ouvert'); tempo = setTimeout(() => { panO.hidden = true; }, 350); }
+  };
+  btnO.addEventListener('click', () => ouvrirO(btnO.getAttribute('aria-expanded') !== 'true'));
+  if (pointeurFin) {
+    navO.addEventListener('pointerenter', () => ouvrirO(true));
+    navO.addEventListener('pointerleave', () => { tempo = setTimeout(() => ouvrirO(false), 220); });
+  }
+  navO.addEventListener('focusout', (e) => { if (!navO.contains(e.relatedTarget)) ouvrirO(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && btnO.getAttribute('aria-expanded') === 'true') { ouvrirO(false); btnO.focus(); } });
+  document.addEventListener('click', (e) => { if (!navO.contains(e.target) && btnO.getAttribute('aria-expanded') === 'true') ouvrirO(false); });
   const evite = document.createElement('a');
   evite.className = 'evite'; evite.href = '#principal'; evite.textContent = 'Aller au contenu';
   document.body.prepend(evite);
 
   const menu = document.createElement('div');
-  menu.className = 'menu-plein'; menu.id = 'menu-plein';
+  menu.className = 'menu-plein'; menu.id = 'menu-plein'; menu.inert = true;
   menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-modal', 'true'); menu.setAttribute('aria-label', 'Menu');
   menu.innerHTML = `
     <button class="outil fermer" type="button" data-menu-fermer aria-label="Fermer le menu">${ICO.croix}</button>
-    <a href="salle.html?s=ardoise">Ardoise</a><a href="salle.html?s=bronze">Bronze</a><a href="salle.html?s=pneu">Pneu recyclé</a>
-    <a href="salle.html?s=petits-formats">Petits formats</a><a href="index.html#livre">Le livre</a><a href="index.html#contact">L'atelier</a>`;
+    ${['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => `<a href="salle.html?s=${k}">${LP.NOMS_SERIES[k]}<small>${LP.serie(k).length}</small></a>`).join('')}
+    <span class="menu-sep" aria-hidden="true"></span>
+    <a class="menu-second" href="index.html#ardoisier">L'Ardoisier</a><a class="menu-second" href="index.html#livre">Le livre</a><a class="menu-second" href="index.html#ou-voir">Expositions</a><a class="menu-second" href="index.html#contact">L'atelier et contact</a>`;
   document.body.append(menu);
 
   const voile = document.createElement('div'); voile.className = 'voile'; voile.dataset.voile = '';
   const panier = document.createElement('aside');
-  panier.className = 'panier'; panier.setAttribute('aria-label', 'Panier'); panier.setAttribute('aria-hidden', 'true');
+  panier.className = 'panier'; panier.setAttribute('role', 'dialog'); panier.setAttribute('aria-modal', 'true'); panier.setAttribute('aria-label', 'Panier'); panier.setAttribute('aria-hidden', 'true'); panier.inert = true;
   panier.innerHTML = `
     <header><h2>Panier</h2><button class="outil" type="button" data-panier-fermer aria-label="Fermer le panier">${ICO.croix}</button></header>
     <div class="liste" data-panier-liste></div>
@@ -160,6 +197,8 @@ function monterChrome() {
   const ouvrirMenu = (on) => {
     menu.classList.toggle('ouvert', on);
     btnMenu.setAttribute('aria-expanded', String(on));
+    LP.isoler(menu, on);
+    menu.inert = !on;
     if (on) { LP.lenis?.stop(); menu.querySelector('a').focus(); } else { LP.lenis?.start(); btnMenu.focus(); }
   };
   btnMenu.addEventListener('click', () => ouvrirMenu(true));
@@ -183,6 +222,8 @@ function monterDefilement() {
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
     document.documentElement.classList.add('lenis');
+    // apres un defilement natif provoque par le focus clavier, Lenis repart de la vraie position
+    document.addEventListener('focusin', () => requestAnimationFrame(() => requestAnimationFrame(() => { if (lenis.isScrolling !== 'smooth') lenis.reset(); })));
   }
   // ancres internes
   document.addEventListener('click', (e) => {
@@ -194,9 +235,16 @@ function monterDefilement() {
     const cible = hash.length > 1 && document.querySelector(hash);
     if (!cible) return;
     e.preventDefault();
-    if (LP.lenis) LP.lenis.scrollTo(cible, { offset: 0, duration: 1.6 });
+    if (LP.lenis) LP.lenis.scrollTo(cible, { offset: 0, duration: a.classList.contains('evite') ? 0.6 : 1.6 });
     else cible.scrollIntoView({ behavior: calme ? 'auto' : 'smooth' });
     history.replaceState(null, '', hash);
+    // le focus clavier suit l'ancre
+    if (!cible.matches('a, button, input, textarea, select, [tabindex]')) cible.setAttribute('tabindex', '-1');
+    cible.focus({ preventScroll: true });
+  });
+  // les liens qui ouvrent un nouvel onglet le disent
+  document.querySelectorAll('a[target="_blank"]').forEach((a) => {
+    if (!a.querySelector('.sr')) a.insertAdjacentHTML('beforeend', '<span class="sr"> (nouvel onglet)</span>');
   });
   // en-tete qui se cache
   const entete = document.querySelector('.entete');
@@ -213,6 +261,7 @@ function monterDefilement() {
   };
   addEventListener('scroll', maj, { passive: true });
   maj();
+  entete.addEventListener('focusin', () => entete.classList.remove('est-cache'));
   if (location.hash && document.body.dataset.page === 'accueil') {
     const cible = document.querySelector(location.hash);
     if (cible) {
@@ -220,7 +269,7 @@ function monterDefilement() {
       LP.pret.then(() => setTimeout(() => {
         ScrollTrigger.refresh();
         const y = cible.getBoundingClientRect().top + scrollY;
-        if (LP.lenis) LP.lenis.scrollTo(y, { immediate: true }); else scrollTo(0, y);
+        if (LP.lenis) { LP.lenis.resize(); LP.lenis.scrollTo(y, { immediate: true, force: true }); } else scrollTo(0, y);
       }, 450));
     }
   }
@@ -462,15 +511,23 @@ const Panier = {
   ouvrir() {
     document.querySelector('.panier').classList.add('ouvert');
     document.querySelector('.panier').setAttribute('aria-hidden', 'false');
+    document.querySelector('.panier').inert = false;
     document.querySelector('[data-voile]').classList.add('on');
     LP.lenis?.stop();
+    this.retour = document.activeElement;
+    LP.isoler(document.querySelector('.panier'), true);
     setTimeout(() => document.querySelector('[data-panier-fermer]').focus(), 300);
   },
   fermer() {
-    document.querySelector('.panier').classList.remove('ouvert');
-    document.querySelector('.panier').setAttribute('aria-hidden', 'true');
+    const p = document.querySelector('.panier');
+    if (!p.classList.contains('ouvert')) return;
+    p.classList.remove('ouvert');
+    p.setAttribute('aria-hidden', 'true');
+    p.inert = true;
     document.querySelector('[data-voile]').classList.remove('on');
+    LP.isoler(p, false);
     LP.lenis?.start();
+    if (this.retour && document.contains(this.retour)) this.retour.focus();
   },
   etape: 'liste',
   rendre() {
@@ -651,6 +708,21 @@ function monterPied() {
   }
 }
 
+/* ---------- retour arriere : la page revient a l'endroit quitte ---------- */
+function memoirePosition() {
+  const cle = `lp-pos:${location.pathname}${location.search}`;
+  const lire = () => { try { return sessionStorage.getItem(cle); } catch (e) { return null; } };
+  addEventListener('pagehide', () => { try { sessionStorage.setItem(cle, String(Math.round(scrollY))); } catch (e) { /* stockage indisponible */ } });
+  const nav = performance.getEntriesByType?.('navigation')[0];
+  const y = Number(lire());
+  if (!nav || nav.type !== 'back_forward' || !y || location.hash) return;
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  LP.pret.then(() => setTimeout(() => {
+    ScrollTrigger.refresh();
+    if (LP.lenis) { LP.lenis.resize(); LP.lenis.scrollTo(y, { immediate: true, force: true }); } else scrollTo(0, y);
+  }, 350));
+}
+
 /* ---------- demarrage ---------- */
 let resoudrePret;
 LP.pret = new Promise((r) => { resoudrePret = r; });
@@ -664,6 +736,7 @@ export function demarrer() {
   monterPied();
   LP.aimants();
   LP.inclinaison();
+  memoirePosition();
   const go = () => ouverture().then(() => resoudrePret());
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
   addEventListener('load', () => ScrollTrigger.refresh());

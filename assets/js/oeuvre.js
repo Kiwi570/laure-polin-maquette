@@ -2,7 +2,7 @@
 import LP, { demarrer } from './base.js';
 import { fondArdoise } from './ardoise-gl.js';
 import { poussiere } from './poussiere.js';
-import { imgOeuvre, carteOeuvre, altOeuvre } from './cartes.js';
+import { imgOeuvre, carteOeuvre, altOeuvre, monterFormulaire } from './cartes.js';
 
 demarrer();
 const { gsap, ScrollTrigger, calme } = LP;
@@ -11,14 +11,18 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const e = LP.esc;
 
 const q = new URLSearchParams(location.search);
-const O = LP.parId[q.get('o')] || LP.parId['l-ardoisier'];
+const demande = q.get('o');
+const O = LP.parId[demande] || LP.parId['l-ardoisier'];
+if (demande && !LP.parId[demande]) {
+  document.querySelector('main').insertAdjacentHTML('afterbegin', `<div class="introuvable" role="status"><div class="contenu"><p>Cette œuvre n'existe pas ou a changé d'adresse. Voici L'Ardoisier ; toutes les œuvres sont dans les <a class="lien" href="salle.html?s=ardoise">salles</a>.</p></div></div>`);
+}
 const serie = O.series.find((s) => s !== 'livre') || 'ardoise';
 document.title = `${O.titre} — Laure Polin, sculptures`;
 
 /* ---------- entree ---------- */
 $('[data-fil]').innerHTML = `<a href="index.html">Accueil</a><span aria-hidden="true">/</span><a href="salle.html?s=${serie}">${e(LP.NOMS_SERIES[serie] || 'Œuvres')}</a><span aria-hidden="true">/</span><span aria-current="page">${e(O.titre)}</span>`;
 $('[data-titre]').textContent = O.titre;
-$('[data-technique]').textContent = O.technique.filter((t) => !/^(hauteur|h\s|dimensions|largeur|\d)/i.test(t)).join(' ') || LP.matiereCourte(O);
+$('[data-technique]').textContent = O.technique.filter((t) => !/^(hauteur|largeur|profondeur|longueur|dimensions|h\s*:?\s*\d|l\s*\d|p\s*\d|\d)/i.test(t.trim())).join(' ') || LP.matiereCourte(O);
 const st = LP.statut(O);
 const edition = O.technique.find((t) => /exemplaire|tirage|n°|n \d|pièce unique|épreuve|ea\b/i.test(t));
 const carac = [
@@ -32,7 +36,7 @@ $('[data-caracteristiques]').innerHTML = carac.map(([k, v]) => `<dt>${k}</dt><dd
 $('[data-prix]').textContent = O.statut === 'disponible' ? LP.prix(O.prix) : '';
 if (O.a_verifier) $('[data-caracteristiques]').insertAdjacentHTML('afterend', `<p class="mini a-completer">${e(O.a_verifier)}</p>`);
 
-const lienDemande = `index.html?oeuvre=${encodeURIComponent(O.id)}#contact`;
+const lienDemande = '#acquerir';
 const actions = () => {
   const dispo = O.statut === 'disponible' && O.prix;
   return `${dispo ? `<button class="bouton bouton--plein" type="button" data-ajout="${O.id}" data-libelle="Ajouter au panier"><span>Ajouter au panier</span></button>` : ''}
@@ -40,7 +44,35 @@ const actions = () => {
     ${O.detoure && O.dimensions?.h ? '<a class="bouton" href="#echelle"><span>Voir à l\'échelle</span></a>' : ''}`;
 };
 $('[data-actions]').innerHTML = actions();
-$('[data-actions-bas]').innerHTML = actions().replace('<a class="bouton" href="#echelle"><span>Voir à l\'échelle</span></a>', '');
+$('[data-actions-bas]').innerHTML = O.statut === 'disponible' && O.prix ? `<button class="bouton bouton--plein" type="button" data-ajout="${O.id}" data-libelle="Ajouter au panier"><span>Ajouter au panier</span></button>` : '';
+// formulaire de la fiche, pre-rempli
+$('[data-message-fiche]').value = O.statut === 'disponible'
+  ? `Bonjour, je suis intéressé(e) par « ${O.titre} ». Pourriez-vous m'en dire plus : autres photos, livraison, visite de l'atelier ?`
+  : `Bonjour, j'ai vu « ${O.titre} » sur votre site. Avez-vous des œuvres proches disponibles, ou acceptez-vous les commandes ?`;
+monterFormulaire($('[data-formulaire-fiche]'), () => O.titre);
+// precedente et suivante dans la salle
+{
+  const liste = LP.serie(serie);
+  const k = liste.findIndex((x) => x.id === O.id);
+  if (k >= 0 && liste.length > 1) {
+    const prec = liste[(k - 1 + liste.length) % liste.length]; const suiv = liste[(k + 1) % liste.length];
+    const vign = (x) => { const v = LP.visuel(x); return v ? `<img src="${LP.src(v, 200)}" alt="" loading="lazy">` : ''; };
+    $('[data-suite]').innerHTML = `
+      <a class="suite prec" href="${LP.lienOeuvre(prec)}" rel="prev"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>${vign(prec)}<span><small>Œuvre précédente</small>${LP.esc(prec.titre)}</span></a>
+      <span class="mini chiffres">${k + 1} / ${liste.length}, salle ${LP.esc(LP.NOMS_SERIES[serie] || '')}</span>
+      <a class="suite suiv" href="${LP.lienOeuvre(suiv)}" rel="next"><span><small>Œuvre suivante</small>${LP.esc(suiv.titre)}</span>${vign(suiv)}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></a>`;
+  } else $('[data-suite]').remove();
+}
+// description et donnees structurees pour les moteurs de recherche
+{
+  const desc = `${O.titre}, ${LP.matiereCourte(O).toLowerCase() || 'sculpture'}${LP.dims(O) ? `, ${LP.dims(O)}` : ''}${O.statut === 'disponible' && O.prix ? `, ${LP.prix(O.prix)}` : ''}. Sculpture de Laure Polin, atelier de Bagnolet.`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+  const v = LP.visuel(O);
+  const ld = { '@context': 'https://schema.org', '@type': 'VisualArtwork', name: O.titre, artform: 'Sculpture', creator: { '@type': 'Person', name: 'Laure Polin' }, artMedium: LP.matiereCourte(O) || undefined, description: O.description.join(' ') || undefined, image: v ? new URL(LP.src(v, 1200), location.href).href : undefined };
+  if (O.dimensions?.h) ld.height = { '@type': 'QuantitativeValue', value: O.dimensions.h, unitCode: 'CMT' };
+  if (O.statut === 'disponible' && O.prix) ld.offers = { '@type': 'Offer', price: O.prix, priceCurrency: 'EUR', availability: 'https://schema.org/InStock' };
+  const sc = document.createElement('script'); sc.type = 'application/ld+json'; sc.textContent = JSON.stringify(ld); document.head.append(sc);
+}
 $('[data-titre-acquerir]').textContent = O.statut === 'disponible' ? 'Acquérir cette œuvre' : 'Cette œuvre a trouvé sa place';
 $('[data-texte-acquerir]').textContent = O.statut === 'disponible'
   ? `${O.titre} est disponible${O.prix ? ` au prix de ${LP.prix(O.prix)}` : ''}. Vous pouvez la réserver dans le panier, ou écrire à Laure Polin pour demander d'autres photos, venir la voir à l'atelier ou organiser la livraison.`
@@ -86,6 +118,7 @@ function montrer(i, anime = true) {
     vue.src = moyenne(p); vue.srcset = LP.srcset(p); vue.sizes = '(max-width: 860px) 92vw, 60vw';
     vue.alt = `${altOeuvre(O)}, vue ${i + 1} sur ${VUES.length}`;
     loupe.style.backgroundImage = `url("${grande(p)}")`;
+    if (p.fond) vis.style.backgroundColor = p.fond;
   };
   if (!anime || calme) { poser(); return; }
   if (LP.gl) {
@@ -125,8 +158,9 @@ if (VUES.length) {
   vis.tabIndex = 0; vis.setAttribute('aria-label', 'Visionneuse : flèches gauche et droite pour changer de vue');
   // plein ecran
   const pe = $('[data-plein-ecran]');
-  $('[data-plein]').addEventListener('click', (ev) => { ev.stopPropagation(); $('img', pe).src = grande(VUES[courant]); $('img', pe).alt = vue.alt; pe.classList.add('on'); LP.lenis?.stop(); $('[data-fermer-plein]').focus(); });
-  const fermer = () => { pe.classList.remove('on'); LP.lenis?.start(); $('[data-plein]').focus(); };
+  $('[data-plein]').addEventListener('click', (ev) => { ev.stopPropagation(); $('img', pe).src = grande(VUES[courant]); $('img', pe).alt = vue.alt; pe.classList.add('on'); pe.inert = false; LP.isoler(pe, true); LP.lenis?.stop(); $('[data-fermer-plein]').focus(); });
+  const fermer = () => { pe.classList.remove('on'); pe.inert = true; LP.isoler(pe, false); LP.lenis?.start(); $('[data-plein]').focus(); };
+  pe.inert = true;
   $('[data-fermer-plein]').addEventListener('click', fermer);
   pe.addEventListener('click', (ev) => { if (ev.target === pe) fermer(); });
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && pe.classList.contains('on')) fermer(); });
@@ -240,3 +274,4 @@ $$('main [data-clive]').forEach((el) => { if (el.id !== 'titre-oeuvre') LP.clive
 LP.majBoutonsPanier();
 LP.aimants();
 ScrollTrigger.refresh();
+document.documentElement.classList.remove('attente');

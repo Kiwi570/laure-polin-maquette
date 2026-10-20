@@ -6,8 +6,19 @@
   <title>Laure Polin — Sculptures en ardoise, bronze et pneu recyclé</title>
   <meta name="description" content="Laure Polin, sculptrice à Bagnolet : sculptures en ardoise taillée, en bronze et en pneu recyclé. Œuvres disponibles, livre Dialogues sculptés, visite de l'atelier.">
   <meta name="theme-color" content="#171b20">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:site_name" content="Laure Polin, sculptures">
+  <meta property="og:title" content="Laure Polin, sculptures en ardoise, bronze et pneu recyclé">
+  <meta property="og:description" content="Sculptures mi-figuratives, mi-abstraites nées dans l'atelier de Bagnolet. Œuvres disponibles, livre Dialogues sculptés, visite de l'atelier.">
+  <meta property="og:image" content="assets/img/partage-laure-polin.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Laure Polin","jobTitle":"Sculptrice","url":"https://www.sculptures-fr.com","email":"contact@sculptures-fr.com","telephone":"+33677805960","address":{"@type":"PostalAddress","streetAddress":"51 rue Lénine","postalCode":"93170","addressLocality":"Bagnolet","addressCountry":"FR"},"sameAs":["https://www.instagram.com/laurepolin/","https://www.facebook.com/sculptureslaure/","https://www.riseart.com/fr/artiste/130832/laure-polin","https://www.majestic-gallery.com/collections/laure-polin"]}</script>
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="assets/img/oeuvres/harmonie/harmonie-detoure-600.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="assets/vendor/lenis.css">
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -29,7 +40,13 @@
           </div>
         </div>
       </div>
-      <div class="hero-oeuvre" data-hero-oeuvre></div>
+      <div class="hero-oeuvre" data-hero-oeuvre>
+        <a class="scene-oeuvre" href="oeuvre.html?o=harmonie" data-curseur="Voir" aria-label="Harmonie, voir la fiche">
+          <img class="oeuvre" src="assets/img/oeuvres/harmonie/harmonie-detoure-600.webp" alt="Harmonie, sculpture en ardoise polie et cirée sur socle en chêne, de Laure Polin" width="455" height="1550" fetchpriority="high" decoding="async">
+          <span class="ombre" aria-hidden="true"></span>
+        </a>
+        <p class="cartel chiffres"><strong>Harmonie</strong>Ardoise, <span class="chiffres">H 70 cm (base 15 × 15 cm)</span><br><span class="prix">900 €</span></p>
+      </div>
     </div>
     <div class="indice" aria-hidden="true"><span>Défiler</span><i></i></div>
   </section>
@@ -60,6 +77,11 @@
   <!-- Trois matieres : coulee de bronze, feuilletage d'ardoise, empreinte de pneu -->
   <section class="matieres" id="matieres" aria-label="Les trois matières">
     <div class="piste" data-piste-matieres>
+      <nav class="index-matieres" data-index-matieres aria-label="Aller à une matière">
+        <button type="button" aria-current="true"><span>Bronze</span></button>
+        <button type="button" aria-current="false"><span>Ardoise</span></button>
+        <button type="button" aria-current="false"><span>Pneu</span></button>
+      </nav>
       <article class="matiere" data-matiere="bronze" aria-labelledby="m-bronze">
         <div class="fond-image" aria-hidden="true"><img src="assets/img/ambiance/g-bronze-fusion-16x9.webp" alt="" loading="lazy"></div>
         <div class="contenu">
@@ -109,7 +131,7 @@
   <section class="salle-h" id="disponibles" aria-labelledby="titre-dispo">
     <div class="tete contenu">
       <div class="intertitre">
-        <h2 id="titre-dispo" data-clive>En ce moment à l'atelier</h2>
+        <h2 id="titre-dispo" data-clive>Disponibles en ce moment</h2>
         <p>Une sélection d'œuvres disponibles. Chaque pièce est unique ou tirée en exemplaires numérotés ; Laure Polin envoie d'autres photos sur demande.</p>
       </div>
     </div>
@@ -194,11 +216,11 @@
             <p>51 rue Lénine, 93170 Bagnolet. Visites : <span class="a-completer">modalités et horaires à compléter</span></p>
           </div>
           <div class="lieu">
-            <h3>Galerie Majestic</h3><a class="lien mini" href="https://www.majestic-gallery.com/collections/laure-polin" target="_blank" rel="noopener">Voir la galerie</a>
+            <h3>Galerie Majestic</h3><a class="lien mini" href="https://www.majestic-gallery.com/collections/laure-polin" target="_blank" rel="noopener">Voir la galerie<span class="sr"> Majestic</span><span class="sr"> (nouvel onglet)</span></a>
             <p>Laure Polin en est artiste permanente ; ses sculptures y sont aussi en vente.</p>
           </div>
           <div class="lieu">
-            <h3>Rise Art</h3><a class="lien mini" href="https://www.riseart.com/fr/artiste/130832/laure-polin" target="_blank" rel="noopener">Voir la page</a>
+            <h3>Rise Art</h3><a class="lien mini" href="https://www.riseart.com/fr/artiste/130832/laure-polin" target="_blank" rel="noopener">Voir la page<span class="sr"> Rise Art</span><span class="sr"> (nouvel onglet)</span></a>
             <p>Œuvres présentées sur la plateforme d'art contemporain en ligne.</p>
           </div>
           <div class="lieu">
@@ -228,7 +250,7 @@
         <div class="gauche">
           <div class="coord">
             <span class="grand">51 rue Lénine<br>93170 Bagnolet</span>
-            <a class="lien chiffres" href="tel:+33677805960">+33 6 77 80 59 60</a>
+            <a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a>
             <a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a>
           </div>
           <p class="ouvert" data-ouvert><i></i><span>Horaires de l'atelier à compléter</span></p>
@@ -268,7 +290,7 @@
 <footer class="pied">
   <div class="grand-nom" data-grand-nom aria-label="Laure Polin"></div>
   <div class="bas">
-    <span>Laure Polin, sculptures — Bagnolet</span>
+    <address class="pied-coord">Laure Polin, sculptures<br>51 rue Lénine, 93170 Bagnolet<br><a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a><br><a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a><span class="reseaux"><a class="lien" href="https://www.instagram.com/laurepolin/" target="_blank" rel="noopener">Instagram</a><a class="lien" href="https://www.facebook.com/sculptureslaure/" target="_blank" rel="noopener">Facebook</a></span></address>
     <nav aria-label="Liens de pied de page">
       <a class="lien" href="salle.html?s=ardoise">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats">Petits formats</a><a class="lien" href="salle.html?s=collection">Collection privée</a><a class="lien" href="mentions.html">Mentions légales et CGV</a>
     </nav>

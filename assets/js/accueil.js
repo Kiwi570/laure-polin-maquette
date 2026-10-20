@@ -3,7 +3,7 @@ import LP, { demarrer } from './base.js';
 import { fondArdoise } from './ardoise-gl.js';
 import { poussiere } from './poussiere.js';
 import { FRANCE, PLAN } from './formes.js';
-import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, boutonAjout } from './cartes.js';
+import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, boutonAjout, monterFormulaire } from './cartes.js';
 
 demarrer();
 const { gsap, ScrollTrigger, calme } = LP;
@@ -21,12 +21,14 @@ if (livre) $('[data-prix-livre]').textContent = LP.prix(livre.prix);
 /* ---------------- hero ---------------- */
 const HERO = o('harmonie');
 const heroZone = $('[data-hero-oeuvre]');
-heroZone.innerHTML = `
+if (!heroZone.querySelector('img')) {
+  heroZone.innerHTML = `
   <a class="scene-oeuvre" href="${LP.lienOeuvre(HERO)}" data-curseur="Voir">
     ${imgOeuvre(HERO, { sizes: '(max-width: 860px) 60vw, 30vw', charge: 'eager' })}
     <span class="ombre" aria-hidden="true"></span>
   </a>
   <p class="cartel chiffres">${cartelHTML(HERO)}</p>`;
+}
 const heroImg = $('img.oeuvre', heroZone);
 const heroSec = $('#hero');
 let fond = null;
@@ -51,7 +53,7 @@ LP.pret.then(() => {
 });
 
 /* ---------------- manifeste ---------------- */
-$$('[data-mots]').forEach((p) => {
+if (!calme) $$('[data-mots]').forEach((p) => {
   p.innerHTML = p.textContent.split(/(\s+)/).map((m) => (m.trim() ? `<span class="mot">${LP.esc(m)}</span>` : m)).join('');
 });
 if (!calme) {
@@ -74,7 +76,7 @@ $('.gestes').removeAttribute('aria-label');
 /* ---------------- trois matieres ---------------- */
 $$('[data-trio]').forEach((t) => {
   t.innerHTML = t.dataset.trio.split(',').map(o).filter(Boolean).map((x) => `
-    <a href="${LP.lienOeuvre(x)}" data-curseur="Voir" data-carte>${imgOeuvre(x, { sizes: '(max-width: 860px) 30vw, 16vw' })}<span class="cartel chiffres">${cartelHTML(x, { etat: false })}</span></a>`).join('');
+    <a href="${LP.lienOeuvre(x)}" data-curseur="Voir" data-carte>${imgOeuvre(x, { sizes: '(max-width: 860px) 30vw, 16vw' })}<span class="cartel"><strong>${LP.esc(x.titre)}</strong><span class="dims-l chiffres">${LP.esc(LP.dims(x).replace(/ \(.*\)$/, ''))}</span>${x.statut === 'disponible' && x.prix ? `<span class="prix chiffres">${LP.prix(x.prix)}</span>` : ''}</span></a>`).join('');
 });
 
 // coulee de bronze : le mot se remplit de metal en fusion qui se fige en patine
@@ -86,7 +88,7 @@ function construireCoulee(svg) {
       <linearGradient id="g-fusion" x1="0" y1="0" x2="0" y2="1">
         <stop offset="0" stop-color="#fff1c9"/><stop offset=".25" stop-color="#ffb04a"/><stop offset=".6" stop-color="#d0631c"/><stop offset="1" stop-color="#6e2a0c"/>
       </linearGradient>
-      <filter id="chaleur"><feTurbulence type="fractalNoise" baseFrequency=".012 .05" numOctaves="2" seed="3"><animate attributeName="seed" values="1;9;1" dur="6s" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="10"/></filter>
+      <filter id="chaleur" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".012 .05" numOctaves="1" seed="3"/><feDisplacementMap in="SourceGraphic" scale="8"/></filter>
     </defs>
     <text x="0" y="0" class="mot-svg contour">Bronze</text>
     <g clip-path="url(#clip-bronze)"><path class="niveau" fill="url(#g-fusion)" filter="url(#chaleur)"/></g>`;
@@ -109,6 +111,7 @@ function construireCoulee(svg) {
     d += ` L${x0 + w},${b.y + b.height + 20} L${x0},${b.y + b.height + 20} Z`;
     niveau.setAttribute('d', d);
     stops.forEach((s, i) => s.setAttribute('stop-color', mixe(chaud[i], froid[i], etat.patine)));
+    if (etat.patine >= 0.999) niveau.removeAttribute('filter'); else if (!niveau.hasAttribute('filter')) niveau.setAttribute('filter', 'url(#chaleur)');
   };
   dessiner();
   if (!calme) gsap.ticker.add((t) => { if (etat.p > 0 && etat.p < 1.01 && etat.patine < 1) dessiner(t); });
@@ -160,31 +163,57 @@ const preparerMatieres = () => {
 
 function animerMatieres() {
   const panneaux = $$('.matiere');
-  if (calme) return;
+  const index = $('[data-index-matieres]');
+  const activer = (n) => $$('button', index).forEach((b, k) => b.setAttribute('aria-current', String(k === n)));
+  if (calme) {
+    index.remove();
+    return;
+  }
+  // les images des panneaux suivants se chargent avant d'etre devoilees
+  ScrollTrigger.create({ trigger: '[data-piste-matieres]', start: 'top bottom+=150%', once: true, onEnter: () => $$('.matiere img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }) });
+  const jouerCoulee = () => gsap.to(coulee.tl, { progress: 1, duration: 2.6, ease: 'power1.inOut', overwrite: true });
+  const jouerFeuillets = () => feuillets && feuillets.restart();
+  const jouerEmpreinte = () => gsap.to(empreinte.tl, { progress: 1, duration: 2, ease: 'power1.inOut', overwrite: true });
+  // le premier panneau est complet des son arrivee a l'ecran
+  gsap.from($$('.trio a', panneaux[0]), { y: 70, opacity: 0, stagger: 0.12, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: panneaux[0], start: 'top 65%', once: true } });
+  ScrollTrigger.create({ trigger: panneaux[0], start: 'top 60%', once: true, onEnter: jouerCoulee });
   if (bureau()) {
     gsap.set(panneaux.slice(1), { clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)' });
     const tl = gsap.timeline({
-      scrollTrigger: { trigger: '[data-piste-matieres]', start: 'top top', end: '+=360%', pin: true, scrub: 0.8, anticipatePin: 1 },
+      scrollTrigger: {
+        trigger: '[data-piste-matieres]', start: 'top top', end: '+=300%', pin: true, scrub: 0.8, anticipatePin: 1,
+        onUpdate: (st) => activer(st.progress < 0.36 ? 0 : st.progress < 0.72 ? 1 : 2),
+      },
     });
-    const trioIn = (p) => gsap.from($$('.trio a', p), { y: 80, opacity: 0, stagger: 0.12, duration: 0.5, ease: 'power2.out' });
-    tl.to(coulee.tl, { progress: 1, duration: 1, ease: 'none' }, 0)
-      .add(trioIn(panneaux[0]), 0.1)
-      .to({}, { duration: 0.35 })
+    tl.to({}, { duration: 0.5 })
       .to(panneaux[1], { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.7, ease: 'power2.inOut' })
       .from($('.fond-image img', panneaux[1]), { scale: 1.25, duration: 0.7, ease: 'power2.out' }, '<')
-      .to(feuillets || {}, feuillets ? { progress: 1, duration: 0.9, ease: 'none' } : { duration: 0.1 }, '>-0.25')
-      .add(trioIn(panneaux[1]), '<0.1')
-      .to({}, { duration: 0.35 })
+      .from($$('.trio a', panneaux[1]), { x: 120, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }, '<0.1')
+      .call(jouerFeuillets, null, '<0.2')
+      .to({}, { duration: 0.5 })
       .to(panneaux[2], { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.7, ease: 'power2.inOut' })
       .from($('.fond-image img', panneaux[2]), { scale: 1.25, duration: 0.7, ease: 'power2.out' }, '<')
-      .to(empreinte.tl, { progress: 1, duration: 1, ease: 'none' }, '>-0.2')
-      .add(trioIn(panneaux[2]), '<0.1')
-      .to({}, { duration: 0.3 });
+      .from($$('.trio a', panneaux[2]), { x: 120, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }, '<0.1')
+      .call(jouerEmpreinte, null, '<0.2')
+      .to({}, { duration: 0.45 });
+    const st = tl.scrollTrigger;
+    const allerPanneau = (k, doux) => {
+      const cible = st.start + (st.end - st.start) * [0.02, 0.5, 0.95][k];
+      if (LP.lenis) LP.lenis.scrollTo(cible, doux ? { duration: 1.4 } : { immediate: true, force: true }); else scrollTo(0, cible);
+      if (!doux) { ScrollTrigger.update(); st.getTween?.()?.progress(1); }
+    };
+    $$('button', index).forEach((b, k) => b.addEventListener('click', () => allerPanneau(k, true)));
+    // au clavier, le focus amene directement au panneau qui le contient
+    panneaux.forEach((p, k) => p.addEventListener('focusin', () => {
+      const pr = st.progress; const actuel = pr < 0.36 ? 0 : pr < 0.72 ? 1 : 2;
+      if (actuel !== k || (k > 0 && !st.isActive)) allerPanneau(k, false);
+    }));
+    activer(0);
   } else {
-    ScrollTrigger.create({ trigger: panneaux[0], start: 'top 70%', once: true, onEnter: () => gsap.to(coulee.tl, { progress: 1, duration: 2.4, ease: 'power1.inOut' }) });
-    ScrollTrigger.create({ trigger: panneaux[1], start: 'top 70%', once: true, onEnter: () => feuillets && feuillets.play() });
-    ScrollTrigger.create({ trigger: panneaux[2], start: 'top 70%', once: true, onEnter: () => gsap.to(empreinte.tl, { progress: 1, duration: 2, ease: 'power1.inOut' }) });
-    panneaux.forEach((p) => gsap.from($$('.trio a', p), { y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 60%', once: true } }));
+    index.remove();
+    ScrollTrigger.create({ trigger: panneaux[1], start: 'top 65%', once: true, onEnter: jouerFeuillets });
+    ScrollTrigger.create({ trigger: panneaux[2], start: 'top 65%', once: true, onEnter: jouerEmpreinte });
+    panneaux.slice(1).forEach((p) => gsap.from($$('.trio a', p), { y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 60%', once: true } }));
   }
 }
 
@@ -195,7 +224,7 @@ const hMax = Math.max(...DISPO.map((x) => x.dimensions?.h || 40));
 const hauteurDispo = () => {
   if (bureau() && !calme) {
     const tete = $('#disponibles .tete');
-    return Math.max(220, Math.min(560, innerHeight - tete.offsetHeight - 76 - 120));
+    return Math.max(220, Math.min(540, innerHeight - tete.offsetHeight - 110 - 120));
   }
   return Math.min(innerHeight * 0.42, 460);
 };
@@ -220,14 +249,25 @@ function animerDispo() {
   }
   const distance = () => piste.scrollWidth - innerWidth;
   const tw = gsap.to(piste, { x: () => -distance(), ease: 'none' });
+  sec.insertAdjacentHTML('beforeend', `<div class="hud-salle hud-simple" aria-hidden="true"><span></span><p><span class="chiffres" data-hud-n>1 / ${cartes.length}</span><span data-hud-t>${LP.esc(DISPO[0].titre)}</span></p><span></span><span class="hud-barre"><i data-hud-barre></i></span></div>`);
+  const hudN = $('[data-hud-n]', sec); const hudT = $('[data-hud-t]', sec); const hudB = $('[data-hud-barre]', sec);
   ScrollTrigger.create({
     trigger: sec, start: 'top top', end: () => `+=${distance()}`, pin: true, scrub: 0.6, animation: tw, invalidateOnRefresh: true, anticipatePin: 1,
-    onUpdate: () => {
+    onUpdate: (self) => {
+      hudB.style.transform = `scaleX(${self.progress})`;
       const mid = innerWidth / 2;
       let best = null; let bd = 1e9;
       cartes.forEach((c) => { const r = c.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = c; } });
-      if (best && best !== sec._active) { sec._active = best; teinter(best); }
+      if (best && best !== sec._active) { sec._active = best; teinter(best); const ka = cartes.indexOf(best); hudN.textContent = `${ka + 1} / ${cartes.length}`; hudT.textContent = DISPO[ka]?.titre || ''; }
     },
+  });
+  const stD = ScrollTrigger.getAll().find((t) => t.vars.trigger === sec && t.pin);
+  piste.addEventListener('focusin', (ev) => {
+    const el = ev.target.closest('.oeuvre-carte, .fin'); if (!el || !stD) return;
+    const d = distance(); if (d <= 0) return;
+    const pr = Math.min(1, Math.max(0, (el.offsetLeft + el.offsetWidth / 2 - innerWidth / 2) / d));
+    const y = stD.start + (stD.end - stD.start) * pr;
+    if (LP.lenis) LP.lenis.scrollTo(y, { immediate: true, force: true }); else scrollTo(0, y);
   });
   cartes.forEach((c) => {
     gsap.fromTo($('img, .oeuvre-absente', c), { y: 60, opacity: 0.2 }, { y: 0, opacity: 1, ease: 'power2.out', scrollTrigger: { trigger: c, containerAnimation: tw, start: 'left 95%', end: 'left 55%', scrub: true } });
@@ -240,43 +280,69 @@ $('[data-cartel-ardoisier]').innerHTML = cartelHTML(ARD);
 const FRUITS = ['profil', 'grands-yeux', 'empreintes', 'dans-les-nuages', 'je-reflechis', 'la-baigneuse', 'observer-le-monde', 'pensive-1', 'humer-le-monde', 'l-aplomb-de-la-jeunesse-1'].map(o).filter((x) => x && x.detoure);
 function construireArbre() {
   const scene = $('[data-arbre]');
-  const W = 1000, H = bureau() ? 625 : 1333;
-  const ox = 500, oy = H * (bureau() ? 0.5 : 0.62);
-  let r = 7;
-  const alea = () => { r = (r * 9301 + 49297) % 233280; return r / 233280; };
-  const n = FRUITS.length;
-  const pointes = FRUITS.map((f, i) => {
-    const t = n === 1 ? 0.5 : i / (n - 1);
-    const a = Math.PI * (0.94 - t * 0.88);
-    const R = bureau() ? 330 + (i % 2) * 70 + alea() * 30 : 300 + alea() * 120;
-    return { x: ox + Math.cos(a) * R * (bureau() ? 1.3 : 0.95), y: oy - Math.sin(a) * R * (bureau() ? 0.78 : 1.0) - (bureau() ? 20 : 0), f };
-  });
-  const branches = [];
-  pointes.forEach((p, i) => {
-    const mx = ox + (p.x - ox) * 0.45 + (alea() - 0.5) * 60; const my = oy + (p.y - oy) * 0.2 - 40 - alea() * 40;
-    branches.push({ d: `M${ox},${oy} Q${mx.toFixed(1)},${my.toFixed(1)} ${p.x.toFixed(1)},${p.y.toFixed(1)}`, w: 7 - (Math.abs(i - (n - 1) / 2) / n) * 4, rang: i });
-    const tx = ox + (p.x - ox) * 0.7; const ty = oy + (p.y - oy) * 0.62 - 10;
-    branches.push({ d: `M${tx.toFixed(1)},${ty.toFixed(1)} q${((alea() - 0.5) * 70).toFixed(1)},${(-30 - alea() * 40).toFixed(1)} ${((alea() - 0.5) * 110).toFixed(1)},${(-50 - alea() * 50).toFixed(1)}`, w: 2.2, rang: i + 0.5 });
-  });
+  const large = bureau();
+  const W = 1000, H = large ? 625 : 1250;
+  // charpente dessinee a la main : trois maitresses branches qui se divisent, chaque pointe porte un fruit
+  const G = large ? {
+    base: [500, 236],
+    branches: [
+      { d: 'M500,236 C470,190 380,165 268,128', w: 8 }, { d: 'M500,236 C505,180 492,120 482,74', w: 7 }, { d: 'M500,236 C540,192 640,170 742,122', w: 8 },
+      { d: 'M268,128 C230,140 172,150 118,178', w: 3.4 }, { d: 'M268,128 C238,105 210,86 172,66', w: 3.2 }, { d: 'M268,128 C288,96 300,70 306,42', w: 3 },
+      { d: 'M482,74 C458,52 432,36 402,22', w: 2.8 }, { d: 'M482,74 C512,52 540,32 566,18', w: 2.8 },
+      { d: 'M742,122 C734,92 718,64 696,40', w: 3 }, { d: 'M742,122 C780,100 820,82 852,62', w: 3.2 }, { d: 'M742,122 C800,128 850,146 890,170', w: 3.4 },
+      { d: 'M402,190 C372,206 340,224 304,236', w: 2.4 }, { d: 'M612,186 C640,206 664,228 684,252', w: 2.4 },
+    ],
+    pointes: [[118, 178], [172, 66], [306, 42], [402, 22], [566, 18], [696, 40], [852, 62], [890, 170], [304, 236], [684, 252]],
+  } : {
+    base: [500, 700],
+    branches: [
+      { d: 'M500,700 C460,620 360,580 250,520', w: 9 }, { d: 'M500,700 C510,600 494,500 488,420', w: 8 }, { d: 'M500,700 C548,622 650,584 756,520', w: 9 },
+      { d: 'M250,520 C200,540 150,560 108,600', w: 4 }, { d: 'M250,520 C220,470 196,430 166,380', w: 3.6 }, { d: 'M250,520 C276,460 300,404 318,340', w: 3.4 },
+      { d: 'M488,420 C456,380 430,340 404,280', w: 3.2 }, { d: 'M488,420 C524,380 556,330 584,276', w: 3.2 },
+      { d: 'M756,520 C730,460 706,410 682,350', w: 3.4 }, { d: 'M756,520 C800,470 836,420 858,372', w: 3.6 }, { d: 'M756,520 C810,540 852,566 892,604', w: 4 },
+    ],
+    pointes: [[108, 600], [166, 380], [318, 340], [404, 280], [584, 276], [682, 350], [858, 372], [892, 604]],
+  };
+  const fruits = FRUITS.slice(0, G.pointes.length);
+  const hMaxF = Math.max(...fruits.map((f) => f.dimensions?.h || 30));
   scene.style.aspectRatio = `${W} / ${H}`;
   scene.innerHTML = `
     <svg class="branches" viewBox="0 0 ${W} ${H}" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-      <defs><linearGradient id="cuivre-grad" x1="0" x2="1"><stop offset="0" stop-color="#7a3f1c"/><stop offset=".5" stop-color="#d08a52"/><stop offset="1" stop-color="#9c5a2c"/></linearGradient></defs>
-      ${branches.map((b) => `<path d="${b.d}" stroke-width="${b.w.toFixed(1)}" data-rang="${b.rang}"/>`).join('')}
+      <defs><linearGradient id="cuivre-grad" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6e3818"/><stop offset=".45" stop-color="#d08a52"/><stop offset=".7" stop-color="#f0b98a"/><stop offset="1" stop-color="#9c5a2c"/></linearGradient></defs>
+      ${G.branches.map((b, i) => `<path d="${b.d}" stroke-width="${b.w}" data-rang="${i < 3 ? 0 : 1}"/>`).join('')}
+      ${G.pointes.slice(0, fruits.length).map(([x, y]) => `<circle class="noeud" cx="${x}" cy="${y}" r="3.2" fill="#e3a676"/>`).join('')}
     </svg>
-    <a class="tronc" href="${LP.lienOeuvre(ARD)}" data-curseur="Voir" style="height:${bureau() ? 70 : 46}%">${imgOeuvre(ARD, { sizes: '30vw', cls: 'oeuvre' })}</a>
-    ${pointes.map((p) => `<a class="fruit" href="${LP.lienOeuvre(p.f)}" style="left:${(p.x / W) * 100}%;top:${(p.y / H) * 100}%;transform:translate(-50%,-8%)" data-carte>${imgOeuvre(p.f, { sizes: '120px' })}<span>${LP.esc(p.f.titre)}, ${LP.prix(p.f.prix)}</span></a>`).join('')}`;
+    <a class="tronc" href="${LP.lienOeuvre(ARD)}" data-curseur="Voir" style="height:${large ? 66 : 44}%" aria-label="L'Ardoisier, voir la fiche">${imgOeuvre(ARD, { sizes: '30vw', cls: 'oeuvre' })}</a>
+    ${fruits.map((f, i) => {
+      const [x, y] = G.pointes[i];
+      const k = 0.62 + 0.38 * ((f.dimensions?.h || 30) / hMaxF);
+      return `<a class="fruit" href="${LP.lienOeuvre(f)}" style="left:${(x / W) * 100}%;top:${(y / H) * 100}%;--k:${k.toFixed(2)}" data-carte aria-label="${LP.esc(f.titre)}, ${LP.prix(f.prix)}"><span class="fruit-in"><i class="tige" aria-hidden="true"></i>${imgOeuvre(f, { sizes: '120px' })}<span class="etiq">${LP.esc(f.titre)}<br>${LP.prix(f.prix)}</span></span></a>`;
+    }).join('')}`;
   const chemins = $$('path', scene);
   chemins.forEach((c) => { const l = c.getTotalLength(); c.style.strokeDasharray = l; c.style.strokeDashoffset = calme ? 0 : l; });
+  const elFruits = $$('.fruit-in', scene);
   if (calme) return;
-  const fruits = $$('.fruit', scene);
-  gsap.set(fruits, { scale: 0, transformOrigin: '50% 0%' });
+  gsap.set(elFruits, { scale: 0, transformOrigin: '50% 0%' });
+  gsap.set($$('.noeud', scene), { scale: 0, transformOrigin: 'center' });
   const tl = gsap.timeline();
-  tl.from($('.tronc', scene), { y: 60, opacity: 0, duration: 0.6, ease: 'power2.out' });
-  chemins.forEach((c) => tl.to(c, { strokeDashoffset: 0, duration: 0.9, ease: 'power1.inOut' }, 0.3 + parseFloat(c.dataset.rang) * 0.08));
-  fruits.forEach((f, i) => tl.to(f, { scale: 1, duration: 0.5, ease: 'back.out(2.2)' }, 0.9 + i * 0.09));
-  if (bureau()) ScrollTrigger.create({ trigger: '#ardoisier', start: 'top top', end: '+=140%', pin: true, scrub: 0.8, animation: tl, anticipatePin: 1 });
-  else ScrollTrigger.create({ trigger: scene, start: 'top 75%', end: 'bottom 60%', scrub: 0.8, animation: tl });
+  tl.from($('.tronc', scene), { y: 40, opacity: 0.2, duration: 0.5, ease: 'power2.out' })
+    .to(chemins.filter((c) => c.dataset.rang === '0'), { strokeDashoffset: 0, duration: 0.7, ease: 'power1.inOut', stagger: 0.08 }, 0.25)
+    .to(chemins.filter((c) => c.dataset.rang === '1'), { strokeDashoffset: 0, duration: 0.6, ease: 'power1.out', stagger: 0.04 }, 0.8)
+    .to($$('.noeud', scene), { scale: 1, duration: 0.3, stagger: 0.04 }, 1.25)
+    .to(elFruits, { scale: 1, duration: 0.55, ease: 'back.out(2)', stagger: 0.06 }, 1.3);
+  // balancement leger des fruits, seulement quand la section est visible
+  const balance = elFruits.map((f, i) => gsap.to(f, { rotation: i % 2 ? 2.2 : -2.2, duration: 2.4 + (i % 3) * 0.5, ease: 'sine.inOut', yoyo: true, repeat: -1, paused: true, delay: i * 0.2 }));
+  ScrollTrigger.create({ trigger: '#ardoisier', start: 'top bottom', end: 'bottom top', onToggle: (st) => balance.forEach((b) => (st.isActive ? b.play() : b.pause())) });
+  if (large) {
+    const stA = ScrollTrigger.create({ trigger: '#ardoisier', start: 'top top', end: '+=130%', pin: true, scrub: 0.8, animation: tl, anticipatePin: 1 });
+    // au clavier, l'arbre se montre en entier avant que le focus n'atteigne un fruit
+    scene.addEventListener('focusin', () => {
+      if (stA.progress > 0.98) return;
+      if (LP.lenis) LP.lenis.scrollTo(stA.end - 2, { immediate: true, force: true }); else scrollTo(0, stA.end - 2);
+      ScrollTrigger.update(); stA.getTween?.()?.progress(1); tl.progress(1);
+    });
+  }
+  else ScrollTrigger.create({ trigger: scene, start: 'top 80%', end: 'center 45%', scrub: 0.8, animation: tl });
 }
 
 /* ---------------- petits formats ---------------- */
@@ -304,7 +370,12 @@ if (!calme) {
     let survol = false;
     rail.addEventListener('pointerenter', () => { survol = true; });
     rail.addEventListener('pointerleave', () => { survol = false; });
+    let visible = false;
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; }, { rootMargin: '100px' }).observe(rail);
+    rail.addEventListener('focusin', () => { survol = true; });
+    rail.addEventListener('focusout', () => { survol = false; });
     gsap.ticker.add(() => {
+      if (!visible || document.hidden) return;
       const v = LP.lenis ? LP.lenis.velocity : 0;
       vitesse += ((survol ? 0.05 : 0.45 + Math.min(4, Math.abs(v) * 0.08)) - vitesse) * 0.06;
       x -= vitesse * sens;
@@ -388,20 +459,7 @@ function formulaire() {
   sel.insertAdjacentHTML('beforeend', dispo.map((x) => `<option value="${x.id}">${LP.esc(x.titre)}${x.prix ? ` (${LP.prix(x.prix)})` : ''}</option>`).join(''));
   const q = new URLSearchParams(location.search);
   if (q.get('oeuvre') && LP.parId[q.get('oeuvre')]) sel.value = q.get('oeuvre');
-  f.addEventListener('submit', (ev) => {
-    ev.preventDefault();
-    const err = $('[data-erreur]', f);
-    const nom = f.nom.value.trim(); const mail = f.email.value.trim(); const msg = f.message.value.trim();
-    const manque = [];
-    if (!nom) manque.push('votre nom');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) manque.push('une adresse e-mail valide');
-    if (!msg) manque.push('un message');
-    if (manque.length) { err.textContent = `Il manque ${manque.join(', ')}.`; (manque[0] === 'votre nom' ? f.nom : manque[0].startsWith('une') ? f.email : f.message).focus(); return; }
-    err.textContent = '';
-    const oeuvre = sel.value ? LP.parId[sel.value].titre : null;
-    f.innerHTML = `<div class="confirmation" role="status"><p class="lead" style="margin-bottom:.5em">Merci ${LP.esc(nom)}.</p><p style="margin:0">Votre demande${oeuvre ? ` au sujet de « ${LP.esc(oeuvre)} »` : ''} est prête. Dans cette maquette, rien n'est envoyé : sur le site final, elle arrivera directement à Laure Polin.</p></div>`;
-    if (LP.son.actif) LP.son.coup(0.8);
-  });
+  monterFormulaire(f, () => (sel.value ? LP.parId[sel.value].titre : null));
 }
 formulaire();
 

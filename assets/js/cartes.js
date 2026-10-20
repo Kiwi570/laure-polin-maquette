@@ -37,7 +37,7 @@ export function carteOeuvre(o, { hauteurPx = 420, sizes = '(max-width: 860px) 70
   const ratio = v ? v.w / v.h : 0.7;
   const largeur = Math.max(160, Math.round(hauteurPx * ratio));
   const visuel = o.detoure
-    ? `<div class="socle-zone" style="height:${hauteurPx}px">${imgOeuvre(o, { sizes, style: `height:${hauteurPx}px` })}</div><div class="socle" style="width:${Math.min(largeur * 0.9, 340)}px"></div>`
+    ? `<div class="socle-zone" style="height:${hauteurPx}px"><span class="halo-mur" aria-hidden="true"></span>${imgOeuvre(o, { sizes, style: `height:${hauteurPx}px` })}<span class="ombre-sol" aria-hidden="true" style="width:${Math.min(largeur * 1.1, 380)}px"></span></div>`
     : `<div class="socle-zone" style="height:${hauteurPx}px"><div class="photo-cadre">${imgOeuvre(o, { sizes, style: `height:${hauteurPx - 20}px` })}</div></div>`;
   return `<article class="oeuvre-carte" data-carte data-id="${o.id}" data-couleur="${o.couleur}" style="width:${Math.max(largeur, 220)}px">
     <a href="${LP.lienOeuvre(o)}" data-curseur="Voir" aria-label="${e(o.titre)}, voir la fiche">${visuel}</a>
@@ -70,4 +70,31 @@ export function teinteSombre(hex, force = 0.22) {
   const base = [23, 27, 32];
   const m = c.map((v, i) => Math.round(base[i] * (1 - force) + v * force));
   return `rgb(${m.join(',')})`;
+}
+
+/** Formulaire de demande (simule) : validation, messages d'erreur relies aux champs, confirmation. */
+export function monterFormulaire(f, titreOeuvre = () => null) {
+  const err = f.querySelector('[data-erreur]');
+  const champs = { nom: f.nom, email: f.email, message: f.message };
+  Object.values(champs).forEach((c) => c && c.addEventListener('input', () => c.removeAttribute('aria-invalid')));
+  if (err && !err.id) err.id = `erreur-${Math.random().toString(36).slice(2, 7)}`;
+  f.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const nom = f.nom.value.trim(); const mail = f.email.value.trim(); const msg = f.message.value.trim();
+    const manque = [];
+    if (!nom) manque.push(['nom', 'votre nom']);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) manque.push(['email', 'une adresse e-mail valide']);
+    if (!msg) manque.push(['message', 'un message']);
+    Object.entries(champs).forEach(([k, c]) => {
+      const ko = manque.some(([m]) => m === k);
+      c.toggleAttribute('aria-invalid', ko);
+      if (ko) c.setAttribute('aria-describedby', err.id); else c.removeAttribute('aria-describedby');
+    });
+    if (manque.length) { err.textContent = `Il manque ${manque.map(([, t]) => t).join(', ')}.`; champs[manque[0][0]].focus(); return; }
+    err.textContent = '';
+    const oeuvre = titreOeuvre();
+    f.innerHTML = `<div class="confirmation" role="status" tabindex="-1"><p class="lead" style="margin-bottom:.5em">Merci ${LP.esc(nom)}.</p><p style="margin:0">Votre demande${oeuvre ? ` au sujet de « ${LP.esc(oeuvre)} »` : ''} est prête. Dans cette maquette, rien n'est envoyé : sur le site final, elle arrivera directement à Laure Polin, qui vous répondra à l'adresse ${LP.esc(mail)}.</p></div>`;
+    f.querySelector('.confirmation').focus();
+    if (LP.son.actif) LP.son.coup(0.8);
+  });
 }
