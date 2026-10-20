@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Salle Ardoise — Laure Polin, sculptures</title>
+  <meta name="description" content="Les sculptures de Laure Polin, salle par salle : ardoise, bronze, pneu recyclé, petits formats et collection privée.">
+  <meta name="theme-color" content="#171b20">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/lenis.css">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body data-page="salle">
+<main id="principal">
+  <section class="salle-entree" aria-labelledby="titre-salle">
+    <div class="fond-image" aria-hidden="true"><img data-fond-salle src="assets/img/ambiance/g-carriere-ardoise-16x9.webp" alt=""></div>
+    <div class="contenu">
+      <nav class="fil" aria-label="Fil d'Ariane"><a href="index.html">Accueil</a><span aria-hidden="true">/</span><a href="index.html#matieres">Les œuvres</a><span aria-hidden="true">/</span><span data-fil-salle aria-current="page">Ardoise</span></nav>
+      <h1 class="titre-salle display" id="titre-salle"><span data-titre-salle>Ardoise</span></h1>
+      <div class="bas">
+        <p data-intro-salle></p>
+        <p class="compte-grand chiffres"><span data-compte-salle>21</span><small>œuvres dans la salle</small></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section taille-directe" data-citation-salle aria-label="La démarche">
+    <div class="contenu rang">
+      <figure><img data-image-citation src="assets/img/ambiance/g-outils-etabli-4x5.webp" alt="" loading="lazy" width="1080" height="1350"></figure>
+      <div class="texte">
+        <p class="citation" data-citation></p>
+        <p class="mini">Laure Polin</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="barre-filtres" role="region" aria-label="Filtrer les œuvres">
+    <div class="contenu">
+      <div class="filtres" data-filtres>
+        <button class="filtre" type="button" data-f="dispo" aria-pressed="false">Disponibles</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button class="filtre" type="button" data-f="taille" data-v="petite" aria-pressed="false">Moins de 30 cm</button>
+        <button class="filtre" type="button" data-f="taille" data-v="moyenne" aria-pressed="false">30 à 60 cm</button>
+        <button class="filtre" type="button" data-f="taille" data-v="grande" aria-pressed="false">Plus de 60 cm</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button class="filtre" type="button" data-f="prix" data-v="1" aria-pressed="false">Moins de 500 €</button>
+        <button class="filtre" type="button" data-f="prix" data-v="2" aria-pressed="false">500 à 1 000 €</button>
+        <button class="filtre" type="button" data-f="prix" data-v="3" aria-pressed="false">Plus de 1 000 €</button>
+      </div>
+      <div class="vues">
+        <span class="mini" data-nb-affiche aria-live="polite"></span>
+        <button class="filtre" type="button" data-vue="salle" aria-pressed="true">Salle</button>
+        <button class="filtre" type="button" data-vue="grille" aria-pressed="false">Grille</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="salle-zone" data-salle-zone aria-label="Œuvres de la salle"></section>
+
+  <section class="section autres-salles" aria-labelledby="titre-autres">
+    <div class="contenu">
+      <div class="intertitre"><h2 id="titre-autres" data-clive>Les autres salles</h2></div>
+      <div class="rang" data-autres></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="titre-cta" style="padding-top:0">
+    <div class="contenu intertitre" style="align-items:end">
+      <div>
+        <h2 id="titre-cta" style="font-size:var(--t-2xl)">Une œuvre vous retient ?</h2>
+        <p class="petit" style="max-width:46ch;margin-top:12px">Demandez d'autres photos, un tarif de livraison ou une visite de l'atelier à Bagnolet.</p>
+      </div>
+      <a class="bouton bouton--plein" href="index.html#contact"><span>Écrire à Laure Polin</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="pied">
+  <div class="grand-nom" data-grand-nom aria-label="Laure Polin"></div>
+  <div class="bas">
+    <span>Laure Polin, sculptures — Bagnolet</span>
+    <nav aria-label="Liens de pied de page">
+      <a class="lien" href="salle.html?s=ardoise">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats">Petits formats</a><a class="lien" href="salle.html?s=collection">Collection privée</a><a class="lien" href="mentions.html">Mentions légales et CGV</a>
+    </nav>
+  </div>
+  <p class="note">Maquette de démonstration : le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.</p>
+</footer>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/vendor/CustomEase.min.js"></script>
+<script src="data/oeuvres.js"></script>
+<script type="module" src="assets/js/salle.js"></script>
+</body>
+</html>
