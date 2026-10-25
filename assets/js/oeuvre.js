@@ -14,7 +14,7 @@ const q = new URLSearchParams(location.search);
 const demande = q.get('o');
 const O = LP.parId[demande] || LP.parId['l-ardoisier'];
 if (demande && !LP.parId[demande]) {
-  document.querySelector('main').insertAdjacentHTML('afterbegin', `<div class="introuvable" role="status"><div class="contenu"><p>Cette œuvre n'existe pas ou a changé d'adresse. Voici L'Ardoisier ; toutes les œuvres sont dans les <a class="lien" href="salle.html?s=ardoise">salles</a>.</p></div></div>`);
+  document.querySelector('main').insertAdjacentHTML('afterbegin', `<div class="introuvable" role="status"><div class="contenu"><p>Cette œuvre n’existe pas ou a changé d’adresse. Voici L’Ardoisier ; toutes les œuvres sont dans les <a class="lien" href="salle.html?s=ardoise">salles</a>.</p></div></div>`);
 }
 const serie = O.series.find((s) => s !== 'livre') || 'ardoise';
 document.title = `${O.titre} — Laure Polin, sculptures`;
@@ -41,14 +41,14 @@ const actions = () => {
   const dispo = O.statut === 'disponible' && O.prix;
   return `${dispo ? `<button class="bouton bouton--plein" type="button" data-ajout="${O.id}" data-libelle="Ajouter au panier"><span>Ajouter au panier</span></button>` : ''}
     <a class="bouton${dispo ? '' : ' bouton--plein'}" href="${lienDemande}"><span>${dispo ? 'Demander cette œuvre' : 'Écrire à Laure Polin'}</span></a>
-    ${O.detoure && O.dimensions?.h ? '<a class="bouton" href="#echelle"><span>Voir à l\'échelle</span></a>' : ''}`;
+    ${O.detoure && O.dimensions?.h ? '<a class="bouton" href="#echelle"><span>Voir à l’échelle</span></a>' : ''}`;
 };
 $('[data-actions]').innerHTML = actions();
 $('[data-actions-bas]').innerHTML = O.statut === 'disponible' && O.prix ? `<button class="bouton bouton--plein" type="button" data-ajout="${O.id}" data-libelle="Ajouter au panier"><span>Ajouter au panier</span></button>` : '';
 // formulaire de la fiche, pre-rempli
 $('[data-message-fiche]').value = O.statut === 'disponible'
-  ? `Bonjour, je suis intéressé(e) par « ${O.titre} ». Pourriez-vous m'en dire plus : autres photos, livraison, visite de l'atelier ?`
-  : `Bonjour, j'ai vu « ${O.titre} » sur votre site. Avez-vous des œuvres proches disponibles, ou acceptez-vous les commandes ?`;
+  ? `Bonjour, je suis intéressé(e) par « ${O.titre} ». Pourriez-vous m’en dire plus : autres photos, livraison, visite de l’atelier ?`
+  : `Bonjour, j’ai vu « ${O.titre} » sur votre site. Avez-vous des œuvres proches disponibles, ou acceptez-vous les commandes ?`;
 monterFormulaire($('[data-formulaire-fiche]'), () => O.titre);
 // precedente et suivante dans la salle
 {
@@ -75,8 +75,8 @@ monterFormulaire($('[data-formulaire-fiche]'), () => O.titre);
 }
 $('[data-titre-acquerir]').textContent = O.statut === 'disponible' ? 'Acquérir cette œuvre' : 'Cette œuvre a trouvé sa place';
 $('[data-texte-acquerir]').textContent = O.statut === 'disponible'
-  ? `${O.titre} est disponible${O.prix ? ` au prix de ${LP.prix(O.prix)}` : ''}. Vous pouvez la réserver dans le panier, ou écrire à Laure Polin pour demander d'autres photos, venir la voir à l'atelier ou organiser la livraison.`
-  : `${O.titre} fait partie d'une collection privée. Laure Polin peut vous parler d'œuvres proches ou d'une commande.`;
+  ? `${O.titre} est disponible${O.prix ? ` au prix de ${LP.prix(O.prix)}` : ''}. Vous pouvez la réserver dans le panier, ou écrire à Laure Polin pour demander d’autres photos, venir la voir à l’atelier ou organiser la livraison.`
+  : `${O.titre} fait partie d’une collection privée. Laure Polin peut vous parler d’œuvres proches ou d’une commande.`;
 
 const scene = $('[data-scene]');
 scene.innerHTML = imgOeuvre(O, { sizes: '(max-width: 860px) 80vw, 50vw', charge: 'eager' });
@@ -132,14 +132,14 @@ function montrer(i, anime = true) {
 }
 if (VUES.length) {
   vue.dataset.opaque = '1';
-  $('[data-vignettes]').innerHTML = VUES.map((p, i) => `<button type="button" role="listitem" aria-label="Vue ${i + 1}" aria-current="${i === 0}"><img src="${LP.src(p, 300)}" alt="" loading="lazy"></button>`).join('') +
+  $('[data-vignettes]').innerHTML = VUES.map((p, i) => `<button type="button" aria-label="Vue ${i + 1}" aria-current="${i === 0}"><img src="${LP.src(p, 300)}" alt="" loading="lazy"></button>`).join('') +
     `<p class="compte chiffres">${VUES.length} ${VUES.length > 1 ? 'vues' : 'vue'}${O.nb_photos_site > VUES.length ? ` sur ${O.nb_photos_site} publiées sur le site actuel` : ''}</p>`;
   $$('[data-vignettes] button').forEach((b, i) => b.addEventListener('click', () => { if (i !== courant) montrer(i); }));
   montrer(0, false);
   const notes = [];
   if (O.nb_photos_site > VUES.length) notes.push(`${O.nb_photos_site - VUES.length} autres photos existent sur le site actuel et pourront être ajoutées.`);
-  if (O.nb_videos_site) notes.push(`${O.nb_videos_site > 1 ? `${O.nb_videos_site} vidéos` : 'Une vidéo'} de l'œuvre ${O.nb_videos_site > 1 ? 'sont publiées' : 'est publiée'} sur le site actuel : à intégrer.`);
-  $('[data-vues-note]').textContent = notes.join(' ') || 'Photographies de l\'atelier.';
+  if (O.nb_videos_site) notes.push(`${O.nb_videos_site > 1 ? `${O.nb_videos_site} vidéos` : 'Une vidéo'} de l’œuvre ${O.nb_videos_site > 1 ? 'sont publiées' : 'est publiée'} sur le site actuel : à intégrer.`);
+  $('[data-vues-note]').textContent = notes.join(' ') || 'Photographies de l’atelier.';
   // loupe : lampe de sculpteur
   const zoom = 2.6;
   const placer = (x, y) => {
@@ -155,7 +155,7 @@ if (VUES.length) {
   vis.addEventListener('pointerleave', () => vis.classList.remove('loupe-on'));
   vis.addEventListener('pointerup', (ev) => { if (ev.pointerType === 'touch') vis.classList.remove('loupe-on'); });
   vis.addEventListener('keydown', (ev) => { if (ev.key === 'ArrowRight') montrer((courant + 1) % VUES.length); if (ev.key === 'ArrowLeft') montrer((courant - 1 + VUES.length) % VUES.length); });
-  vis.tabIndex = 0; vis.setAttribute('aria-label', 'Visionneuse : flèches gauche et droite pour changer de vue');
+  vis.tabIndex = 0; vis.setAttribute('role', 'group'); vis.setAttribute('aria-roledescription', 'visionneuse'); vis.setAttribute('aria-label', 'Visionneuse : flèches gauche et droite pour changer de vue');
   // plein ecran
   const pe = $('[data-plein-ecran]');
   $('[data-plein]').addEventListener('click', (ev) => { ev.stopPropagation(); $('img', pe).src = grande(VUES[courant]); $('img', pe).alt = vue.alt; pe.classList.add('on'); pe.inert = false; LP.isoler(pe, true); LP.lenis?.stop(); $('[data-fermer-plein]').focus(); });
@@ -165,7 +165,7 @@ if (VUES.length) {
   pe.addEventListener('click', (ev) => { if (ev.target === pe) fermer(); });
   document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && pe.classList.contains('on')) fermer(); });
 } else {
-  $('.vues-oeuvre').innerHTML = `<div class="contenu"><div class="intertitre"><h2>Photos à venir</h2><p>La photo reçue pour cette œuvre montre la signature de l'artiste. Les vues de l'œuvre sont à ajouter.</p></div></div>`;
+  $('.vues-oeuvre').innerHTML = `<div class="contenu"><div class="intertitre"><h2>Photos à venir</h2><p>La photo reçue pour cette œuvre montre la signature de l’artiste. Les vues de l’œuvre sont à ajouter.</p></div></div>`;
 }
 
 /* ---------- recit et matieres ---------- */
@@ -176,7 +176,7 @@ $('[data-description]').innerHTML = desc.length
 const t = `${O.technique.join(' ')} ${O.description.join(' ')} ${O.series.join(' ')}`.toLowerCase();
 const MAT = [
   ['ardoise', 'Ardoise', 'g-ardoise-relief-16x9', 'Taillée directement dans la pierre.'],
-  ['bronze', 'Bronze', 'g-bronze-patine-1x1', 'Fonte d\'après un modèle en plâtre.'],
+  ['bronze', 'Bronze', 'g-bronze-patine-1x1', 'Fonte d’après un modèle en plâtre.'],
   ['cuivre', 'Cuivre', 'g-cuivre-etain-1x1', /socle cuivre|socle en cuivre/.test(t) ? 'Le socle.' : ''],
   ['étain', 'Étain', 'g-cuivre-etain-1x1', /incrustation d'étain|incrustation d’étain/.test(t) ? 'Les incrustations.' : ''],
   ['pneu', 'Pneu recyclé', 'g-pneu-gomme-16x9', 'Pneus et chambres à air récupérés.'],
@@ -205,11 +205,11 @@ if (!O.detoure || !O.dimensions?.h) {
     <div class="sol"></div>
     <div class="elem silhouette">${SILHOUETTE}</div>
     <div class="elem console"></div>
-    <div class="elem elem-oeuvre"><img src="${LP.src(O.detoure, 600)}" alt="${e(O.titre)} à l'échelle"></div>
+    <div class="elem elem-oeuvre"><img src="${LP.src(O.detoure, 600)}" alt="${e(O.titre)} à l’échelle"></div>
     <div class="cote"><i></i><span class="chiffres"></span></div>
     <div class="cote cote-humain"><i></i><span class="chiffres">170 cm</span></div>`);
   $('[data-modes]').innerHTML = modes.map(([k, l]) => `<button class="filtre" type="button" data-mode="${k}" aria-pressed="${k === mode}">${l}</button>`).join('');
-  $('[data-echelle-note]').textContent = `Hauteur indiquée par l'artiste : ${String(h).replace('.', ',')} cm${O.dimensions.note ? ` (${O.dimensions.note})` : ''}. Proportions calculées d'après la photo détourée.`;
+  $('[data-echelle-note]').textContent = `Hauteur indiquée par l’artiste : ${String(h).replace('.', ',')} cm${O.dimensions.note ? ` (${O.dimensions.note})` : ''}. Proportions calculées d’après la photo détourée.`;
   const fondPiece = $('[data-fond-piece]');
   const ratio = O.detoure.w / O.detoure.h;
   const placer = () => {
@@ -217,6 +217,7 @@ if (!O.detoure || !O.dimensions?.h) {
     const sil = $('.silhouette', sc); const con = $('.console', sc); const oe = $('.elem-oeuvre', sc);
     const coteO = $('.cote:not(.cote-humain)', sc); const coteH = $('.cote-humain', sc);
     fondPiece.classList.toggle('on', mode === 'salon');
+    sc.classList.toggle('clair', mode === 'salon');
     if (mode === 'salon') fondPiece.style.backgroundImage = `url('assets/img/ambiance/${murale ? 'g-mur-vide-16x9' : 'g-salon-console-16x9'}.webp')`;
     let k; let solY; let baseY; let xO; let silX;
     if (mode === 'salon') {
@@ -258,7 +259,7 @@ if (!O.detoure || !O.dimensions?.h) {
     $$('[data-mode]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     placer();
   }));
-  new ResizeObserver(() => placer()).observe(sc);
+  new ResizeObserver(() => requestAnimationFrame(placer)).observe(sc); // hors du cycle du ResizeObserver : placer() change la hauteur observée
   ScrollTrigger.create({ trigger: sc, start: 'top 75%', once: true, onEnter: placer });
 }
 

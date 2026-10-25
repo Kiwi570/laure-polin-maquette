@@ -312,11 +312,11 @@ function construireArbre() {
       ${G.branches.map((b, i) => `<path d="${b.d}" stroke-width="${b.w}" data-rang="${i < 3 ? 0 : 1}"/>`).join('')}
       ${G.pointes.slice(0, fruits.length).map(([x, y]) => `<circle class="noeud" cx="${x}" cy="${y}" r="3.2" fill="#e3a676"/>`).join('')}
     </svg>
-    <a class="tronc" href="${LP.lienOeuvre(ARD)}" data-curseur="Voir" style="height:${large ? 66 : 44}%" aria-label="L'Ardoisier, voir la fiche">${imgOeuvre(ARD, { sizes: '30vw', cls: 'oeuvre' })}</a>
+    <a class="tronc" href="${LP.lienOeuvre(ARD)}" data-curseur="Voir" style="height:${large ? 66 : 44}%" aria-label="L’Ardoisier, voir la fiche">${imgOeuvre(ARD, { sizes: '30vw', cls: 'oeuvre' })}</a>
     ${fruits.map((f, i) => {
       const [x, y] = G.pointes[i];
       const k = 0.62 + 0.38 * ((f.dimensions?.h || 30) / hMaxF);
-      return `<a class="fruit" href="${LP.lienOeuvre(f)}" style="left:${(x / W) * 100}%;top:${(y / H) * 100}%;--k:${k.toFixed(2)}" data-carte aria-label="${LP.esc(f.titre)}, ${LP.prix(f.prix)}"><span class="fruit-in"><i class="tige" aria-hidden="true"></i>${imgOeuvre(f, { sizes: '120px' })}<span class="etiq">${LP.esc(f.titre)}<br>${LP.prix(f.prix)}</span></span></a>`;
+      return `<a class="fruit" href="${LP.lienOeuvre(f)}" style="left:${(x / W) * 100}%;top:${(y / H) * 100}%;--k:${k.toFixed(2)}" data-carte aria-label="${LP.esc(f.titre)}, ${LP.prix(f.prix)}"><span class="fruit-in"><i class="tige" aria-hidden="true"></i>${imgOeuvre(f, { sizes: '120px' })}<span class="etiq">${LP.esc(f.titre)}<br> ${LP.prix(f.prix)}</span></span></a>`;
     }).join('')}`;
   const chemins = $$('path', scene);
   chemins.forEach((c) => { const l = c.getTotalLength(); c.style.strokeDasharray = l; c.style.strokeDashoffset = calme ? 0 : l; });
@@ -377,7 +377,7 @@ if (!calme) {
     gsap.ticker.add(() => {
       if (!visible || document.hidden) return;
       const v = LP.lenis ? LP.lenis.velocity : 0;
-      vitesse += ((survol ? 0.05 : 0.45 + Math.min(4, Math.abs(v) * 0.08)) - vitesse) * 0.06;
+      vitesse += ((survol ? 0 : 0.45 + Math.min(4, Math.abs(v) * 0.08)) - vitesse) * 0.06;
       x -= vitesse * sens;
       const L = largeur();
       if (L > 0) { if (x <= -L) x += L; if (x > 0) x -= L; }
@@ -403,13 +403,13 @@ function construireCarte() {
   const P = FRANCE.pts;
   const [bx, by] = P.bagnolet; const [sx, sy] = P.sables;
   const cx = (bx + sx) / 2 - 40; const cy = (by + sy) / 2 - 140;
-  z.innerHTML = `<svg viewBox="0 0 ${FRANCE.w} ${FRANCE.h}" role="img" aria-label="Carte de France : l'atelier à Bagnolet et le salon des Sables-d'Olonne">
+  z.innerHTML = `<svg viewBox="0 0 ${FRANCE.w} ${FRANCE.h}" role="img" aria-label="Carte de France : l’atelier à Bagnolet et le salon des Sables-d’Olonne">
     <path class="pays" d="${FRANCE.d}"/>
     <path class="trajet" d="M${bx},${by} Q${cx},${cy} ${sx},${sy}"/>
     <circle class="halo" cx="${bx}" cy="${by}" r="10"/><circle class="point" cx="${bx}" cy="${by}" r="6"/>
     <circle class="point" cx="${sx}" cy="${sy}" r="5" style="fill:#8a929b"/>
     <text class="etiquette" x="${bx + 16}" y="${by - 12}">Atelier, Bagnolet</text>
-    <text class="etiquette discret" x="${sx - 14}" y="${sy + 34}" text-anchor="end">Les Sables-d'Olonne, 2025</text>
+    <text class="etiquette discret" x="${sx - 14}" y="${sy + 34}" text-anchor="end">Les Sables-d’Olonne, 2025</text>
   </svg>`;
   if (calme) return;
   const pays = $('.pays', z); const L = pays.getTotalLength();
@@ -426,7 +426,7 @@ function construireCarte() {
 function construirePlan() {
   const z = $('[data-plan]');
   const pad = 8;
-  z.innerHTML = `<svg viewBox="${-pad} ${-pad} ${PLAN.w + pad * 2} ${PLAN.h + pad * 2}" role="img" aria-label="Plan : Bagnolet, à l'est de Paris, entre Montreuil, Romainville et Les Lilas">
+  z.innerHTML = `<svg viewBox="${-pad} ${-pad} ${PLAN.w + pad * 2} ${PLAN.h + pad * 2}" role="img" aria-label="Plan : Bagnolet, à l’est de Paris, entre Montreuil, Romainville et Les Lilas">
     ${PLAN.zones.map((zn) => `<path class="${zn.type === 'a' ? 'paris' : 'commune'}${zn.nom === 'Bagnolet' ? ' ici' : ''}" d="${zn.d}"/>`).join('')}
     ${PLAN.zones.map((zn) => {
       const [x, y] = zn.c;
@@ -447,7 +447,7 @@ function ouvertMaintenant() {
   const d = new Date(); const h = d.getHours() + d.getMinutes() / 60;
   const ok = (HORAIRES[d.getDay()] || []).some(([a, b]) => h >= a && h < b);
   el.classList.toggle('oui', ok);
-  $('span', el).textContent = ok ? "L'atelier est ouvert en ce moment" : "L'atelier est fermé en ce moment";
+  $('span', el).textContent = ok ? "L’atelier est ouvert en ce moment" : "L’atelier est fermé en ce moment";
 }
 ouvertMaintenant();
 

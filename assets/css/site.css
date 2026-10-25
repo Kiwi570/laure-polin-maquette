@@ -1,9 +1,9 @@
 /* Laure Polin — maquette « Ardoise et poussière » */
 
-@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond.woff") format("woff"); font-weight: 300 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond-italic.woff") format("woff"); font-weight: 300 700; font-style: italic; font-display: swap; }
-@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight.woff") format("woff"); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight-italic.woff") format("woff"); font-weight: 100 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond.woff2") format("woff2"); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("../fonts/cormorant-garamond-italic.woff2") format("woff2"); font-weight: 300 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter Tight"; src: url("../fonts/inter-tight-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
 
 :root {
   color-scheme: dark;
@@ -723,3 +723,47 @@ main { overflow-x: clip; }
 /* evite d'apercevoir le contenu par defaut avant que la page ne soit remplie */
 html.attente main { opacity: 0; animation: lp-montrer 0s 2.5s forwards; }
 @keyframes lp-montrer { to { opacity: 1; } }
+
+/* sans JavaScript : navigation de secours (l'en-tete est construit en JS) */
+.sans-js { display: flex; flex-wrap: wrap; gap: 8px 22px; padding: 18px var(--marge); background: var(--ardoise-0); border-bottom: 1px solid var(--ardoise-3); font-size: var(--t-s); }
+.sans-js a { padding: 10px 0; color: var(--craie-2); }
+.sans-js a:first-child { color: var(--craie); font-family: var(--f-display); font-size: 1.2rem; margin-right: auto; }
+.sans-js-note { padding: 18px var(--marge); color: var(--craie-2); }
+
+/* dialogues ouverts : la page ne defile plus, meme sans Lenis (mode calme) */
+html.verrou { overflow: hidden; }
+
+/* menu plein ecran : defilable quand il depasse (telephone en paysage) */
+.menu-plein { overflow-y: auto; overscroll-behavior: contain; justify-content: safe center; }
+@media (max-height: 520px) {
+  .menu-plein { justify-content: flex-start; padding-top: 64px; }
+  .panier { grid-template-rows: auto auto auto; overflow-y: auto; overscroll-behavior: contain; }
+  .panier .liste { overflow: visible; }
+}
+
+/* vue « Dans un salon » : mur clair, cotes et silhouette foncees pour rester lisibles */
+.echelle .scene-echelle.clair .cote { color: var(--ardoise-0); }
+.echelle .scene-echelle.clair .cote i, .echelle .scene-echelle.clair .cote i::before, .echelle .scene-echelle.clair .cote i::after { background: #7a4a24; }
+.echelle .scene-echelle.clair .silhouette svg { fill: rgba(16,19,23,.28); stroke: var(--ardoise-3); }
+
+/* cibles tactiles : 44 px */
+@media (pointer: coarse) {
+  .filtre { min-height: 44px; }
+  .choix span { padding: 12px 16px; }
+  .ligne-panier [data-moins], .ligne-panier [data-plus] { width: 44px; height: 44px; }
+  .ligne-panier [data-retirer] { padding: 12px 0; }
+  .index-matieres button { padding: 13px 0; }
+}
+
+/* page introuvable */
+body[data-page="introuvable"] .page-simple .display { font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: 1; margin: 14px 0 22px; text-wrap: balance; }
+.actions-introuvable { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+body[data-page="introuvable"] .pied { padding-top: 60px; }
+body[data-page="introuvable"] .pied .bas { margin-top: 0; }
+
+/* écrans tactiles : les étiquettes révélées au survol restent visibles */
+@media (hover: none) {
+  .fruit .etiq, .vignette .legende { opacity: 1; transform: none; }
+}
+/* mention « Photo à compléter » en contenu généré : décorative, hors du nom des liens */
+.oeuvre-absente .mini::after { content: attr(data-txt); }

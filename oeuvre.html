@@ -3,33 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>L'Ardoisier — Laure Polin, sculptures</title>
-  <meta name="description" content="Fiche d'œuvre de Laure Polin : photos, technique, dimensions, prix, vue à l'échelle et demande d'acquisition.">
+  <title>Œuvre — Laure Polin, sculptures</title>
+  <meta name="description" content="Fiche d’œuvre de Laure Polin&nbsp;: photos, technique, dimensions, prix, vue à l’échelle et demande d’acquisition.">
   <meta name="theme-color" content="#171b20">
+  <meta name="robots" content="noindex, nofollow">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:site_name" content="Laure Polin, sculptures">
   <meta property="og:title" content="Laure Polin, sculptures en ardoise, bronze et pneu recyclé">
-  <meta property="og:description" content="Sculptures mi-figuratives, mi-abstraites nées dans l'atelier de Bagnolet. Œuvres disponibles, livre Dialogues sculptés, visite de l'atelier.">
-  <meta property="og:image" content="assets/img/partage-laure-polin.jpg">
+  <meta property="og:description" content="Sculptures mi-figuratives, mi-abstraites nées dans l’atelier de Bagnolet. Œuvres disponibles, livre Dialogues sculptés, visite de l’atelier.">
+  <meta property="og:image" content="https://laure-polin-maquette.vercel.app/assets/img/partage-laure-polin.jpg">
+  <meta property="og:url" content="https://laure-polin-maquette.vercel.app/oeuvre">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/cormorant-garamond.woff" as="font" type="font/woff" crossorigin>
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="preload" href="assets/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/vendor/lenis.css">
   <link rel="stylesheet" href="assets/css/site.css">
   <script>document.documentElement.classList.add('attente');</script>
 </head>
 <body data-page="oeuvre">
+<noscript><nav class="sans-js" aria-label="Navigation principale"><a href="index.html">Laure Polin</a><a href="salle.html?s=ardoise">Ardoise</a><a href="salle.html?s=bronze">Bronze</a><a href="salle.html?s=pneu">Pneu recyclé</a><a href="salle.html?s=petits-formats">Petits formats</a><a href="salle.html?s=collection">Collection privée</a><a href="index.html#contact">L’atelier et contact</a></nav></noscript>
 <main id="principal">
+<noscript><p class="sans-js-note">Cette page s’affiche avec JavaScript. Les œuvres sont aussi présentées sur l’accueil.</p></noscript>
   <section class="fiche-entree" aria-labelledby="titre-oeuvre">
     <div class="gl-repli" aria-hidden="true" style="position:absolute;inset:0;z-index:-2;background:var(--ardoise-0) url('assets/img/ambiance/g-ardoise-relief-16x9.webp') center/cover"></div>
     <div class="fiche-grille">
       <div class="fiche-scene" data-scene></div>
       <div class="fiche-infos">
-        <nav class="fil" aria-label="Fil d'Ariane" data-fil></nav>
-        <h1 id="titre-oeuvre" data-titre>L'Ardoisier</h1>
+        <nav class="fil" aria-label="Fil d’Ariane" data-fil></nav>
+        <h1 id="titre-oeuvre" data-titre>L’Ardoisier</h1>
         <p class="technique" data-technique></p>
         <dl data-caracteristiques></dl>
         <p class="prix-grand chiffres" data-prix></p>
@@ -48,7 +54,7 @@
           <span class="aide">Survolez pour examiner la matière à la loupe.</span>
           <button class="outil plein" type="button" data-plein aria-label="Afficher en plein écran"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
         </div>
-        <div class="vignettes-vues" data-vignettes role="list"></div>
+        <div class="vignettes-vues" data-vignettes></div>
       </div>
     </div>
   </section>
@@ -56,7 +62,7 @@
   <section class="section recit" aria-labelledby="titre-recit" style="padding-top:0">
     <div class="contenu rang">
       <div class="texte">
-        <h2 id="titre-recit" class="sr">À propos de l'œuvre</h2>
+        <h2 id="titre-recit" class="sr">À propos de l’œuvre</h2>
         <div data-description></div>
       </div>
       <div class="matieres-liste" data-matieres></div>
@@ -65,7 +71,7 @@
 
   <section class="section echelle" id="echelle" aria-labelledby="titre-echelle" data-echelle>
     <div class="contenu">
-      <div class="intertitre"><h2 id="titre-echelle" data-clive>Voir à l'échelle</h2><p>La sculpture à sa vraie taille, à côté d'une silhouette de 1,70 m. Changez de mise en situation.</p></div>
+      <div class="intertitre"><h2 id="titre-echelle" data-clive>Voir à l’échelle</h2><p>La sculpture à sa vraie taille, à côté d’une silhouette de 1,70 m. Changez de mise en situation.</p></div>
       <div class="scene-echelle" data-scene-echelle>
         <div class="fond-piece" data-fond-piece></div>
       </div>
@@ -82,8 +88,8 @@
         <h2 id="titre-acquerir" data-titre-acquerir>Acquérir cette œuvre</h2>
         <p class="petit" data-texte-acquerir></p>
         <div class="actions" data-actions-bas></div>
-        <p class="mini">Livraison, emballage ou retrait à l'atelier de Bagnolet : <span class="a-completer">conditions à compléter</span></p>
-        <p class="mini">Vous pouvez aussi joindre Laure Polin au <span class="chiffres tel">+33 6 77 80 59 60</span> ou à contact@sculptures-fr.com.</p>
+        <p class="mini">Livraison, emballage ou retrait à l’atelier de Bagnolet&nbsp;: <span class="a-completer">conditions à compléter</span></p>
+        <p class="mini">Vous pouvez aussi joindre Laure Polin au <a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a> ou à <a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a>.</p>
       </div>
       <form class="formulaire acq-form" data-formulaire-fiche novalidate aria-labelledby="titre-form-fiche">
         <h3 id="titre-form-fiche">Écrire à Laure Polin</h3>
@@ -92,10 +98,10 @@
           <div class="champ"><label for="ff-email">E-mail</label><input id="ff-email" name="email" type="email" autocomplete="email" required></div>
         </div>
         <div class="champ"><label for="ff-tel">Téléphone (facultatif)</label><input id="ff-tel" name="tel" type="tel" autocomplete="tel"></div>
-        <div class="champ"><label for="ff-msg">Message</label><textarea id="ff-msg" name="message" required data-message-fiche></textarea></div>
+        <div class="champ"><label for="ff-msg">Message</label><textarea data-lenis-prevent id="ff-msg" name="message" required data-message-fiche></textarea></div>
         <p class="mini" data-erreur role="alert"></p>
         <div><button class="bouton bouton--plein" type="submit"><span>Envoyer la demande</span></button></div>
-        <p class="mini">Maquette : le message n'est pas envoyé.</p>
+        <p class="mini">Maquette&nbsp;: le message n’est pas envoyé.</p>
       </form>
     </div>
   </section>
@@ -121,7 +127,7 @@
       <a class="lien" href="salle.html?s=ardoise">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats">Petits formats</a><a class="lien" href="salle.html?s=collection">Collection privée</a><a class="lien" href="mentions.html">Mentions légales et CGV</a>
     </nav>
   </div>
-  <p class="note">Maquette de démonstration : le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.</p>
+  <p class="note">Maquette de démonstration&nbsp;: le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.</p>
 </footer>
 
 <script src="assets/vendor/gsap.min.js"></script>

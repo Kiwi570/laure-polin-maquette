@@ -12,31 +12,31 @@ const bureau = () => !LP.etroit();
 const SALLES = {
   ardoise: {
     nom: 'Ardoise', fond: 'g-carriere-ardoise-16x9', fondMobile: 'g-carriere-ardoise-9x16', couleur: '#8fa3b5',
-    intro: "Taille directe dans l'ardoise, parfois de Trélazé : la pierre est polie, cirée, quelquefois patinée ou rehaussée à la cire dorée, puis posée sur un socle de bois, d'ardoise, de marbre ou de métal.",
-    citation: "Lorsque je sculpte, que ce soit en taille directe sur l'ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie. Je construis une forme qui me fait reconnaître le sentiment que je porte.",
+    intro: "Taille directe dans l’ardoise, parfois de Trélazé : la pierre est polie, cirée, quelquefois patinée ou rehaussée à la cire dorée, puis posée sur un socle de bois, d’ardoise, de marbre ou de métal.",
+    citation: "Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie. Je construis une forme qui me fait reconnaître le sentiment que je porte.",
     imgCitation: 'oeuvres/transmettre-au-monde-1/transmettre-au-monde-1-02', altCitation: 'Détail du visage taillé dans Transmettre au monde, ardoise.',
   },
   bronze: {
     nom: 'Bronze', fond: 'g-bronze-fusion-16x9', couleur: '#c4874a',
     intro: "Façonnées en plâtre puis fondues par les fonderies Chapon et Avangini, le plus souvent en tirages numérotés. Certaines pièces associent le bronze au pneu, au cuivre ou au ciment pigmenté.",
-    citation: "Lorsque je sculpte, que ce soit en taille directe sur l'ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie.",
-    imgCitation: 'oeuvres/la-danse/la-danse-01', altCitation: 'La danse, bronze de Laure Polin, photographiée à l\'atelier.',
+    citation: "Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie.",
+    imgCitation: 'oeuvres/la-danse/la-danse-01', altCitation: 'La danse, bronze de Laure Polin, photographiée à l’atelier.',
   },
   pneu: {
     nom: 'Pneu recyclé', fond: 'g-pneu-gomme-16x9', couleur: '#9aa1a8',
-    intro: "Pneus et chambres à air recyclés, découpés puis assemblés, parfois avec une pièce d'ardoise ou de bronze.",
-    citation: "Je taille, je ponce, je bouscule la matière, alors quelque chose survient ; un détail infime parfois, comme un écho ou au contraire comme un appel.",
-    imgCitation: 'oeuvres/premices-d-ouragan/premices-d-ouragan-02', altCitation: 'Détail de Prémices d\'ouragan : bandes de pneu recyclé et fragment d\'ardoise.',
+    intro: "Pneus et chambres à air recyclés, découpés puis assemblés, parfois avec une pièce d’ardoise ou de bronze.",
+    citation: "Je taille, je ponce, je bouscule la matière, alors quelque chose survient ; un détail infime parfois, comme un écho ou au contraire comme un appel.",
+    imgCitation: 'oeuvres/premices-d-ouragan/premices-d-ouragan-02', altCitation: 'Détail de Prémices d’ouragan : bandes de pneu recyclé et fragment d’ardoise.',
   },
   'petits-formats': {
     nom: 'Petits formats', fond: 'g-ardoise-relief-16x9', fondMobile: 'g-ardoise-relief-9x16', couleur: '#a7b8c7',
     intro: "Des ardoises de 20 à 40 cm, sur socle de bois, de marbre ou de plexiglas.",
     citation: "Dans les courbes et les déliés naissent des visages, des corps, des sensations, des mouvements, des rythmes.",
-    imgCitation: 'oeuvres/introspection/introspection-02', altCitation: 'Détail d\'Introspection : un visage affleure dans l\'ardoise.',
+    imgCitation: 'oeuvres/introspection/introspection-02', altCitation: 'Détail d’Introspection : un visage affleure dans l’ardoise.',
   },
   collection: {
     nom: 'Collection privée', fond: 'g-salle-socles-16x9', couleur: '#8a929b',
-    intro: "Ces œuvres ont rejoint des collections particulières. Elles restent visibles ici ; certaines existent en d'autres tirages, renseignez-vous auprès de Laure Polin.",
+    intro: "Ces œuvres ont rejoint des collections particulières. Elles restent visibles ici ; certaines existent en d’autres tirages, renseignez-vous auprès de Laure Polin.",
     citation: "La sculpture me conduit dans des territoires de recherche, sans a priori, où je vais trouver le chemin qui va matérialiser ce flux qui me traverse en modelant la matière.",
     imgCitation: 'site/laure-polin-exposition', altCitation: 'Laure Polin parmi ses sculptures.',
   },
@@ -47,7 +47,7 @@ const cle = SALLES[q.get('s')] ? q.get('s') : 'ardoise';
 const S = SALLES[cle];
 const OEUVRES = LP.serie(cle);
 document.title = `Salle ${S.nom} — Laure Polin, sculptures`;
-document.querySelector('meta[name="description"]')?.setAttribute('content', `${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`);
+document.querySelector('meta[name="description"]')?.setAttribute('content', `${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`);
 
 /* ---------- entree ---------- */
 const fondImg = $('[data-fond-salle]');
@@ -62,7 +62,7 @@ if (cle === 'petits-formats') {
   intro += ` À partir de ${LP.prix(min)}.`;
 }
 $('[data-intro-salle]').textContent = intro;
-$('[data-citation]').textContent = `« ${S.citation} »`;
+$('[data-citation]').textContent = `« ${S.citation} »`;
 const ic = $('[data-image-citation]');
 ic.src = `assets/img/${S.imgCitation}-800.webp`;
 ic.alt = S.altCitation || '';

@@ -11,7 +11,7 @@ window.OEUVRES = [
 "prix": 900,
 "en_stock": true,
 "description": [
-"Elle avance en sens contraire du courant principal. Rebelle ? pas forcément, c'est sa nature profonde, le sentiment de ne pas appartenir à la majorité.",
+"Elle avance en sens contraire du courant principal. Rebelle ? pas forcément, c'est sa nature profonde, le sentiment de ne pas appartenir à la majorité.",
 "Elle n'est pas malheureuse pour autant car cela ne l'empêche pas d'avancer, bien au contraire..."
 ],
 "technique": [
@@ -1152,7 +1152,7 @@ window.OEUVRES = [
 "prix": 800,
 "en_stock": true,
 "description": [
-"\"Etreinte infinie\" explore la notion d’attachement : attachement à l’espace, à la forme, mais aussi aux forces invisibles qui orientent et contraignent le geste sculptural. La sculpture s'inscrit dans un mouvement continu où chaque courbe répond à une autre",
+"\"Etreinte infinie\" explore la notion d’attachement : attachement à l’espace, à la forme, mais aussi aux forces invisibles qui orientent et contraignent le geste sculptural. La sculpture s'inscrit dans un mouvement continu où chaque courbe répond à une autre",
 "Elle déploie ainsi une succession de courbes qui semblent se refermer tout en s’ouvrant, créant une impression de puissance contenue."
 ],
 "technique": [
@@ -1368,7 +1368,7 @@ window.OEUVRES = [
 "sculpture en terre cuite patinée."
 ],
 "technique": [
-"Terre cuite patinée : Hauteur 24, largeur 14, profondeur 17"
+"Terre cuite patinée : Hauteur 24, largeur 14, profondeur 17"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/femme-1",
 "photos": [
@@ -1661,7 +1661,7 @@ window.OEUVRES = [
 "prix": 300,
 "en_stock": true,
 "description": [
-"Fierté : il arbore une chevelure digne d'une crinière royale, tel le lion. Cette sculpture incarne à la fois la force et la fierté."
+"Fierté : il arbore une chevelure digne d'une crinière royale, tel le lion. Cette sculpture incarne à la fois la force et la fierté."
 ],
 "technique": [
 "sculpture en ardoise sur socle en eucalyptus. Pièce unique",
@@ -2411,11 +2411,11 @@ window.OEUVRES = [
 "en_stock": true,
 "description": [
 "Le front haut, la bouche fermée, l'air sérieux, il ne faut pas le déranger.",
-"Pourquoi ? Il réfléchit intensément....."
+"Pourquoi ? Il réfléchit intensément....."
 ],
 "technique": [
 "Sculpture ardoise sur socle en bois.Pièce unique.",
-"dimensions avec socle :",
+"dimensions avec socle :",
 "Hauteur 29 cm, largeur 6cm profondeur 6cm"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/je-reflechis",
@@ -2468,8 +2468,8 @@ window.OEUVRES = [
 "description": [
 "L'intensité du regard qui transcende la pierre, une présence qui interpelle silencieusement le spectateur, c'est ce qu'évoque cette sculpture Chaque trait est marqué par l'émotion brute de la matière, modelant une connexion intime avec celui qui l'observe.",
 "Le visage droit devant mais le regard sur le côté, que fait-il, que veut-il?",
-"Il semble nous dire, attention je vous surveille. Mais pourquoi ?",
-"De quoi se méfie-t-il ?",
+"Il semble nous dire, attention je vous surveille. Mais pourquoi ?",
+"De quoi se méfie-t-il ?",
 "En fait c'est lespectateur qui se trompe, lui ne fait qu'observer ce qui l'entoure, sans à priori, aucun."
 ],
 "technique": [
@@ -2602,7 +2602,7 @@ window.OEUVRES = [
 "prix": 900,
 "en_stock": true,
 "description": [
-"Dans « L’Anneau du Temps », le pneu est transformé en une forme circulaire évoquant le cycle infini du temps. Son tressage suggère un geste de réparation, une reconstruction patiente.",
+"Dans « L’Anneau du Temps », le pneu est transformé en une forme circulaire évoquant le cycle infini du temps. Son tressage suggère un geste de réparation, une reconstruction patiente.",
 "Au cœur de cette structure, une ardoise sculptée, polie.",
 "Les perforations et altérations deviennent des signes, des empreintes du passage du temps, entre résistance et adaptation. L’œuvre met en tension rigidité et souplesse, mémoire et transformation, dans une dynamique de renaissance où chaque matière raconte sa propre métamorphose."
 ],
@@ -3062,7 +3062,7 @@ window.OEUVRES = [
 "Elle effleure à peine l'eau, elle prend son temps, elle observe les éclaboussures que provoquent ses pieds dans l'eau et les éclaboussures qui petit à petit vont lui permettre de s'abandonner complètement dans l'eau. Pour le moment elle hésite."
 ],
 "technique": [
-"Hauteur totale 32cm, largeur profondeur du socle : 7*7cm",
+"Hauteur totale 32cm, largeur profondeur du socle : 7*7cm",
 "Sculpture en ardoise, avec incrustation d'étain sur socle en marbre."
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/la-baigneuse",
@@ -3118,11 +3118,11 @@ window.OEUVRES = [
 "prix": null,
 "en_stock": false,
 "description": [
-"La bûche de Noêl : pour les gourmands, on peut la manger, pour les frileux on peut la mettre dans la cheminée et se réchauffer au coin du feu. Celle-ci est destinée à être contemplée. Le personnage au creux du bois, regarde ses admirateurs et se demande comment il va finir ! Pièce unique, bois et bronze."
+"La bûche de Noêl : pour les gourmands, on peut la manger, pour les frileux on peut la mettre dans la cheminée et se réchauffer au coin du feu. Celle-ci est destinée à être contemplée. Le personnage au creux du bois, regarde ses admirateurs et se demande comment il va finir ! Pièce unique, bois et bronze."
 ],
 "technique": [
 "Bois et bronze, pièce unique",
-"Dimensions en cm : H30CM, 10*10"
+"Dimensions en cm : H30CM, 10*10"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/la-bûche-de-noel",
 "photos": [
@@ -3221,7 +3221,7 @@ window.OEUVRES = [
 "prix": 4000,
 "en_stock": true,
 "description": [
-"La danse : Elle danse, elle s'enflamme. Elle invite au mouvement, elle invite à entrer dans la danse"
+"La danse : Elle danse, elle s'enflamme. Elle invite au mouvement, elle invite à entrer dans la danse"
 ],
 "technique": [
 "Hauteur 108 profondeur 33 largeur 33 NB: la hauteur est donnée sans la hauteur du socle qui peut de faire sur mesure",
@@ -3281,7 +3281,7 @@ window.OEUVRES = [
 "en_stock": true,
 "description": [
 "**La Faille Bleue** représente un visage traversé par une veine minérale.",
-"Cette coulée bleue, rugueuse et incrustée de cercles métalliques, évoque le temps, la mémoire et les traces laissées par l’expérience. Elle sépare autant qu’elle relie : chair et pierre, intérieur et extérieur, silence et mouvement.",
+"Cette coulée bleue, rugueuse et incrustée de cercles métalliques, évoque le temps, la mémoire et les traces laissées par l’expérience. Elle sépare autant qu’elle relie : chair et pierre, intérieur et extérieur, silence et mouvement.",
 "L’œuvre parle de transformation, de ce qui se fissure pour révéler une autre énergie — une force vitale, presque géologique, qui traverse l’être et le façonne."
 ],
 "technique": [
@@ -3705,10 +3705,10 @@ window.OEUVRES = [
 "prix": 8000,
 "en_stock": true,
 "description": [
-"Il se penche, esquisse un mouvement, il invite. Il Invite à quoi? A la danse ? Peut-être veut-il souhaiter la bienvenue à ses visiteurs et simplement leur faire la révérence."
+"Il se penche, esquisse un mouvement, il invite. Il Invite à quoi? A la danse ? Peut-être veut-il souhaiter la bienvenue à ses visiteurs et simplement leur faire la révérence."
 ],
 "technique": [
-"Fonte : fonderie Chapon. Exemplaire N°2",
+"Fonte : fonderie Chapon. Exemplaire N°2",
 "Largeur 60, Profondeur 40, Hauteur 120",
 "La hauteur donnée est la hauteur sans socle. Le socle peut être modifié à la demande et sur mesure."
 ],
@@ -3827,7 +3827,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "Exemplaire N°1/8, fonderie chapon",
-"H : 52 largeur 30 profondeur 18"
+"H : 52 largeur 30 profondeur 18"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/le-cirque",
 "photos": [
@@ -3998,7 +3998,7 @@ window.OEUVRES = [
 "prix": 700,
 "en_stock": true,
 "description": [
-"Cette sculpture prend la forme d’un dé monumental réinventé, où les faces géométriques laissent place à un enchevêtrement de bandes de pneu. Les spirales orangées, disposées comme des points sur un dé traditionnel, deviennent ici des repères symboliques : elles évoquent le hasard, le mouvement et les possibilités infinies.",
+"Cette sculpture prend la forme d’un dé monumental réinventé, où les faces géométriques laissent place à un enchevêtrement de bandes de pneu. Les spirales orangées, disposées comme des points sur un dé traditionnel, deviennent ici des repères symboliques : elles évoquent le hasard, le mouvement et les possibilités infinies.",
 "En équilibre précaire sur son socle, le dé semble suspendu entre chute et stabilité, comme une métaphore de nos choix et des forces invisibles qui orientent le destin. L’œuvre détourne un objet universellement associé au jeu pour en faire une réflexion sur le risque, l’incertitude..."
 ],
 "technique": [
@@ -4375,7 +4375,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "sculpture en ardoise, polie et cirée.",
-"Dimensions en cm : hauteur 30 largeur 40 profondeur 6"
+"Dimensions en cm : hauteur 30 largeur 40 profondeur 6"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/le-troisième-œil",
 "photos": [
@@ -4450,7 +4450,7 @@ window.OEUVRES = [
 "prix": null,
 "en_stock": false,
 "description": [
-"Le veilleur : souvent on dit de lui qu'il ne dort que d'un œil. Le veilleur ne veille pas sur les autres mais sur lui-même. Il est éveillé sur son être intérieur mais aussi sur ses attitudes dans l'univers visible. L'œil fermé appelle à se recentrer sur soi, tandis que l'oeil ouvert appelle à l'action juste, dans le monde. Tel Janus tourné vers le passé et le présent des choses, lui se projette dans le dedans et le dehors des êtres.",
+"Le veilleur : souvent on dit de lui qu'il ne dort que d'un œil. Le veilleur ne veille pas sur les autres mais sur lui-même. Il est éveillé sur son être intérieur mais aussi sur ses attitudes dans l'univers visible. L'œil fermé appelle à se recentrer sur soi, tandis que l'oeil ouvert appelle à l'action juste, dans le monde. Tel Janus tourné vers le passé et le présent des choses, lui se projette dans le dedans et le dehors des êtres.",
 "L'œil fermé veille sur le monde invisible, tandis que l'œil ouvert veille sur le monde visible...."
 ],
 "technique": [
@@ -4502,7 +4502,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "Sculpture fabriquée à partir de pneus et chambres à air recyclés",
-"Dimensions en cm: Hauteur : 27, Largeur : 48, Profondeur : 8"
+"Dimensions en cm: Hauteur : 27, Largeur : 48, Profondeur : 8"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/ligne-captive",
 "photos": [
@@ -4561,7 +4561,7 @@ window.OEUVRES = [
 "en_stock": false,
 "description": [
 "Madame Bâ a été inspirée par 2 romans d'Erik Orsenna dont elle est l'héroîne.",
-"Née au Mali, fille d'Ousmane, forgeron, sous-directeur de la chute d'eau, et de Mariama, « traditionniste », c'est-à-dire savante de toutes les choses du passé, Madame Bâ aime la connaissance.",
+"Née au Mali, fille d'Ousmane, forgeron, sous-directeur de la chute d'eau, et de Mariama, « traditionniste », c'est-à-dire savante de toutes les choses du passé, Madame Bâ aime la connaissance.",
 "Madame Bâ, lorsque qu'elle a besoin de se ressourcer, s'isole sous son arbre..."
 ],
 "technique": [
@@ -4691,7 +4691,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "sculpture en ardoise sur socle en bois de thuya.",
-"Dimensions : hauteur 26cm, largeur 14cm, profondeur 7cm"
+"Dimensions : hauteur 26cm, largeur 14cm, profondeur 7cm"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/mignonne",
 "photos": [
@@ -4904,7 +4904,7 @@ window.OEUVRES = [
 "prix": 450,
 "en_stock": true,
 "description": [
-"Est-elle oiseau ou est-elle une feuille à la forme d'oiseau ? Si c'est une feuille c'est sans doute une feuille aux couleurs de l'automne. Les couleurs sontles couleurs naturelles de l'ardoise, rehaussées avecde la cire à dorer."
+"Est-elle oiseau ou est-elle une feuille à la forme d'oiseau ? Si c'est une feuille c'est sans doute une feuille aux couleurs de l'automne. Les couleurs sontles couleurs naturelles de l'ardoise, rehaussées avecde la cire à dorer."
 ],
 "technique": [
 "Pièce en ardoise sur socle ardoise.",
@@ -5103,7 +5103,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "Sculpture en ardoise sur socle pierre.(taillée sur une seule face)",
-"DIMENSIONS : H38* P7*L7 Cm"
+"DIMENSIONS : H38* P7*L7 Cm"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/pensif",
 "photos": [
@@ -5251,7 +5251,7 @@ window.OEUVRES = [
 "prix": null,
 "en_stock": false,
 "description": [
-"\"Il était tard ; ainsi qu'une médaille neuve",
+"\"Il était tard ; ainsi qu'une médaille neuve",
 "La pleine lune s'étalait,",
 "Et la solennité de la nuit, comme un fleuve,",
 "Sur Paris dormant ruisselait.\"",
@@ -5551,7 +5551,7 @@ window.OEUVRES = [
 "prix": 800,
 "en_stock": true,
 "description": [
-"Cette œuvre explore la tension entre l’ancrage et l’élan. Ses formes ramifiées appartiennent à un monde en transformation, racine, organisme, mouvement. Une évocation de la vie dans ce qu’elle a de plus instinctif : s’attacher, résister, se développer."
+"Cette œuvre explore la tension entre l’ancrage et l’élan. Ses formes ramifiées appartiennent à un monde en transformation, racine, organisme, mouvement. Une évocation de la vie dans ce qu’elle a de plus instinctif : s’attacher, résister, se développer."
 ],
 "technique": [
 "Pièce unique en pneu sur socle en bois",
@@ -5662,7 +5662,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "sculpture en ardoise sur socle bois",
-"dimensions en cm : Hauteur 39, largeur 11, profondeur 7"
+"dimensions en cm : Hauteur 39, largeur 11, profondeur 7"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/retour-aux-sources-2",
 "photos": [
@@ -5851,7 +5851,7 @@ window.OEUVRES = [
 ],
 "technique": [
 "Sculpture en ardoise, polie, cirée.",
-"Dimensions en cm : Longueur 17cm Hauteur 48cm Profondeur 6cm"
+"Dimensions en cm : Longueur 17cm Hauteur 48cm Profondeur 6cm"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/sablier-infini",
 "photos": [
@@ -6209,7 +6209,7 @@ window.OEUVRES = [
 "sculpture en ardoise sur socle bois.",
 "Hauteur 36 cm,largeur et profondeur 6,5 cm",
 "Sculpture en ardoise, taillée sur une face",
-"dimensions en cm : hauteur 39 profondeur8 largeur10"
+"dimensions en cm : hauteur 39 profondeur8 largeur10"
 ],
 "url_site": "https://www.sculptures-fr.com/page-d-articles/transmettre-au-monde",
 "photos": [
@@ -6441,18 +6441,18 @@ window.OEUVRES = [
 },
 {
 "id": "yin-ou-yang",
-"titre": "Yin ou yang ?",
-"titre_site": "Yin ou yang ?",
+"titre": "Yin ou yang ?",
+"titre_site": "Yin ou yang ?",
 "series": [
 "pneu"
 ],
 "prix": 900,
 "en_stock": true,
 "description": [
-"Yin ou Yang ?",
-"Ce titre « Yin ou Yang ? » renvoie à la philosophie chinoise du dualisme complémentaire, où deux forces opposées coexistent et s’équilibrent.",
+"Yin ou Yang ?",
+"Ce titre « Yin ou Yang ? » renvoie à la philosophie chinoise du dualisme complémentaire, où deux forces opposées coexistent et s’équilibrent.",
 "Les lignes courbes et torsadées évoquent à la fois la tension et l’harmonie, la lutte et la complémentarité.",
-"Le matériau recyclé, le pneu, rappelle la capacité de transformation : d’un objet utilitaire voué au rebut, on fait émerger une œuvre d’art porteuse de sens.",
+"Le matériau recyclé, le pneu, rappelle la capacité de transformation : d’un objet utilitaire voué au rebut, on fait émerger une œuvre d’art porteuse de sens.",
 "Entre ombre et lumière, la matière se plie, se tord, se réinvente.",
 "Deux forces contraires se croisent, s’enlacent, s’équilibrent."
 ],

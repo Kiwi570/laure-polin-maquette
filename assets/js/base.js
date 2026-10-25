@@ -44,6 +44,8 @@ LP.src = (img, cible = 800) => {
   const t = img.tailles.find(([, w]) => w >= cible) || img.tailles[img.tailles.length - 1];
   return `assets/${img.src}-${t[0]}.webp`;
 };
+/* ancre lue dans l'adresse ou un lien : jamais de querySelector sur une valeur brute (#_=_, #1…) */
+LP.cible = (hash) => { try { return hash && hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; } catch (e) { return null; } };
 LP.visuel = (o) => o.detoure || (o.photos.find((p) => p.role !== 'signature') || null);
 LP.estDetoure = (o) => !!o.detoure;
 LP.dims = (o) => {
@@ -94,6 +96,7 @@ LP.monoSVG = (cls = '') => `<svg class="${cls}" viewBox="0 0 ${MONO.w} ${MONO.h}
 
 /* ---------- dialogues : le reste de la page devient inerte ---------- */
 LP.isoler = (dialogue, on) => {
+  document.documentElement.classList.toggle('verrou', on);
   [...document.body.children].forEach((el) => {
     if (el === dialogue || el.contains(dialogue) || el.matches('script, .curseur, .curseur-anneau, .toast, .voile, .rideau')) return;
     if (on) { if (!el.inert) { el.inert = true; el.dataset.inertLp = '1'; } } else if (el.dataset.inertLp) { el.inert = false; delete el.dataset.inertLp; }
@@ -120,15 +123,15 @@ function monterChrome() {
         <button type="button" class="nav-bouton"${page === 'salle' || page === 'oeuvre' ? ' aria-current="page"' : ''} aria-expanded="false" aria-controls="panneau-oeuvres">Les œuvres<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
         <div class="panneau-oeuvres" id="panneau-oeuvres" hidden>${salles()}</div>
       </div>
-      <a href="index.html#ardoisier">L'Ardoisier</a>
+      <a href="index.html#ardoisier">L’Ardoisier</a>
       <a href="index.html#livre">Le livre</a>
       <a href="index.html#ou-voir">Expositions</a>
-      <a href="index.html#contact"${cur('contact')}>L'atelier</a>
+      <a href="index.html#contact"${cur('contact')}>L’atelier</a>
     </nav>
     <div class="outils">
-      <button class="outil" type="button" data-son aria-pressed="false" title="Ambiance sonore de l'atelier"><span class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lib">Son</span><span class="sr">Activer le son de l'atelier</span></button>
+      <button class="outil" type="button" data-son aria-pressed="false" title="Ambiance sonore de l’atelier"><span class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lib">Son</span><span class="sr">Activer le son de l’atelier</span></button>
       <button class="outil" type="button" data-calme aria-pressed="${calme}" title="Réduire les animations">${ICO.calme}<span class="lib">Mode calme</span></button>
-      <button class="outil" type="button" data-panier-ouvrir aria-label="Ouvrir le panier">${ICO.sac}<span class="pastille" data-compte>0</span></button>
+      <button class="outil" type="button" data-panier-ouvrir>${ICO.sac}<span class="sr" data-panier-nom>Ouvrir le panier</span><span class="pastille" data-compte aria-hidden="true">0</span></button>
       <button class="outil menu-bouton" type="button" data-menu aria-expanded="false" aria-controls="menu-plein" aria-label="Ouvrir le menu">${ICO.menu}</button>
     </div>`;
   document.body.prepend(entete);
@@ -155,18 +158,18 @@ function monterChrome() {
   document.body.prepend(evite);
 
   const menu = document.createElement('div');
-  menu.className = 'menu-plein'; menu.id = 'menu-plein'; menu.inert = true;
+  menu.className = 'menu-plein'; menu.id = 'menu-plein'; menu.inert = true; menu.setAttribute('data-lenis-prevent', '');
   menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-modal', 'true'); menu.setAttribute('aria-label', 'Menu');
   menu.innerHTML = `
     <button class="outil fermer" type="button" data-menu-fermer aria-label="Fermer le menu">${ICO.croix}</button>
     ${['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => `<a href="salle.html?s=${k}">${LP.NOMS_SERIES[k]}<small>${LP.serie(k).length}</small></a>`).join('')}
     <span class="menu-sep" aria-hidden="true"></span>
-    <a class="menu-second" href="index.html#ardoisier">L'Ardoisier</a><a class="menu-second" href="index.html#livre">Le livre</a><a class="menu-second" href="index.html#ou-voir">Expositions</a><a class="menu-second" href="index.html#contact">L'atelier et contact</a>`;
+    <a class="menu-second" href="index.html#ardoisier">L’Ardoisier</a><a class="menu-second" href="index.html#livre">Le livre</a><a class="menu-second" href="index.html#ou-voir">Expositions</a><a class="menu-second" href="index.html#contact">L’atelier et contact</a>`;
   document.body.append(menu);
 
   const voile = document.createElement('div'); voile.className = 'voile'; voile.dataset.voile = '';
   const panier = document.createElement('aside');
-  panier.className = 'panier'; panier.setAttribute('role', 'dialog'); panier.setAttribute('aria-modal', 'true'); panier.setAttribute('aria-label', 'Panier'); panier.setAttribute('aria-hidden', 'true'); panier.inert = true;
+  panier.className = 'panier'; panier.setAttribute('data-lenis-prevent', ''); panier.setAttribute('role', 'dialog'); panier.setAttribute('aria-modal', 'true'); panier.setAttribute('aria-label', 'Panier'); panier.setAttribute('aria-hidden', 'true'); panier.inert = true;
   panier.innerHTML = `
     <header><h2>Panier</h2><button class="outil" type="button" data-panier-fermer aria-label="Fermer le panier">${ICO.croix}</button></header>
     <div class="liste" data-panier-liste></div>
@@ -182,7 +185,7 @@ function monterChrome() {
   toast.className = 'toast'; toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
   document.body.append(toast);
 
-  if (pointeurFin) {
+  if (pointeurFin && !calme) {
     const c = document.createElement('div'); c.className = 'curseur';
     const a = document.createElement('div'); a.className = 'curseur-anneau'; a.innerHTML = '<span>Voir</span>';
     document.body.append(c, a);
@@ -232,7 +235,7 @@ function monterDefilement() {
     const href = a.getAttribute('href');
     const hash = href.slice(href.indexOf('#'));
     if (href.startsWith('index.html') && document.body.dataset.page !== 'accueil') return;
-    const cible = hash.length > 1 && document.querySelector(hash);
+    const cible = LP.cible(hash);
     if (!cible) return;
     e.preventDefault();
     if (LP.lenis) LP.lenis.scrollTo(cible, { offset: 0, duration: a.classList.contains('evite') ? 0.6 : 1.6 });
@@ -263,7 +266,7 @@ function monterDefilement() {
   maj();
   entete.addEventListener('focusin', () => entete.classList.remove('est-cache'));
   if (location.hash && document.body.dataset.page === 'accueil') {
-    const cible = document.querySelector(location.hash);
+    const cible = LP.cible(location.hash);
     if (cible) {
       if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
       LP.pret.then(() => setTimeout(() => {
@@ -277,7 +280,7 @@ function monterDefilement() {
 
 /* ---------- curseur et aimants ---------- */
 function monterCurseur() {
-  if (!pointeurFin) return;
+  if (!pointeurFin || calme) return;
   document.documentElement.classList.add('curseur-actif');
   const point = document.querySelector('.curseur');
   const anneau = document.querySelector('.curseur-anneau');
@@ -449,7 +452,7 @@ function monterSon() {
     const on = Atelier.basculer();
     b.setAttribute('aria-pressed', String(on));
     b.classList.toggle('son-on', on);
-    b.querySelector('.sr').textContent = on ? "Couper le son de l'atelier" : "Activer le son de l'atelier";
+    b.querySelector('.sr').textContent = on ? "Couper le son de l’atelier" : "Activer le son de l’atelier";
   });
   document.addEventListener('click', (e) => { if (Atelier.actif && e.target.closest('.bouton, .ajout, .filtre')) Atelier.coup(0.6); });
 }
@@ -503,7 +506,7 @@ const Panier = {
     const v = img.cloneNode(); v.className = 'vol'; v.removeAttribute('srcset'); v.style.left = `${r.left + r.width / 2 - 30}px`; v.style.top = `${r.top + r.height / 2 - 30}px`;
     document.body.append(v);
     gsap.timeline({ onComplete: () => v.remove() })
-      .to(v, { duration: 0.9, ease: 'power2.in', motionPath: undefined, x: c.left + c.width / 2 - (r.left + r.width / 2), scale: 0.3 }, 0)
+      .to(v, { duration: 0.9, ease: 'power2.in', x: c.left + c.width / 2 - (r.left + r.width / 2), scale: 0.3 }, 0)
       .to(v, { duration: 0.9, ease: 'back.in(1.6)', y: c.top + c.height / 2 - (r.top + r.height / 2) }, 0)
       .to(v, { opacity: 0, duration: 0.2 }, 0.75)
       .fromTo(cible, { scale: 1 }, { scale: 1.25, duration: 0.18, yoyo: true, repeat: 1 }, 0.82);
@@ -534,16 +537,18 @@ const Panier = {
     const n = this.nombre();
     const p = document.querySelector('[data-compte]');
     p.textContent = n; p.classList.toggle('on', n > 0);
+    const nom = document.querySelector('[data-panier-nom]');
+    if (nom) nom.textContent = n ? `Ouvrir le panier, ${n} ${n > 1 ? 'articles' : 'article'}` : 'Ouvrir le panier';
     const liste = document.querySelector('[data-panier-liste]');
     const pied = document.querySelector('[data-panier-pied]');
     if (this.etape === 'fait') {
-      liste.innerHTML = `<div class="vide"><p class="lead">Commande simulée enregistrée.</p><p class="petit">Aucun paiement n'a été effectué : dans cette maquette, le panier montre le parcours d'achat. Le paiement réel sera branché sur la solution choisie par Laure Polin.</p></div>`;
+      liste.innerHTML = `<div class="vide"><p class="lead">Commande simulée enregistrée.</p><p class="petit">Aucun paiement n’a été effectué : dans cette maquette, le panier montre le parcours d’achat. Le paiement réel sera branché sur la solution choisie par Laure Polin.</p></div>`;
       pied.innerHTML = `<button class="bouton" type="button" data-panier-fermer2>Revenir aux œuvres</button>`;
       pied.querySelector('[data-panier-fermer2]').addEventListener('click', () => { this.etape = 'liste'; this.rendre(); this.fermer(); });
       return;
     }
     if (!n) {
-      liste.innerHTML = `<div class="vide"><p>Votre panier est vide.</p><p class="petit">Les œuvres disponibles sont des pièces uniques ou des tirages numérotés : ajoutez-en une, ou demandez à Laure Polin d'autres photos.</p><a class="bouton" href="salle.html?s=ardoise">Voir les œuvres</a></div>`;
+      liste.innerHTML = `<div class="vide"><p>Votre panier est vide.</p><p class="petit">Les œuvres disponibles sont des pièces uniques ou des tirages numérotés : ajoutez-en une, ou demandez à Laure Polin d’autres photos.</p><a class="bouton" href="salle.html?s=ardoise">Voir les œuvres</a></div>`;
       pied.innerHTML = '';
       return;
     }
@@ -561,8 +566,8 @@ const Panier = {
     if (this.etape === 'paiement') {
       pied.innerHTML = `
         <div class="total"><span>Total</span><strong class="chiffres">${LP.prix(this.total())}</strong></div>
-        <p class="mini">Livraison ou retrait à l'atelier de Bagnolet : <span class="a-completer">conditions à compléter</span>. Mentions de TVA : <span class="a-completer">à confirmer</span>.</p>
-        <div class="moyens" aria-label="Moyens de paiement"><span>Moyens de paiement : à compléter</span></div>
+        <p class="mini">Livraison ou retrait à l’atelier de Bagnolet : <span class="a-completer">conditions à compléter</span>. Mentions de TVA : <span class="a-completer">à confirmer</span>.</p>
+        <div class="moyens" aria-label="Moyens de paiement"><span>Moyens de paiement : à compléter</span></div>
         <button class="bouton bouton--plein" type="button" data-payer><span>Valider la commande simulée</span></button>
         <button class="lien mini" type="button" data-retour style="justify-self:start">Revenir au panier</button>`;
       pied.querySelector('[data-payer]').addEventListener('click', () => { this.items = []; this.etape = 'fait'; this.sauver(); document.querySelectorAll('[data-ajout]').forEach((b) => this.etatBouton(b)); });
@@ -570,7 +575,7 @@ const Panier = {
     } else {
       pied.innerHTML = `
         <div class="total"><span>Sous-total</span><strong class="chiffres">${LP.prix(this.total())}</strong></div>
-        <p class="mini">Paiement simulé : aucune donnée bancaire n'est demandée dans cette maquette.</p>
+        <p class="mini">Paiement simulé : aucune donnée bancaire n’est demandée dans cette maquette.</p>
         <button class="bouton bouton--plein" type="button" data-commander><span>Passer commande</span></button>`;
       pied.querySelector('[data-commander]').addEventListener('click', () => { this.etape = 'paiement'; this.rendre(); });
     }
@@ -608,12 +613,13 @@ function monterTransitions() {
   }
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
-    if (!a || calme || e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;
+    if (!a || e.defaultPrevented || calme || e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;
     const url = new URL(a.href, location.href);
     if (url.origin !== location.origin || !/\.html$|\/$/.test(url.pathname) && !url.pathname.endsWith('/')) {
       if (url.origin !== location.origin) return;
     }
-    if (url.pathname === location.pathname && url.search === location.search) return;
+    const norm = (p) => p.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
+    if (norm(url.pathname) === norm(location.pathname) && url.search === location.search) return;
     if (a.getAttribute('href').startsWith('#')) return;
     e.preventDefault();
     memo.session('lp-transition', '1');
@@ -670,6 +676,9 @@ function ouverture() {
     const tl = gsap.timeline({
       onComplete: () => { gsap.ticker.remove(anime); o.remove(); },
     });
+    const passer = () => { if (tl.progress() < 1) tl.progress(1); };
+    addEventListener('pointerdown', passer, { once: true });
+    addEventListener('keydown', passer, { once: true });
     tl.to(chemin, { strokeDashoffset: 0, duration: 1.15, ease: 'power2.inOut' })
       .to(chemin, { fill: 'rgba(236,232,224,1)', duration: 0.35 }, 0.95)
       .from(lettres, { opacity: 0, y: 14, filter: 'blur(6px)', duration: 0.6, stagger: 0.035, ease: 'power3.out' }, 0.55)
@@ -681,14 +690,6 @@ function ouverture() {
       }, 1.7);
   });
 }
-
-/* ---------- reveils discrets ---------- */
-LP.revele = (racine = document) => {
-  if (calme) return;
-  racine.querySelectorAll('[data-revele]').forEach((el) => {
-    gsap.from(el, { opacity: 0, y: 26, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
-  });
-};
 
 /* ---------- pied de page : nom trace ---------- */
 function monterPied() {

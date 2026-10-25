@@ -6,7 +6,7 @@ const e = LP.esc;
 export function imgOeuvre(o, { sizes = '40vw', cls = 'oeuvre', charge = 'lazy', style = '' } = {}) {
   const v = LP.visuel(o);
   if (!v) {
-    return `<div class="${cls} oeuvre-absente" style="${style}" role="img" aria-label="${e(o.titre)} : photo à compléter"><svg viewBox="0 0 120 160" width="120" height="160" aria-hidden="true"><rect x="40" y="128" width="40" height="22" fill="#2c333b"/><path d="M60 30c14 10 18 34 10 60s-8 34-10 38c-4-6-14-22-12-44s4-44 12-54z" fill="none" stroke="#8a929b" stroke-dasharray="3 4"/></svg><span class="mini">Photo à compléter</span></div>`;
+    return `<div class="${cls} oeuvre-absente" style="${style}" role="img" aria-label="${e(o.titre)} : photo à compléter"><svg viewBox="0 0 120 160" width="120" height="160" aria-hidden="true"><rect x="40" y="128" width="40" height="22" fill="#2c333b"/><path d="M60 30c14 10 18 34 10 60s-8 34-10 38c-4-6-14-22-12-44s4-44 12-54z" fill="none" stroke="#8a929b" stroke-dasharray="3 4"/></svg><span class="mini" aria-hidden="true" data-txt="Photo à compléter"></span></div>`;
   }
   const opaque = o.detoure ? '0' : '1';
   return `<img class="${cls}" src="${LP.src(v, 800)}" srcset="${LP.srcset(v)}" sizes="${sizes}" alt="${e(altOeuvre(o))}" width="${v.w}" height="${v.h}" loading="${charge}" decoding="async" data-opaque="${opaque}" style="${style}">`;
@@ -87,13 +87,13 @@ export function monterFormulaire(f, titreOeuvre = () => null) {
     if (!msg) manque.push(['message', 'un message']);
     Object.entries(champs).forEach(([k, c]) => {
       const ko = manque.some(([m]) => m === k);
-      c.toggleAttribute('aria-invalid', ko);
+      if (ko) c.setAttribute('aria-invalid', 'true'); else c.removeAttribute('aria-invalid');
       if (ko) c.setAttribute('aria-describedby', err.id); else c.removeAttribute('aria-describedby');
     });
     if (manque.length) { err.textContent = `Il manque ${manque.map(([, t]) => t).join(', ')}.`; champs[manque[0][0]].focus(); return; }
     err.textContent = '';
     const oeuvre = titreOeuvre();
-    f.innerHTML = `<div class="confirmation" role="status" tabindex="-1"><p class="lead" style="margin-bottom:.5em">Merci ${LP.esc(nom)}.</p><p style="margin:0">Votre demande${oeuvre ? ` au sujet de « ${LP.esc(oeuvre)} »` : ''} est prête. Dans cette maquette, rien n'est envoyé : sur le site final, elle arrivera directement à Laure Polin, qui vous répondra à l'adresse ${LP.esc(mail)}.</p></div>`;
+    f.innerHTML = `<div class="confirmation" role="status" tabindex="-1"><p class="lead" style="margin-bottom:.5em">Merci ${LP.esc(nom)}.</p><p style="margin:0">Votre demande${oeuvre ? ` au sujet de « ${LP.esc(oeuvre)} »` : ''} est prête. Dans cette maquette, rien n’est envoyé : sur le site final, elle arrivera directement à Laure Polin, qui vous répondra à l’adresse ${LP.esc(mail)}.</p></div>`;
     f.querySelector('.confirmation').focus();
     if (LP.son.actif) LP.son.coup(0.8);
   });
