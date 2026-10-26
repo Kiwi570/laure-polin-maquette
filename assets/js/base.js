@@ -1,6 +1,6 @@
-/* Laure Polin — socle commun : en-tete, defilement, curseur, son, panier, transitions, ouverture. */
+/* Laure Polin — socle commun : langue, en-tete, defilement, panier, transitions, ouverture. */
 import { Lenis } from '../vendor/lenis.mjs';
-import { MONO, NOM } from './formes.js';
+import { NOM } from './formes.js';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -17,9 +17,37 @@ const memo = {
   session(k, v) { try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, v); } catch (e) { return null; } },
 };
 
+/* ---------- langue : ?lang= dans l'adresse, puis le dernier choix, puis la langue du navigateur ---------- */
+const LANGUES = ['fr', 'en'];
+const langue = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get('lang');
+    if (LANGUES.includes(q)) { memo.ecrire('lp-langue', q); return q; }
+  } catch (e) { /* adresse illisible */ }
+  const m = memo.lire('lp-langue');
+  if (LANGUES.includes(m)) return m;
+  const n = (navigator.languages && navigator.languages[0]) || navigator.language || 'fr';
+  return /^fr\b/i.test(n) ? 'fr' : 'en';
+})();
+const en = langue === 'en';
+const tr = (fr, anglais) => (en ? anglais : fr);
+
+/* les textes fixes des pages portent leur version anglaise : data-en (contenu) et data-en-<attribut> */
+function traduirePage() {
+  document.documentElement.lang = langue;
+  if (en) {
+    document.querySelectorAll('[data-en]').forEach((el) => { el.innerHTML = el.getAttribute('data-en'); });
+    ['aria-label', 'alt', 'content', 'title', 'placeholder'].forEach((a) => {
+      document.querySelectorAll(`[data-en-${a}]`).forEach((el) => el.setAttribute(a, el.getAttribute(`data-en-${a}`)));
+    });
+  }
+  document.documentElement.classList.remove('trad-attente');
+}
+traduirePage();
+
 /* ---------- etat global ---------- */
-const prefereCalme = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const calme = memo.lire('lp-calme', prefereCalme);
+// les animations suivent le reglage « reduire les animations » de l'appareil
+const calme = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pointeurFin = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const etroit = () => window.innerWidth < 861;
 const glDispo = (() => {
@@ -29,6 +57,7 @@ document.documentElement.classList.toggle('calme', calme);
 
 export const LP = {
   gsap, ScrollTrigger, memo, calme, pointeurFin, etroit, gl: glDispo && !calme,
+  langue, en, tr,
   oeuvres: window.OEUVRES || [],
   ordre: window.SERIES_ORDRE || {},
   lenis: null,
@@ -36,8 +65,8 @@ export const LP = {
 LP.parId = Object.fromEntries(LP.oeuvres.map((o) => [o.id, o]));
 
 /* ---------- utilitaires ---------- */
-const fmt = new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 });
-LP.prix = (n) => (n ? `${fmt.format(n)} €` : 'Prix sur demande');
+const fmt = new Intl.NumberFormat(en ? 'en-GB' : 'fr-FR', { maximumFractionDigits: 0 });
+LP.prix = (n) => (n ? (en ? `€${fmt.format(n)}` : `${fmt.format(n)} €`) : tr('Prix sur demande', 'Price on request'));
 LP.esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 LP.srcset = (img) => img.tailles.map(([suf, w]) => `assets/${img.src}-${suf}.webp ${w}w`).join(', ');
 LP.src = (img, cible = 800) => {
@@ -46,93 +75,107 @@ LP.src = (img, cible = 800) => {
 };
 /* ancre lue dans l'adresse ou un lien : jamais de querySelector sur une valeur brute (#_=_, #1…) */
 LP.cible = (hash) => { try { return hash && hash.length > 1 ? document.getElementById(decodeURIComponent(hash.slice(1))) : null; } catch (e) { return null; } };
-LP.visuel = (o) => o.detoure || (o.photos.find((p) => p.role !== 'signature') || null);
-LP.estDetoure = (o) => !!o.detoure;
+/* les oeuvres sont toujours montrees sur leur vraie photo, jamais detourees */
+LP.photos = (o) => o.photos.filter((p) => p.role !== 'signature');
+LP.visuel = (o) => LP.photos(o)[0] || null;
+/* textes de la fiche dans la langue de la page */
+LP.description = (o) => (en && o.description_en ? o.description_en : o.description);
+LP.technique = (o) => (en && o.technique_en ? o.technique_en : o.technique);
 LP.dims = (o) => {
   const d = o.dimensions;
   if (!d) return '';
   const parts = [];
-  const n = (v) => String(v).replace('.', ',');
+  const n = (v) => (en ? String(v) : String(v).replace('.', ','));
   if (d.h) parts.push(`H ${n(d.h)}`);
-  if (d.l) parts.push(`L ${n(d.l)}`);
-  if (d.p) parts.push(`P ${n(d.p)}`);
+  if (d.l) parts.push(`${tr('L', 'W')} ${n(d.l)}`);
+  if (d.p) parts.push(`${tr('P', 'D')} ${n(d.p)}`);
   let s = parts.length ? `${parts.join(' × ')} cm` : '';
-  if (d.note) s += s ? ` (${d.note})` : d.note;
+  const note = en ? (d.note_en || d.note) : d.note;
+  if (note) s += s ? ` (${note})` : note;
   return s;
 };
 LP.matiereCourte = (o) => {
   const t = (o.technique.join(' ') + ' ' + o.series.join(' ')).toLowerCase();
   const m = [];
   if (/bronze/.test(t)) m.push('bronze');
-  if (/ardoise/.test(t)) m.push('ardoise');
-  if (/pneu|chambre/.test(t)) m.push('pneu recyclé');
-  if (/terre cuite/.test(t)) m.push('terre cuite');
-  if (/\bbois\b/.test(t) && !m.length) m.push('bois');
-  if (/cuivre/.test(t) && !m.includes('bronze')) m.push('cuivre');
-  if (/étain/.test(t)) m.push('étain');
+  if (/ardoise/.test(t)) m.push(tr('ardoise', 'slate'));
+  if (/pneu|chambre/.test(t)) m.push(tr('pneu recyclé', 'recycled tyre'));
+  if (/terre cuite/.test(t)) m.push(tr('terre cuite', 'terracotta'));
+  if (/\bbois\b/.test(t) && !m.length) m.push(tr('bois', 'wood'));
+  if (/cuivre/.test(t) && !m.includes('bronze')) m.push(tr('cuivre', 'copper'));
+  if (/étain/.test(t)) m.push(tr('étain', 'pewter'));
   return m.length ? m.join(', ').replace(/^./, (c) => c.toUpperCase()) : '';
 };
 LP.statut = (o) => {
-  if (o.statut === 'collection') return { txt: 'En collection privée', cls: '' };
-  if (o.statut === 'vendue') return { txt: 'Vendue', cls: '' };
-  return { txt: 'Disponible', cls: 'etat--dispo' };
+  if (o.statut === 'collection') return { txt: tr('En collection privée', 'In a private collection'), cls: '' };
+  if (o.statut === 'vendue') return { txt: tr('Vendue', 'Sold'), cls: '' };
+  return { txt: tr('Disponible', 'Available'), cls: 'etat--dispo' };
 };
 LP.lienOeuvre = (o) => `oeuvre.html?o=${encodeURIComponent(o.id)}`;
 LP.serie = (s) => (LP.ordre[s] || []).filter((id, i, a) => a.indexOf(id) === i).map((id) => LP.parId[id]).filter(Boolean);
-LP.NOMS_SERIES = { ardoise: 'Ardoise', bronze: 'Bronze', pneu: 'Pneu recyclé', 'petits-formats': 'Petits formats', collection: 'Collection privée' };
+LP.NOMS_SERIES = en
+  ? { ardoise: 'Slate', bronze: 'Bronze', pneu: 'Recycled tyre', 'petits-formats': 'Small works', collection: 'Private collection' }
+  : { ardoise: 'Ardoise', bronze: 'Bronze', pneu: 'Pneu recyclé', 'petits-formats': 'Petits formats', collection: 'Collection privée' };
+LP.oeuvresTxt = (n) => (en ? `${n} ${n > 1 ? 'works' : 'work'}` : `${n} ${n > 1 ? 'œuvres' : 'œuvre'}`);
 
 const ICO = {
   plus: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>',
   ok: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>',
   sac: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7h12l-1 10H5L4 7z M7 7V5.5a3 3 0 0 1 6 0V7" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>',
-  calme: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 12c2.5-3 4.5-3 7 0s4.5 3 7 0" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>',
   fleche: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>',
   menu: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14" stroke="currentColor" stroke-width="1.4"/></svg>',
   croix: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.4"/></svg>',
 };
 LP.ICO = ICO;
 
-LP.monoSVG = (cls = '') => `<svg class="${cls}" viewBox="0 0 ${MONO.w} ${MONO.h}" aria-hidden="true"><path d="${MONO.d}" fill-rule="evenodd"/></svg>`;
-
 /* ---------- dialogues : le reste de la page devient inerte ---------- */
 LP.isoler = (dialogue, on) => {
   document.documentElement.classList.toggle('verrou', on);
   [...document.body.children].forEach((el) => {
-    if (el === dialogue || el.contains(dialogue) || el.matches('script, .curseur, .curseur-anneau, .toast, .voile, .rideau')) return;
+    if (el === dialogue || el.contains(dialogue) || el.matches('script, .toast, .voile, .rideau')) return;
     if (on) { if (!el.inert) { el.inert = true; el.dataset.inertLp = '1'; } } else if (el.dataset.inertLp) { el.inert = false; delete el.dataset.inertLp; }
   });
 };
-/* ---------- chrome : en-tete, menu, panier, curseur ---------- */
+
+/* ---------- changer de langue : meme page, autre langue ---------- */
+LP.changerLangue = (l) => {
+  if (!LANGUES.includes(l) || l === langue) return;
+  memo.ecrire('lp-langue', l);
+  const url = new URL(location.href);
+  url.searchParams.set('lang', l);
+  LP.allerVers ? LP.allerVers(url.href) : location.assign(url.href);
+};
+const boutonsLangue = () => LANGUES.map((l) => `<button type="button" data-langue="${l}" lang="${l}" aria-pressed="${l === langue}" aria-label="${l === 'fr' ? 'Français' : 'English'}">${l.toUpperCase()}</button>`).join('<span aria-hidden="true">/</span>');
+
+/* ---------- chrome : en-tete, menu, panier ---------- */
 const VEDETTES = { ardoise: 'a-contre-courant', bronze: 'la-danse-du-voile', pneu: 'le-de-du-chaos', 'petits-formats': 'profil', collection: 'cheveux-au-vent' };
 function salles() {
   return ['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => {
     const v = LP.parId[VEDETTES[k]];
-    const im = v ? (v.detoure || v.photos[0]) : null;
-    return `<a class="salle-lien" href="salle.html?s=${k}"><span class="vig">${im ? `<img src="${LP.src(im, 300)}" alt="" loading="lazy">` : ''}</span><span class="t">${LP.NOMS_SERIES[k]}</span><span class="n chiffres">${LP.serie(k).length} œuvres</span></a>`;
+    const im = v ? LP.visuel(v) : null;
+    return `<a class="salle-lien" href="salle.html?s=${k}"><span class="vig">${im ? `<img src="${LP.src(im, 300)}" alt="" loading="lazy">` : ''}</span><span class="t">${LP.NOMS_SERIES[k]}</span><span class="n chiffres">${LP.oeuvresTxt(LP.serie(k).length)}</span></a>`;
   }).join('');
 }
 function monterChrome() {
   const page = document.body.dataset.page || '';
-  const cur = (p) => (p === page ? ' aria-current="page"' : '');
   const entete = document.createElement('header');
   entete.className = 'entete';
+  // logo : le nom en toutes lettres en attendant le fichier du vrai logo de Laure Polin
   entete.innerHTML = `
-    <a class="marque" href="index.html" aria-label="Laure Polin, accueil">${LP.monoSVG()}<span>Laure Polin</span></a>
-    <nav class="nav" aria-label="Navigation principale">
+    <a class="marque" href="index.html" aria-label="${tr('Laure Polin, accueil', 'Laure Polin, home')}"><span>Laure Polin</span></a>
+    <nav class="nav" aria-label="${tr('Navigation principale', 'Main navigation')}">
       <div class="nav-oeuvres">
-        <button type="button" class="nav-bouton"${page === 'salle' || page === 'oeuvre' ? ' aria-current="page"' : ''} aria-expanded="false" aria-controls="panneau-oeuvres">Les œuvres<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
+        <button type="button" class="nav-bouton"${page === 'salle' || page === 'oeuvre' ? ' aria-current="page"' : ''} aria-expanded="false" aria-controls="panneau-oeuvres">${tr('Les œuvres', 'The works')}<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
         <div class="panneau-oeuvres" id="panneau-oeuvres" hidden>${salles()}</div>
       </div>
-      <a href="index.html#ardoisier">L’Ardoisier</a>
-      <a href="index.html#livre">Le livre</a>
-      <a href="index.html#ou-voir">Expositions</a>
-      <a href="index.html#contact"${cur('contact')}>L’atelier</a>
+      <a href="index.html#livre">${tr('Le livre', 'The book')}</a>
+      <a href="index.html#ou-voir">${tr('Expositions', 'Exhibitions')}</a>
+      <a class="nav-contact" href="index.html#contact">Contact</a>
     </nav>
     <div class="outils">
-      <button class="outil" type="button" data-son aria-pressed="false" title="Ambiance sonore de l’atelier"><span class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lib">Son</span><span class="sr">Activer le son de l’atelier</span></button>
-      <button class="outil" type="button" data-calme aria-pressed="${calme}" title="Réduire les animations">${ICO.calme}<span class="lib">Mode calme</span></button>
-      <button class="outil" type="button" data-panier-ouvrir>${ICO.sac}<span class="sr" data-panier-nom>Ouvrir le panier</span><span class="pastille" data-compte aria-hidden="true">0</span></button>
-      <button class="outil menu-bouton" type="button" data-menu aria-expanded="false" aria-controls="menu-plein" aria-label="Ouvrir le menu">${ICO.menu}</button>
+      <div class="langues" role="group" aria-label="Langue / Language">${boutonsLangue()}</div>
+      <button class="outil" type="button" data-panier-ouvrir>${ICO.sac}<span class="sr" data-panier-nom>${tr('Ouvrir le panier', 'Open the basket')}</span><span class="pastille" data-compte aria-hidden="true">0</span></button>
+      <button class="outil menu-bouton" type="button" data-menu aria-expanded="false" aria-controls="menu-plein" aria-label="${tr('Ouvrir le menu', 'Open the menu')}">${ICO.menu}</button>
     </div>`;
   document.body.prepend(entete);
   // menu deroulant des salles
@@ -154,24 +197,27 @@ function monterChrome() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && btnO.getAttribute('aria-expanded') === 'true') { ouvrirO(false); btnO.focus(); } });
   document.addEventListener('click', (e) => { if (!navO.contains(e.target) && btnO.getAttribute('aria-expanded') === 'true') ouvrirO(false); });
   const evite = document.createElement('a');
-  evite.className = 'evite'; evite.href = '#principal'; evite.textContent = 'Aller au contenu';
+  evite.className = 'evite'; evite.href = '#principal'; evite.textContent = tr('Aller au contenu', 'Skip to content');
   document.body.prepend(evite);
 
   const menu = document.createElement('div');
   menu.className = 'menu-plein'; menu.id = 'menu-plein'; menu.inert = true; menu.setAttribute('data-lenis-prevent', '');
   menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-modal', 'true'); menu.setAttribute('aria-label', 'Menu');
   menu.innerHTML = `
-    <button class="outil fermer" type="button" data-menu-fermer aria-label="Fermer le menu">${ICO.croix}</button>
+    <button class="outil fermer" type="button" data-menu-fermer aria-label="${tr('Fermer le menu', 'Close the menu')}">${ICO.croix}</button>
     ${['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => `<a href="salle.html?s=${k}">${LP.NOMS_SERIES[k]}<small>${LP.serie(k).length}</small></a>`).join('')}
     <span class="menu-sep" aria-hidden="true"></span>
-    <a class="menu-second" href="index.html#ardoisier">L’Ardoisier</a><a class="menu-second" href="index.html#livre">Le livre</a><a class="menu-second" href="index.html#ou-voir">Expositions</a><a class="menu-second" href="index.html#contact">L’atelier et contact</a>`;
+    <a class="menu-second" href="index.html#livre">${tr('Le livre', 'The book')}</a><a class="menu-second" href="index.html#ou-voir">${tr('Expositions', 'Exhibitions')}</a><a class="menu-second" href="index.html#contact">Contact</a>
+    <div class="langues langues--menu" role="group" aria-label="Langue / Language">${boutonsLangue()}</div>`;
   document.body.append(menu);
+
+  document.addEventListener('click', (e) => { const b = e.target.closest('[data-langue]'); if (b) LP.changerLangue(b.dataset.langue); });
 
   const voile = document.createElement('div'); voile.className = 'voile'; voile.dataset.voile = '';
   const panier = document.createElement('aside');
-  panier.className = 'panier'; panier.setAttribute('data-lenis-prevent', ''); panier.setAttribute('role', 'dialog'); panier.setAttribute('aria-modal', 'true'); panier.setAttribute('aria-label', 'Panier'); panier.setAttribute('aria-hidden', 'true'); panier.inert = true;
+  panier.className = 'panier'; panier.setAttribute('data-lenis-prevent', ''); panier.setAttribute('role', 'dialog'); panier.setAttribute('aria-modal', 'true'); panier.setAttribute('aria-label', tr('Panier', 'Basket')); panier.setAttribute('aria-hidden', 'true'); panier.inert = true;
   panier.innerHTML = `
-    <header><h2>Panier</h2><button class="outil" type="button" data-panier-fermer aria-label="Fermer le panier">${ICO.croix}</button></header>
+    <header><h2>${tr('Panier', 'Basket')}</h2><button class="outil" type="button" data-panier-fermer aria-label="${tr('Fermer le panier', 'Close the basket')}">${ICO.croix}</button></header>
     <div class="liste" data-panier-liste></div>
     <footer data-panier-pied></footer>`;
   document.body.append(voile, panier);
@@ -185,11 +231,6 @@ function monterChrome() {
   toast.className = 'toast'; toast.setAttribute('role', 'status'); toast.setAttribute('aria-live', 'polite');
   document.body.append(toast);
 
-  if (pointeurFin && !calme) {
-    const c = document.createElement('div'); c.className = 'curseur';
-    const a = document.createElement('div'); a.className = 'curseur-anneau'; a.innerHTML = '<span>Voir</span>';
-    document.body.append(c, a);
-  }
   const rideau = document.createElement('div');
   rideau.className = 'rideau'; rideau.setAttribute('aria-hidden', 'true');
   rideau.innerHTML = '<i></i><i></i><i></i><i></i><i></i><i></i>';
@@ -208,12 +249,6 @@ function monterChrome() {
   menu.querySelector('[data-menu-fermer]').addEventListener('click', () => ouvrirMenu(false));
   menu.querySelectorAll('a').forEach((l) => l.addEventListener('click', () => ouvrirMenu(false)));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && menu.classList.contains('ouvert')) ouvrirMenu(false); });
-
-  // mode calme
-  entete.querySelector('[data-calme]').addEventListener('click', () => {
-    memo.ecrire('lp-calme', !calme);
-    location.reload();
-  });
 }
 
 /* ---------- defilement fluide ---------- */
@@ -247,7 +282,7 @@ function monterDefilement() {
   });
   // les liens qui ouvrent un nouvel onglet le disent
   document.querySelectorAll('a[target="_blank"]').forEach((a) => {
-    if (!a.querySelector('.sr')) a.insertAdjacentHTML('beforeend', '<span class="sr"> (nouvel onglet)</span>');
+    if (!a.querySelector('.sr')) a.insertAdjacentHTML('beforeend', `<span class="sr"> ${tr('(nouvel onglet)', '(new tab)')}</span>`);
   });
   // en-tete qui se cache
   const entete = document.querySelector('.entete');
@@ -278,27 +313,7 @@ function monterDefilement() {
   }
 }
 
-/* ---------- curseur et aimants ---------- */
-function monterCurseur() {
-  if (!pointeurFin || calme) return;
-  document.documentElement.classList.add('curseur-actif');
-  const point = document.querySelector('.curseur');
-  const anneau = document.querySelector('.curseur-anneau');
-  const lib = anneau.querySelector('span');
-  const px = gsap.quickTo(point, 'x', { duration: 0.08 }); const py = gsap.quickTo(point, 'y', { duration: 0.08 });
-  const ax = gsap.quickTo(anneau, 'x', { duration: 0.45, ease: 'power3' }); const ay = gsap.quickTo(anneau, 'y', { duration: 0.45, ease: 'power3' });
-  addEventListener('pointermove', (e) => { document.documentElement.classList.add('curseur-vu'); px(e.clientX); py(e.clientY); ax(e.clientX); ay(e.clientY); LP.souris = { x: e.clientX, y: e.clientY }; }, { passive: true });
-  document.addEventListener('pointerover', (e) => {
-    const v = e.target.closest('[data-curseur]');
-    const l = e.target.closest('a, button, label, select');
-    anneau.classList.toggle('voir', !!v);
-    lib.textContent = v ? (v.dataset.curseur || 'Voir') : 'Voir';
-    anneau.classList.toggle('lien-on', !v && !!l);
-  });
-  document.addEventListener('pointerleave', () => { gsap.to([point, anneau], { opacity: 0, duration: 0.3 }); });
-  document.addEventListener('pointerenter', () => { gsap.to([point, anneau], { opacity: 1, duration: 0.3 }); });
-}
-
+/* ---------- boutons magnetiques et cartes inclinables ---------- */
 LP.aimants = (racine = document) => {
   if (!pointeurFin || calme) return;
   racine.querySelectorAll('.bouton, [data-aimant]').forEach((el) => {
@@ -370,93 +385,6 @@ LP.cliver = (el, { strates = 4, ecart = 90, scrub = false, declencheur, debut = 
   return tl;
 };
 
-/* ---------- son d'atelier synthetise ---------- */
-const Atelier = {
-  ctx: null, actif: false, maitre: null, minuteurs: [],
-  creer() {
-    const AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return false;
-    const ctx = this.ctx = new AC();
-    const maitre = this.maitre = ctx.createGain(); maitre.gain.value = 0; maitre.connect(ctx.destination);
-    const echo = ctx.createDelay(1); echo.delayTime.value = 0.19;
-    const retour = ctx.createGain(); retour.gain.value = 0.22;
-    echo.connect(retour); retour.connect(echo); echo.connect(maitre);
-    this.echo = echo;
-    // bruit brun
-    const len = ctx.sampleRate * 3; const buf = ctx.createBuffer(1, len, ctx.sampleRate); const d = buf.getChannelData(0);
-    let last = 0;
-    for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; last = (last + 0.02 * w) / 1.02; d[i] = last * 3.2; }
-    this.bruit = buf;
-    // ambiance de piece
-    const piece = ctx.createBufferSource(); piece.buffer = buf; piece.loop = true;
-    const pb = ctx.createBiquadFilter(); pb.type = 'lowpass'; pb.frequency.value = 260;
-    const pg = ctx.createGain(); pg.gain.value = 0.35;
-    piece.connect(pb).connect(pg).connect(maitre); piece.start();
-    // poncage
-    const ponce = ctx.createBufferSource(); ponce.buffer = buf; ponce.loop = true;
-    const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1300; bp.Q.value = 0.6;
-    const hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 500;
-    const pgain = this.pgain = ctx.createGain(); pgain.gain.value = 0;
-    ponce.connect(bp).connect(hp).connect(pgain).connect(maitre); ponce.start();
-    return true;
-  },
-  passes() {
-    if (!this.actif) return;
-    const ctx = this.ctx; const t = ctx.currentTime; const g = this.pgain.gain;
-    const n = 3 + Math.floor(Math.random() * 5);
-    let at = t;
-    for (let i = 0; i < n; i++) {
-      const dur = 0.45 + Math.random() * 0.35;
-      g.setValueAtTime(0.0001, at); g.linearRampToValueAtTime(0.55 + Math.random() * 0.3, at + dur * 0.4); g.linearRampToValueAtTime(0.0001, at + dur);
-      at += dur + 0.06;
-    }
-    this.minuteurs.push(setTimeout(() => this.passes(), (at - t) * 1000 + 1600 + Math.random() * 3800));
-  },
-  coups() {
-    if (!this.actif) return;
-    const k = 1 + Math.floor(Math.random() * 3);
-    for (let i = 0; i < k; i++) setTimeout(() => this.coup(0.5 + Math.random() * 0.4), i * (230 + Math.random() * 120));
-    this.minuteurs.push(setTimeout(() => this.coups(), 2600 + Math.random() * 5200));
-  },
-  coup(force = 0.7) {
-    if (!this.ctx || !this.actif) return;
-    const ctx = this.ctx; const t = ctx.currentTime;
-    const src = ctx.createBufferSource(); src.buffer = this.bruit;
-    const f = ctx.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2200 + Math.random() * 900; f.Q.value = 3;
-    const g = ctx.createGain(); g.gain.setValueAtTime(force, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
-    src.connect(f).connect(g); g.connect(this.maitre); g.connect(this.echo);
-    src.start(t, Math.random() * 2, 0.12);
-    const o = ctx.createOscillator(); o.type = 'triangle'; o.frequency.value = 1500 + Math.random() * 700;
-    const og = ctx.createGain(); og.gain.setValueAtTime(force * 0.18, t); og.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
-    o.connect(og).connect(this.maitre); o.start(t); o.stop(t + 0.16);
-  },
-  basculer() {
-    if (!this.ctx && !this.creer()) return false;
-    this.actif = !this.actif;
-    const t = this.ctx.currentTime;
-    if (this.actif) {
-      this.ctx.resume();
-      this.maitre.gain.cancelScheduledValues(t); this.maitre.gain.setTargetAtTime(0.16, t, 0.6);
-      this.passes(); this.coups();
-    } else {
-      this.maitre.gain.cancelScheduledValues(t); this.maitre.gain.setTargetAtTime(0, t, 0.25);
-      this.minuteurs.forEach(clearTimeout); this.minuteurs = [];
-    }
-    return this.actif;
-  },
-};
-LP.son = Atelier;
-function monterSon() {
-  const b = document.querySelector('[data-son]');
-  b.addEventListener('click', () => {
-    const on = Atelier.basculer();
-    b.setAttribute('aria-pressed', String(on));
-    b.classList.toggle('son-on', on);
-    b.querySelector('.sr').textContent = on ? "Couper le son de l’atelier" : "Activer le son de l’atelier";
-  });
-  document.addEventListener('click', (e) => { if (Atelier.actif && e.target.closest('.bouton, .ajout, .filtre')) Atelier.coup(0.6); });
-}
-
 /* ---------- notifications ---------- */
 let minuterieToast;
 LP.toast = (msg) => {
@@ -475,11 +403,11 @@ const Panier = {
     if (!o || !o.prix) return;
     const exist = this.items.find((i) => i.id === id);
     if (exist) {
-      if (id === 'dialogues-sculptes') exist.q += 1; else { LP.toast(`${o.titre} est déjà dans votre panier (pièce unique).`); this.ouvrir(); return; }
+      if (id === 'dialogues-sculptes') exist.q += 1; else { LP.toast(tr(`${o.titre} est déjà dans votre panier (pièce unique).`, `${o.titre} is already in your basket (unique piece).`)); this.ouvrir(); return; }
     } else this.items.push({ id, q: 1 });
     this.sauver();
     this.vol(depuis);
-    LP.toast(`${o.titre} ajouté au panier.`);
+    LP.toast(tr(`${o.titre} ajouté au panier.`, `${o.titre} added to your basket.`));
     document.querySelectorAll(`[data-ajout="${id}"]`).forEach((b) => this.etatBouton(b));
   },
   retirer(id) { this.items = this.items.filter((i) => i.id !== id); this.sauver(); document.querySelectorAll(`[data-ajout="${id}"]`).forEach((b) => this.etatBouton(b)); },
@@ -492,9 +420,9 @@ const Panier = {
     if (b.classList.contains('ajout')) {
       b.innerHTML = dedans ? ICO.ok : ICO.plus;
       const o = LP.parId[b.dataset.ajout];
-      b.setAttribute('aria-label', dedans ? `${o?.titre} est dans le panier` : `Ajouter ${o?.titre} au panier`);
+      b.setAttribute('aria-label', dedans ? tr(`${o?.titre} est dans le panier`, `${o?.titre} is in your basket`) : tr(`Ajouter ${o?.titre} au panier`, `Add ${o?.titre} to your basket`));
     } else if (b.dataset.libelle) {
-      b.querySelector('span').textContent = dedans && b.dataset.ajout !== 'dialogues-sculptes' ? 'Dans votre panier' : b.dataset.libelle;
+      b.querySelector('span').textContent = dedans && b.dataset.ajout !== 'dialogues-sculptes' ? tr('Dans votre panier', 'In your basket') : b.dataset.libelle;
     }
   },
   vol(depuis) {
@@ -538,17 +466,21 @@ const Panier = {
     const p = document.querySelector('[data-compte]');
     p.textContent = n; p.classList.toggle('on', n > 0);
     const nom = document.querySelector('[data-panier-nom]');
-    if (nom) nom.textContent = n ? `Ouvrir le panier, ${n} ${n > 1 ? 'articles' : 'article'}` : 'Ouvrir le panier';
+    if (nom) nom.textContent = n ? tr(`Ouvrir le panier, ${n} ${n > 1 ? 'articles' : 'article'}`, `Open the basket, ${n} ${n > 1 ? 'items' : 'item'}`) : tr('Ouvrir le panier', 'Open the basket');
     const liste = document.querySelector('[data-panier-liste]');
     const pied = document.querySelector('[data-panier-pied]');
     if (this.etape === 'fait') {
-      liste.innerHTML = `<div class="vide"><p class="lead">Commande simulée enregistrée.</p><p class="petit">Aucun paiement n’a été effectué : dans cette maquette, le panier montre le parcours d’achat. Le paiement réel sera branché sur la solution choisie par Laure Polin.</p></div>`;
-      pied.innerHTML = `<button class="bouton" type="button" data-panier-fermer2>Revenir aux œuvres</button>`;
+      liste.innerHTML = tr(
+        `<div class="vide"><p class="lead">Commande simulée enregistrée.</p><p class="petit">Aucun paiement n’a été effectué : dans cette maquette, le panier montre le parcours d’achat. Le paiement réel sera branché sur la solution choisie par Laure Polin.</p></div>`,
+        `<div class="vide"><p class="lead">Simulated order recorded.</p><p class="petit">No payment has been taken: in this mock-up, the basket shows the purchase journey. Real payment will be connected to the solution chosen by Laure Polin.</p></div>`);
+      pied.innerHTML = `<button class="bouton" type="button" data-panier-fermer2>${tr('Revenir aux œuvres', 'Back to the works')}</button>`;
       pied.querySelector('[data-panier-fermer2]').addEventListener('click', () => { this.etape = 'liste'; this.rendre(); this.fermer(); });
       return;
     }
     if (!n) {
-      liste.innerHTML = `<div class="vide"><p>Votre panier est vide.</p><p class="petit">Les œuvres disponibles sont des pièces uniques ou des tirages numérotés : ajoutez-en une, ou demandez à Laure Polin d’autres photos.</p><a class="bouton" href="salle.html?s=ardoise">Voir les œuvres</a></div>`;
+      liste.innerHTML = tr(
+        `<div class="vide"><p>Votre panier est vide.</p><p class="petit">Les œuvres disponibles sont des pièces uniques ou des tirages numérotés : ajoutez-en une, ou demandez à Laure Polin d’autres photos.</p><a class="bouton" href="salle.html?s=ardoise">Voir les œuvres</a></div>`,
+        `<div class="vide"><p>Your basket is empty.</p><p class="petit">The available works are unique pieces or numbered casts: add one, or ask Laure Polin for more photos.</p><a class="bouton" href="salle.html?s=ardoise">See the works</a></div>`);
       pied.innerHTML = '';
       return;
     }
@@ -556,27 +488,27 @@ const Panier = {
       const o = LP.parId[it.id]; if (!o) return '';
       const v = LP.visuel(o);
       const qte = it.id === 'dialogues-sculptes'
-        ? `<span class="mini">Quantité <button type="button" data-moins="${it.id}" aria-label="Retirer un exemplaire">−</button> ${it.q} <button type="button" data-plus="${it.id}" aria-label="Ajouter un exemplaire">+</button></span>`
-        : '<span class="mini">Pièce unique</span>';
+        ? `<span class="mini">${tr('Quantité', 'Quantity')} <button type="button" data-moins="${it.id}" aria-label="${tr('Retirer un exemplaire', 'Remove one copy')}">−</button> ${it.q} <button type="button" data-plus="${it.id}" aria-label="${tr('Ajouter un exemplaire', 'Add one copy')}">+</button></span>`
+        : `<span class="mini">${tr('Pièce unique', 'Unique piece')}</span>`;
       return `<div class="ligne-panier">
         <img src="${v ? LP.src(v, 200) : ''}" alt="">
-        <div><div class="t">${LP.esc(o.titre)}</div>${qte}<br><button type="button" data-retirer="${it.id}">Retirer</button></div>
+        <div><div class="t">${LP.esc(o.titre)}</div>${qte}<br><button type="button" data-retirer="${it.id}">${tr('Retirer', 'Remove')}</button></div>
         <div class="chiffres">${LP.prix(o.prix * it.q)}</div></div>`;
     }).join('');
     if (this.etape === 'paiement') {
       pied.innerHTML = `
         <div class="total"><span>Total</span><strong class="chiffres">${LP.prix(this.total())}</strong></div>
-        <p class="mini">Livraison ou retrait à l’atelier de Bagnolet : <span class="a-completer">conditions à compléter</span>. Mentions de TVA : <span class="a-completer">à confirmer</span>.</p>
-        <div class="moyens" aria-label="Moyens de paiement"><span>Moyens de paiement : à compléter</span></div>
-        <button class="bouton bouton--plein" type="button" data-payer><span>Valider la commande simulée</span></button>
-        <button class="lien mini" type="button" data-retour style="justify-self:start">Revenir au panier</button>`;
+        <p class="mini">${tr('Livraison ou retrait à l’atelier de Bagnolet : <span class="a-completer">conditions à compléter</span>. Mentions de TVA : <span class="a-completer">à confirmer</span>.', 'Delivery or collection from the Bagnolet studio: <span class="a-completer">terms to be completed</span>. VAT details: <span class="a-completer">to be confirmed</span>.')}</p>
+        <div class="moyens" aria-label="${tr('Moyens de paiement', 'Payment methods')}"><span>${tr('Moyens de paiement : à compléter', 'Payment methods: to be completed')}</span></div>
+        <button class="bouton bouton--plein" type="button" data-payer><span>${tr('Valider la commande simulée', 'Confirm the simulated order')}</span></button>
+        <button class="lien mini" type="button" data-retour style="justify-self:start">${tr('Revenir au panier', 'Back to the basket')}</button>`;
       pied.querySelector('[data-payer]').addEventListener('click', () => { this.items = []; this.etape = 'fait'; this.sauver(); document.querySelectorAll('[data-ajout]').forEach((b) => this.etatBouton(b)); });
       pied.querySelector('[data-retour]').addEventListener('click', () => { this.etape = 'liste'; this.rendre(); });
     } else {
       pied.innerHTML = `
-        <div class="total"><span>Sous-total</span><strong class="chiffres">${LP.prix(this.total())}</strong></div>
-        <p class="mini">Paiement simulé : aucune donnée bancaire n’est demandée dans cette maquette.</p>
-        <button class="bouton bouton--plein" type="button" data-commander><span>Passer commande</span></button>`;
+        <div class="total"><span>${tr('Sous-total', 'Subtotal')}</span><strong class="chiffres">${LP.prix(this.total())}</strong></div>
+        <p class="mini">${tr('Paiement simulé : aucune donnée bancaire n’est demandée dans cette maquette.', 'Simulated payment: no bank details are requested in this mock-up.')}</p>
+        <button class="bouton bouton--plein" type="button" data-commander><span>${tr('Passer commande', 'Place order')}</span></button>`;
       pied.querySelector('[data-commander]').addEventListener('click', () => { this.etape = 'paiement'; this.rendre(); });
     }
   },
@@ -611,25 +543,28 @@ function monterTransitions() {
     gsap.set(lames, { scaleX: 1, transformOrigin: 'right' });
     gsap.to(lames, { scaleX: 0, duration: 0.7, ease: 'expo.inOut', stagger: { each: 0.05, from: 'random' }, delay: 0.05 });
   }
+  LP.allerVers = (href) => {
+    if (calme) { location.href = href; return; }
+    memo.session('lp-transition', '1');
+    gsap.set(lames, { transformOrigin: 'left' });
+    gsap.to(lames, { scaleX: 1, duration: 0.6, ease: 'expo.inOut', stagger: { each: 0.045, from: 'random' }, onComplete: () => { location.href = href; } });
+  };
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a[href]');
     if (!a || e.defaultPrevented || calme || e.metaKey || e.ctrlKey || e.shiftKey || a.target === '_blank') return;
     const url = new URL(a.href, location.href);
-    if (url.origin !== location.origin || !/\.html$|\/$/.test(url.pathname) && !url.pathname.endsWith('/')) {
-      if (url.origin !== location.origin) return;
-    }
+    if (url.origin !== location.origin) return;
+    if (!/^https?:$/.test(url.protocol)) return;
     const norm = (p) => p.replace(/\/index\.html$/, '/').replace(/\.html$/, '');
     if (norm(url.pathname) === norm(location.pathname) && url.search === location.search) return;
     if (a.getAttribute('href').startsWith('#')) return;
     e.preventDefault();
-    memo.session('lp-transition', '1');
-    gsap.set(lames, { transformOrigin: 'left' });
-    gsap.to(lames, { scaleX: 1, duration: 0.6, ease: 'expo.inOut', stagger: { each: 0.045, from: 'random' }, onComplete: () => { location.href = url.href; } });
+    LP.allerVers(url.href);
   });
   addEventListener('pageshow', (e) => { if (e.persisted) gsap.set(lames, { scaleX: 0 }); });
 }
 
-/* ---------- ouverture : monogramme a la craie, poussiere, feuillets ---------- */
+/* ---------- ouverture : le nom ecrit a la craie, poussiere, feuillets ---------- */
 function ouverture() {
   return new Promise((resoudre) => {
     const premiere = memo.session('lp-vu') !== '1';
@@ -643,13 +578,13 @@ function ouverture() {
     o.innerHTML = `${feuillets}
       <svg width="0" height="0" style="position:absolute"><filter id="craie"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></svg>
       <div class="scene"><div class="signature">
-        <svg class="mono" viewBox="-6 -6 ${MONO.w + 12} ${MONO.h + 12}"><path d="${MONO.d}" fill-rule="evenodd"/></svg>
         <div class="nom">${'Laure Polin'.split('').map((c) => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
+        <svg class="trait" viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M4 9 C 90 3, 210 13, 396 5"/></svg>
       </div></div>
-      <div class="compteur chiffres">Sculptures, Bagnolet</div>
+      <div class="compteur chiffres">${tr('Sculptures, Bagnolet', 'Sculptures, Bagnolet, France')}</div>
       <canvas></canvas>`;
     document.body.append(o);
-    const chemin = o.querySelector('.mono path');
+    const chemin = o.querySelector('.trait path');
     const L = chemin.getTotalLength();
     gsap.set(chemin, { strokeDasharray: L, strokeDashoffset: L });
     const lettres = o.querySelectorAll('.nom span');
@@ -679,9 +614,8 @@ function ouverture() {
     const passer = () => { if (tl.progress() < 1) tl.progress(1); };
     addEventListener('pointerdown', passer, { once: true });
     addEventListener('keydown', passer, { once: true });
-    tl.to(chemin, { strokeDashoffset: 0, duration: 1.15, ease: 'power2.inOut' })
-      .to(chemin, { fill: 'rgba(236,232,224,1)', duration: 0.35 }, 0.95)
-      .from(lettres, { opacity: 0, y: 14, filter: 'blur(6px)', duration: 0.6, stagger: 0.035, ease: 'power3.out' }, 0.55)
+    tl.from(lettres, { opacity: 0, y: 18, filter: 'blur(8px)', duration: 0.7, stagger: 0.045, ease: 'power3.out' }, 0.1)
+      .to(chemin, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.55)
       .add(souffle, 1.6)
       .to(o.querySelector('.signature'), { opacity: 0, scale: 0.96, filter: 'blur(8px)', duration: 0.45, ease: 'power2.in' }, 1.6)
       .add(() => resoudre(), 1.75)
@@ -730,8 +664,6 @@ LP.pret = new Promise((r) => { resoudrePret = r; });
 export function demarrer() {
   monterChrome();
   monterDefilement();
-  monterCurseur();
-  monterSon();
   monterPanier();
   monterTransitions();
   monterPied();

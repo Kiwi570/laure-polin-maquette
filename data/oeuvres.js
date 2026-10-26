@@ -77,7 +77,17 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#4b4f53",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"She moves against the main current. Rebellious? Not necessarily, it is her deep nature, the feeling of not belonging to the majority.",
+"She is not unhappy for all that, because it does not stop her from moving forward, quite the contrary..."
+],
+"technique_en": [
+"HEIGHT 56",
+"WIDTH 15",
+"DEPTH 10",
+"Unique piece in slate, polished and waxed, on a plaster base."
+]
 },
 {
 "id": "allons-danser",
@@ -142,7 +152,17 @@ window.OEUVRES = [
 "p": 20.0
 },
 "couleur": "#313238",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Twisted forms, contrasting textures and flashes of light make up this sculpture.",
+"The material twists and unfurls like a body in motion.",
+"Between fluidity and tension, when matter becomes movement, it invites a dance of the imagination."
+],
+"technique_en": [
+"height 59 cm",
+"width 23 cm",
+"depth 20 cm"
+]
 },
 {
 "id": "ange-gardien",
@@ -181,7 +201,14 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#929596",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Like Jiminy Cricket, the famous character from the animated film Pinocchio, whose mission is to teach him about life on his quest, human beings also have their own guardian angel, which can go by several names: moral values, conscience, the art of being ... and take on several forms according to each person's beliefs.",
+"This sculpture is the representation of that guardian angel."
+],
+"technique_en": [
+"slate sculpture, waxed and patinated, on a wooden base"
+]
 },
 {
 "id": "arum",
@@ -225,7 +252,15 @@ window.OEUVRES = [
 },
 "couleur": "#e2d4d4",
 "statut": "collection",
-"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel."
+"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel.",
+"description_en": [
+"ARUM is the name of this white flower, magnificent and spectacular, and apparently without scent, without aroma. This face, barely sketched, is lost in thought. This sculpture is the evocation of memories, or sometimes of simple, imprecise sensations that assail us when we perceive a scent. Imprecise sensations in the sense that they are difficult to put into words, yet that does not mean they are trivial."
+],
+"technique_en": [
+"Height 52, width 38, depth 30",
+"Bronze piece from the Chapon foundry. This is the 2nd cast, numbered 2/8."
+],
+"a_verifier_en": "Listed in a private collection but marked available on the current site."
 },
 {
 "id": "au-loin",
@@ -269,7 +304,15 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#dbdbdb",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Slate portrait, the gaze into the distance, lost in a daydream or deep thoughts.",
+"Unique piece"
+],
+"technique_en": [
+"Slate sculpture on a slate base.",
+"Height 28cm, width 14, depth 6"
+]
 },
 {
 "id": "avis-de-tempete",
@@ -331,7 +374,14 @@ window.OEUVRES = [
 "p": 18.0
 },
 "couleur": "#8b7566",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Avis de tempête, on earth or in the mind? The spherical form of the sculpture can symbolise either the planet, a victim of global warming, or our mind when a torment passes through it."
+],
+"technique_en": [
+"bronze sculpture, Avangini foundry No. 1/8",
+"width 33cm, height 20cm depth 18cm"
+]
 },
 {
 "id": "azur",
@@ -365,7 +415,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#989795",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "caravelle",
@@ -399,7 +451,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#c8c6c5",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "ce-que-l-on-a-tu",
@@ -463,7 +517,16 @@ window.OEUVRES = [
 "p": 70.0
 },
 "couleur": "#373843",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"A female figure shaped from used tyres, this work transforms a material of constraint into a living body.",
+"The covered face and the suspended gesture evoke words held back and a dance prevented, between protection and silent resistance. This body thinks of those women whose voice was taken away, and who were forbidden to move. What has been silenced, or what someone tried to silence, refuses to disappear"
+],
+"technique_en": [
+"height 190 cm",
+"width 70 cm",
+"depth 70 cm"
+]
 },
 {
 "id": "cheveux-au-vent",
@@ -507,7 +570,15 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#ffffff",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"On her wooden base, made of slate, \"Cheveux au vent\" nevertheless seems light.",
+"Her golden hair ripples in the wind. Her gaze fixed, her mouth closed, she soaks up the open air."
+],
+"technique_en": [
+"sculpture in Trélazé slate, on a eucalyptus wood base",
+"Height 44, width 23, depth 14"
+]
 },
 {
 "id": "corpus",
@@ -569,7 +640,14 @@ window.OEUVRES = [
 "p": 17.0
 },
 "couleur": "#433e37",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Inspired by Rodin's Three Shades, Corpus is the living body. The back is intentionally anatomically distorted. This back, which no one can see for themselves, is our frame, the part that reacts as soon as our soul is mistreated, stressed, but also joyful. It is our frame."
+],
+"technique_en": [
+"height 42 width 19 depth 17",
+"Bronze sculpture from the Chapon foundry. Signed and numbered. Number 5/8"
+]
 },
 {
 "id": "coucher-de-soleil",
@@ -620,7 +698,22 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#ffffff",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The earth loves the sun",
+"And she turns to be admired",
+"To be admired",
+"And the sun finds her beautiful",
+"And he shines for her;",
+"And when he is tired",
+"He goes to bed",
+"And the moon rises.",
+"Jacques Prévert"
+],
+"technique_en": [
+"Slate sculpture on a metal base",
+"H 32 width 15 depth 6"
+]
 },
 {
 "id": "dans-les-nuages",
@@ -682,7 +775,14 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#696d6e",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"How good it is to let oneself be carried, how good it is to close one's eyes and let one's soul wander."
+],
+"technique_en": [
+"slate sculpture on a eucalyptus wood base.",
+"Height 23, width 16, Depth 6"
+]
 },
 {
 "id": "desir-no-2",
@@ -757,7 +857,14 @@ window.OEUVRES = [
 "p": 16.0
 },
 "couleur": "#222325",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Does she desire, does she want to arouse desire, does she feel desirable? Plato says that desire originates in a lack that gives rise to suffering. Indeed, desire aims at its own extinction: \"if my hunger is satisfied, I no longer desire to eat\". Feeling desirable presupposes personal satisfaction, and so does arousing desire. So she does not suffer, because her desire is manifold and fills her with joy."
+],
+"technique_en": [
+"Slate sculpture on a wooden base",
+"Height 70 width 16 depth 16"
+]
 },
 {
 "id": "desir",
@@ -800,7 +907,14 @@ window.OEUVRES = [
 "p": 18.0
 },
 "couleur": "#cecdca",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Does she desire, does she want to arouse desire, does she feel desirable? Plato says that desire originates in a lack that gives rise to suffering. Indeed, desire aims at its own extinction: \"if my hunger is satisfied, I no longer desire to eat\". Feeling desirable presupposes personal satisfaction, and so does arousing desire. So she does not suffer, because her desire is manifold and fills her with joy."
+],
+"technique_en": [
+"height 58 width 30 depth 18",
+"Sculpture in polished slate, oiled and gilded in places, on a solid wood base."
+]
 },
 {
 "id": "dialogues-sculptes",
@@ -892,7 +1006,12 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#9d908b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"\"Dialogues sculptés\" is a conversation between two women artists who use two different means of expression: one sculpts, the other writes.",
+"This book published by Le Livre d'Art presents 15 sculptures by Laure Polin photographed by Franck Sanyas and illustrated with poems written by Claire Sistach"
+],
+"technique_en": []
 },
 {
 "id": "emergence",
@@ -977,7 +1096,18 @@ window.OEUVRES = [
 "p": 3.0
 },
 "couleur": "#27282b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"A relief work blending raw material and contemporary composition, EMERGENCE presents a partially revealed face, carved in slate, on a background made of tyre",
+"The contrast between the mineral texture, raw and imperfect, and the structured background with its repetitive patterns creates a dialogue between nature and human construction.",
+"This face, deliberately incomplete, invites the viewer to project their own emotions and to explore the idea of identity.",
+"Between archaeological relic and modern creation, the work evokes memory, the passing of time and the persistence of the human within matter,",
+"a singular piece, on the border between sculpture and painting."
+],
+"technique_en": [
+"slate sculpture on a tyre background",
+"Height 32, width 23 depth 3"
+]
 },
 {
 "id": "empreintes",
@@ -1033,7 +1163,12 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#5d5d5e",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [],
+"technique_en": [
+"sculpture in Trélazé slate, on a marble base",
+"Height 22, width 9, depth 7"
+]
 },
 {
 "id": "energies",
@@ -1077,7 +1212,15 @@ window.OEUVRES = [
 },
 "couleur": "#d2d7db",
 "statut": "collection",
-"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel."
+"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel.",
+"description_en": [
+"Those days when we feel strong, those days when we have so many desires, those days when we embark on new things, ENERGIES symbolises the feeling that runs through us in those moments"
+],
+"technique_en": [
+"height 72 width 47 depth 47",
+"Bronze sculpture from the Chapon foundry, No. 1/8"
+],
+"a_verifier_en": "Listed in a private collection but marked available on the current site."
 },
 {
 "id": "entre-deux-silences",
@@ -1140,7 +1283,15 @@ window.OEUVRES = [
 "p": 23.0
 },
 "couleur": "#28282b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"I imagined this piece as an inner dialogue, something that is not spoken but that circulates, that rises and holds itself back at the same time. The forms rise, brush against each other, cross without ever really leaving one another, like thoughts that keep coming back, insistent, or emotions we cannot manage to set down.",
+"There is in this sculpture a gentle tension, a fragile balance between momentum and anchoring. It speaks of those suspended moments when everything seems to be in motion inside while the outside remains still."
+],
+"technique_en": [
+"Unique piece in tyre on a wooden base.",
+"Height 51, width 35, depth 23"
+]
 },
 {
 "id": "etreinte-infinie",
@@ -1190,7 +1341,17 @@ window.OEUVRES = [
 "p": 54.0
 },
 "couleur": "#7d7e81",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"\"Etreinte infinie\" explores the notion of attachment: attachment to space, to form, but also to the invisible forces that guide and constrain the sculptural gesture. The sculpture is part of a continuous movement in which each curve answers another",
+"It thus unfolds a succession of curves that seem to close while opening, creating an impression of contained power."
+],
+"technique_en": [
+"Sculpture in recycled tyre.",
+"height 61",
+"width 54",
+"depth 54"
+]
 },
 {
 "id": "evanescence",
@@ -1234,7 +1395,17 @@ window.OEUVRES = [
 "h": 20.0
 },
 "couleur": "#c6c6c6",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Head held high, covered by her shawl, elusive, around her something like an energy, a diffuse halo, she waits.",
+"She waits for the fragile instant when the vision, the intangible quality of dawn or evening, will come to fulfil her.",
+"That fleeting moment when serenity is there, present."
+],
+"technique_en": [
+"Bronze sculpture, made from a slate, therefore on one side only.",
+"Stone base, unique piece",
+"Height 20cm width depth of the base 6.5 cm"
+]
 },
 {
 "id": "evasion",
@@ -1278,7 +1449,15 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#d2d7db",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The desire to escape can take many forms. Escaping from one's home?, escaping from one's self?",
+"The slate form is at once fish, at once bird. Is it taking flight into the air or about to plunge into the depths? It is on the brink of its decision. It does not yet know whether it will do it. The only certainty it has is that it terribly wants to. Slate sculpture, inside a wooden piece painted black, with golden highlights."
+],
+"technique_en": [
+"Height 49, width 22, Depth 14",
+"Slate sculpture, inside a wooden piece painted black, with golden highlights."
+]
 },
 {
 "id": "expression",
@@ -1353,7 +1532,14 @@ window.OEUVRES = [
 "p": 13.0
 },
 "couleur": "#3e3d3f",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"The slate face, emerging almost organically from a raw, unrefined form, creates a contrast between the natural texture of the stone and the finely chiselled features. The expression is meditative, reflecting deep introspection. This sculpture, set on a chiselled copper rod, speaks of resilience and of the beauty emanating from our inner battles. This work, at once soothing and powerful, is a unique piece."
+],
+"technique_en": [
+"slate sculpture on a wooden base",
+"Dimensions in cm height 50, width 20, depth 13"
+]
 },
 {
 "id": "femme-1",
@@ -1395,7 +1581,13 @@ window.OEUVRES = [
 "p": 17.0
 },
 "couleur": "#ffffff",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"patinated terracotta sculpture."
+],
+"technique_en": [
+"Patinated terracotta: Height 24, width 14, depth 17"
+]
 },
 {
 "id": "femme-11",
@@ -1438,7 +1630,14 @@ window.OEUVRES = [
 "p": 16.0
 },
 "couleur": "#e7e3e2",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"This work, shaped in terracotta, expresses human quietude and serenity. Every curve and hollow in the sculpture exudes a thoughtful calm. Its eroded appearance and raw texture evoke the timeless nature and robustness of human emotions, inviting contemplation and a pause in the frenzy of everyday life."
+],
+"technique_en": [
+"Terracotta sculpture patinated with gold wax.",
+"height 9, width 31, depth 16"
+]
 },
 {
 "id": "femme-14",
@@ -1483,7 +1682,16 @@ window.OEUVRES = [
 "p": 15.0
 },
 "couleur": "#c7b19e",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"She has just been exerting herself, dancing perhaps?",
+"She is resting, stretching gently while daydreaming and recalling the sensations she felt on stage.",
+"Exhausted but happy"
+],
+"technique_en": [
+"Patinated terracotta sculpture.",
+"height 19, width 11, depth 15"
+]
 },
 {
 "id": "femme-3",
@@ -1524,7 +1732,12 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#dad8d8",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": [
+"Terracotta sculpture",
+"height 23, width 18, depth 14"
+]
 },
 {
 "id": "femme-7",
@@ -1565,7 +1778,12 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#aa7c67",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": [
+"Patinated terracotta sculpture.",
+"Height 12, width 24, depth 10"
+]
 },
 {
 "id": "femme15",
@@ -1608,7 +1826,14 @@ window.OEUVRES = [
 "p": 13.0
 },
 "couleur": "#dedadf",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"composed, peaceful, she is deep in reverie."
+],
+"technique_en": [
+"Patinated terracotta sculpture.",
+"height 20, width 20, depth 13"
+]
 },
 {
 "id": "femme4",
@@ -1649,7 +1874,12 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#ffffff",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": [
+"Terracotta sculpture",
+"height 9, width 28, depth 14"
+]
 },
 {
 "id": "fierte",
@@ -1697,7 +1927,14 @@ window.OEUVRES = [
 },
 "couleur": "#696969",
 "photo_a_completer": true,
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Fierté: he sports a head of hair worthy of a royal mane, like the lion. This sculpture embodies both strength and pride."
+],
+"technique_en": [
+"slate sculpture on a eucalyptus base. Unique piece",
+"dimensions including the base in cm 20*10*7"
+]
 },
 {
 "id": "fin-hivernale",
@@ -1743,7 +1980,17 @@ window.OEUVRES = [
 "p": 12.0
 },
 "couleur": "#a3a09e",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Having bundled herself up to get through the winter period, she is uncovering herself little by little.",
+"She does not yet dare to take off her scarf completely, but she no longer wears it over her face.",
+"Soon she will rediscover the pleasure of going for walks, of feeling nature awaken.",
+"She will rediscover FREEDOM."
+],
+"technique_en": [
+"Height 20 width 12 depth 12",
+"Unique piece, cast directly from the clay original."
+]
 },
 {
 "id": "flamenco",
@@ -1807,7 +2054,16 @@ window.OEUVRES = [
 "p": 25.0
 },
 "couleur": "#2e2d2f",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"\"Flamenco\" evokes the movement of a dancing body. The curves and textures of the rubber, ribbing, braided surfaces create a vibrant visual interplay.",
+"The dark volutes recall at once feathers, scales and the sweeping gesture of a flamenco dancer."
+],
+"technique_en": [
+"height 80 cm",
+"width 70 cm",
+"depth 25 cm"
+]
 },
 {
 "id": "fleur-eternelle",
@@ -1888,7 +2144,16 @@ window.OEUVRES = [
 "p": 11.0
 },
 "couleur": "#535355",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture, carved in slate, is a tribute to the fragile and resilient beauty of nature.",
+"Even though it was carved in stone, the strata of the slate that nature offered show through.",
+"In a way, the stone has given it eternity.",
+"this slate sculpture is carved on one side only, polished and waxed"
+],
+"technique_en": [
+"height 20, width 14, depth 11"
+]
 },
 {
 "id": "grands-yeux",
@@ -1948,7 +2213,16 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#444748",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"With his big eyes he seeks neither to implore nor to soften hearts.",
+"he is there, innocent, full of gentleness, watching the world around him.",
+"This world to which he conveys his gentleness, his kindness, hoping that they will be contagious and pass easily from one person to another."
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"H 30cm D 8cm W 8cm"
+]
 },
 {
 "id": "grosse-fatigue",
@@ -2028,7 +2302,15 @@ window.OEUVRES = [
 "p": 15.0
 },
 "couleur": "#352d23",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"One arm hanging, leaning against a tree trunk, she is tired and recharges by allowing herself a break. She seems to be playing hide-and-seek.",
+"The ochre colour on the front is the natural colour of the stone."
+],
+"technique_en": [
+"height 67 width 15 depth 15",
+"The slate has been polished, waxed in places. Solid oak base"
+]
 },
 {
 "id": "harmonie",
@@ -2103,10 +2385,22 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": {
 "h": 70.0,
-"note": "base 15 × 15 cm"
+"note": "base 15 × 15 cm",
+"note_en": "base 15 × 15 cm"
 },
 "couleur": "#1f2124",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"On one side the silhouette of a woman, on the other vegetation.",
+"The two intertwine and become one.",
+"In a very sensual dance, the forms interlace in absolute harmony.",
+"This sculpture symbolises what human beings often seek to find or rediscover in their relationship with their environment, whether human or plant."
+],
+"technique_en": [
+"polished and waxed slate sculpture on an oak base.",
+"Unique piece",
+"Height 70cm base 15*15 cm"
+]
 },
 {
 "id": "homme-2",
@@ -2152,7 +2446,17 @@ window.OEUVRES = [
 },
 "couleur": "#ceccc5",
 "statut": "collection",
-"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel."
+"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel.",
+"description_en": [
+"This terracotta sculpture evokes human reflection, like a suspended moment, a pause in the tumult of life to refocus on oneself.",
+"The face is not worked because what is essential is the expression of the body, everything lies in the feeling.",
+"This body that sends us so many messages and that we listen to so little."
+],
+"technique_en": [
+"Terracotta sculpture",
+"height 20, width 26, depth 20"
+],
+"a_verifier_en": "Listed in a private collection but marked available on the current site."
 },
 {
 "id": "humer-le-monde",
@@ -2210,7 +2514,14 @@ window.OEUVRES = [
 "l": 6.5
 },
 "couleur": "#232a35",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Eyes closed, mouth small, he soaks up the world, breathes it in. He will only be able to observe the world by opening his eyes, or tell of it, after going through this stage of inwardness."
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"Height 36 cm, width and depth 6.5 cm"
+]
 },
 {
 "id": "icare",
@@ -2281,7 +2592,14 @@ window.OEUVRES = [
 "p": 9.0
 },
 "couleur": "#646563",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Despite his father's advice, Icarus, flying too close to the sun, is plunged into the sea when his wings of wax melt. The myth of Icarus addresses themes of transgression (parent/child relationships), or between social groups (slaves and free people) and, more generally, between nature and culture. Humankind is confronted with the harmful effect that its desire to push ever further the frontiers of exploration and knowledge can have, at the risk of subjecting its human condition to a fatal ordeal."
+],
+"technique_en": [
+"slate sculpture, polished and waxed and highlighted with gold wax in places, on a wooden base",
+"Dimensions: Height 42, width 12, depth 9"
+]
 },
 {
 "id": "inspiration",
@@ -2324,7 +2642,16 @@ window.OEUVRES = [
 "h": 17.0
 },
 "couleur": "#c0bebd",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"In the secret heart of every being lies inspiration, or rather the sources of inspiration. To encounter it, all we need do is listen, observe and let ourselves be imbued with what surrounds us.",
+"Slate sculpture on a Plexiglas base.",
+"Carved on one side only."
+],
+"technique_en": [
+"height 17, width and depth of the Plexiglas base 6 cm",
+"Slate sculpture carved on one side"
+]
 },
 {
 "id": "introspection",
@@ -2398,7 +2725,17 @@ window.OEUVRES = [
 "p": 9.0
 },
 "couleur": "#36373c",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"\"Knowing yourself is the beginning of all wisdom\" Aristotle",
+"This woman is lost in her thoughts, in search of her truth.",
+"Slate sculpture on a slate base.",
+"Unique piece"
+],
+"technique_en": [
+"unique piece in slate on a slate base",
+"Dimensions in cm: Height 38 width 14 depth 9"
+]
 },
 {
 "id": "je-reflechis",
@@ -2454,7 +2791,16 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#303b4e",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Forehead high, mouth closed, looking serious, he must not be disturbed.",
+"Why? He is thinking intensely....."
+],
+"technique_en": [
+"Slate sculpture on a wooden base. Unique piece.",
+"dimensions with base:",
+"Height 29 cm, width 6cm depth 6cm"
+]
 },
 {
 "id": "je-vous-regarde",
@@ -2502,7 +2848,19 @@ window.OEUVRES = [
 "p": 12.0
 },
 "couleur": "#ffffff",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The intensity of a gaze that transcends the stone, a presence that silently calls out to the viewer, this is what this sculpture evokes. Every feature is marked by the raw emotion of the material, shaping an intimate connection with the one who observes it.",
+"The face looking straight ahead but the eyes turned to the side, what is he doing, what does he want?",
+"He seems to be telling us, careful, I am watching you. But why?",
+"What is he wary of?",
+"In fact it is the viewer who is mistaken, he is merely observing what surrounds him, without any preconceptions, none at all."
+],
+"technique_en": [
+"Slate sculpture on a metal base",
+"Dimensions in cm (including the base):",
+"H 30 W 12 D 12"
+]
 },
 {
 "id": "l-ame-des-arbres",
@@ -2548,7 +2906,19 @@ window.OEUVRES = [
 "h": 65.0
 },
 "couleur": "#e3e3e3",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"\"When I am among you, trees of these great woods,",
+"In all that surrounds me and hides me at once,",
+"In your solitude where I withdraw into myself,",
+"I feel someone great who listens to me and loves me!\"",
+"extract from a poem by Victor Hugo.",
+"This sculpture expresses both what human beings feel in the presence of trees and also what the tree feels, trees which some say have a soul."
+],
+"technique_en": [
+"Wood sculpture with an inlaid bronze piece, wooden base and metal rod.",
+"Height 65cm, width depth of the base 16.5 cm"
+]
 },
 {
 "id": "l-ancien",
@@ -2589,7 +2959,14 @@ window.OEUVRES = [
 "h": 29.0
 },
 "couleur": "#dbdbdc",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"L'ancien: sculpture made from a Trélazé slate marked by time. The ochre colour of the stone is its natural colour, acquired over the years. L'ancien therefore symbolises the passing of the years."
+],
+"technique_en": [
+"Sculpture carved on one side only, metal base and rod",
+"height 29, base 8*8 cm"
+]
 },
 {
 "id": "l-anneau-du-temps",
@@ -2671,7 +3048,16 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#252527",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"In « L’Anneau du Temps », the tyre is transformed into a circular form evoking the infinite cycle of time. Its braiding suggests a gesture of repair, a patient reconstruction.",
+"At the heart of this structure, a carved, polished slate.",
+"The perforations and alterations become signs, imprints of the passage of time, between resistance and adaptation. The work sets rigidity and suppleness, memory and transformation in tension, in a dynamic of rebirth where each material tells its own metamorphosis."
+],
+"technique_en": [
+"Sculpture made from a recycled tyre with an inlaid slate sculpture.",
+"Height 35, width 30, depth 6"
+]
 },
 {
 "id": "l-aplomb-de-la-jeunesse-1",
@@ -2735,7 +3121,16 @@ window.OEUVRES = [
 "p": 4.0
 },
 "couleur": "#373031",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Crowned with his certainty, he is ready to face the world, to assert his opinions, to believe that he will be able to change things as he pleases. Will he succeed?",
+"Slate sculpture, wooden base. Unique piece. NB carved on one side only, given the thinness of the slate."
+],
+"technique_en": [
+"Height: 27, depth 4, width 7",
+"NB: the slate is carved on one side only given its thinness.",
+"Unique piece"
+]
 },
 {
 "id": "l-ardoisier",
@@ -2983,7 +3378,15 @@ window.OEUVRES = [
 "p": 20.0
 },
 "couleur": "#3c3636",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"L'Ardoisier is a tree. At the ends of its branches grow unusual fruits, slate sculptures. It is in full bloom, so a few fruits can already be glimpsed.",
+"Copper base, pewter, slate sculptures."
+],
+"technique_en": [
+"height 50 cm, width 30 cm, depth 20 cm",
+"Slate sculpture on a copper base with pewter inlay"
+]
 },
 {
 "id": "l-arene",
@@ -3047,7 +3450,16 @@ window.OEUVRES = [
 "p": 30.0
 },
 "couleur": "#2e2722",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"In the apparent void, created by the tumult that surrounds them, created by the tumult that dwells within them, stands the individual.",
+"L'Arène is the ring where our inner battles are played out until we let go, until deliverance.",
+"Its meaning lies both in the expressed form that occupies space and also in the void created by the form. Human beings are defined by what they are, that is to say in relation to those around them, but also to WHAT surrounds them."
+],
+"technique_en": [
+"height 65, width 65, depth 30",
+"Cast no. 1/4 AP from the Chapon foundry"
+]
 },
 {
 "id": "la-baigneuse",
@@ -3103,10 +3515,18 @@ window.OEUVRES = [
 "h": 32.0,
 "l": 7.0,
 "p": 7.0,
-"note": "socle 7 × 7 cm"
+"note": "socle 7 × 7 cm",
+"note_en": "base 7 × 7 cm"
 },
 "couleur": "#535a63",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"She barely skims the water, she takes her time, she watches the splashes her feet make in the water and the splashes that, little by little, will allow her to give herself up completely to the water. For the moment she hesitates."
+],
+"technique_en": [
+"Total height 32cm, width depth of the base: 7*7cm",
+"Slate sculpture, with pewter inlay, on a marble base."
+]
 },
 {
 "id": "la-buche-de-noel",
@@ -3147,7 +3567,14 @@ window.OEUVRES = [
 "h": 30.0
 },
 "couleur": "#221c18",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"La bûche de Noël: for those with a sweet tooth, you can eat it; for those who feel the cold, you can put it in the fireplace and warm yourself by the fire. This one is meant to be contemplated. The figure in the hollow of the wood looks at his admirers and wonders how he will end up! Unique piece, wood and bronze."
+],
+"technique_en": [
+"Wood and bronze, unique piece",
+"Dimensions in cm: H30CM, 10*10"
+]
 },
 {
 "id": "la-danse-du-voile",
@@ -3209,7 +3636,14 @@ window.OEUVRES = [
 "p": 23.0
 },
 "couleur": "#7e4733",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"She turns, she twirls, all metal and yet so light. This sculpture expresses the danced moment, the present moment, and also the moment that will follow it. It is a sculpture of movement, of instants. Instants during which all our senses are awake, during which we forget ourselves to live only the sensations that carry us."
+],
+"technique_en": [
+"Width 30, Height 52, depth 23",
+"Cast no. 1 from the AVANGINI foundry"
+]
 },
 {
 "id": "la-danse",
@@ -3265,10 +3699,18 @@ window.OEUVRES = [
 "h": 108.0,
 "l": 33.0,
 "p": 33.0,
-"note": "hauteur sans le socle, réalisable sur mesure"
+"note": "hauteur sans le socle, réalisable sur mesure",
+"note_en": "height without the base, can be made to measure"
 },
 "couleur": "#625b55",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"La danse: She dances, she catches fire. She invites movement, she invites you to join the dance"
+],
+"technique_en": [
+"Height 108 depth 33 width 33 NB: the height is given without the height of the base, which can be made to measure",
+"Chapon foundry. Cast no. 2"
+]
 },
 {
 "id": "la-faille-bleue",
@@ -3334,7 +3776,18 @@ window.OEUVRES = [
 "p": 15.0
 },
 "couleur": "#55544e",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"**La Faille Bleue** depicts a face crossed by a mineral vein.",
+"This blue flow, rough and inlaid with metal circles, evokes time, memory and the traces left by experience. It separates as much as it connects: flesh and stone, inside and outside, silence and movement.",
+"The work speaks of transformation, of what cracks open to reveal another energy — a vital, almost geological force that runs through the being and shapes it."
+],
+"technique_en": [
+"bronze, pigmented cement and copper.",
+"height 21 cm",
+"width 15 cm",
+"depth 15cm"
+]
 },
 {
 "id": "la-femme-d-essaouira",
@@ -3368,7 +3821,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#837f7c",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "la-flamme",
@@ -3440,7 +3895,15 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#373a40",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"La flamme is a symbol, it encourages, it shines, bringing gentleness.",
+"Its light illuminates us, its warmth warms us, its energy carries us away."
+],
+"technique_en": [
+"Slate sculpture on a wooden base.",
+"Height 44, depth 10 width 10"
+]
 },
 {
 "id": "la-grande-dame",
@@ -3484,7 +3947,16 @@ window.OEUVRES = [
 "p": 8.5
 },
 "couleur": "#717761",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"La grande dame: her portrait in black slate lives on in every memory. A particularly remarkable, passionate and endearing woman, she is immortal.",
+"The stone surrounding her has the colours of the earth."
+],
+"technique_en": [
+"Slate sculpture, on a slate base. Unique piece",
+"Height 31",
+"width depth 8.5"
+]
 },
 {
 "id": "la-memoire",
@@ -3522,7 +3994,13 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#a28e77",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Memory, history, transmission. This sculpture looks old, the portrait seems worn by the years; that is because the figure symbolises the past, the roots, everything from which the future will be built."
+],
+"technique_en": [
+"Bronze, unique piece, cast from a slate sculpture. It is therefore worked on one side only."
+]
 },
 {
 "id": "la-mysterieuse",
@@ -3586,7 +4064,16 @@ window.OEUVRES = [
 "p": 31.0
 },
 "couleur": "#202125",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture, made from recycled tyre, is mounted on a solid wood base (thuja root). The industrial material, cut and shaped by hand, takes on an organic dimension: the curves evoke movements of twisting, of growth, while the textures alternate between smooth, ribbed and fragmented.",
+"The work thus oscillates between raw strength and fluid elegance. It transforms a material born of mass consumption into a unique object"
+],
+"technique_en": [
+"height 40 cm",
+"width 31 cm",
+"depth 31 cm"
+]
 },
 {
 "id": "la-petite-arene",
@@ -3649,7 +4136,15 @@ window.OEUVRES = [
 "p": 12.0
 },
 "couleur": "#583629",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"In the apparent void, created by the turmoil that surrounds them, created by the turmoil that dwells within them, stands the individual. The arena is the circus where our inner battles are played out, until we let go, until deliverance"
+],
+"technique_en": [
+"Height 30, width 30, depth 12",
+"La petite arène is a scaled-down version of L'Arène, presented on this site. It was reduced using digital scanning, from which a resin model was cast and then reworked by my own hand.",
+"From the Avangini foundry, No. 2/8."
+]
 },
 {
 "id": "la-promeneuse",
@@ -3693,7 +4188,15 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#8d888e",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"La promeneuse",
+"In her long coat, hands in her pockets, the walker strolls along, letting her soul wander."
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"height 52 width 15 depth 7"
+]
 },
 {
 "id": "la-reverence",
@@ -3756,7 +4259,15 @@ window.OEUVRES = [
 "p": 40.0
 },
 "couleur": "#554233",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"He leans forward, sketches a movement, he invites. An invitation to what? To dance? Perhaps he wishes to welcome his visitors and simply bow to them."
+],
+"technique_en": [
+"Casting: Chapon foundry. Cast No. 2",
+"Width 60, Depth 40, Height 120",
+"The height given is the height without the base. The base can be modified on request and made to measure."
+]
 },
 {
 "id": "le-cerceau",
@@ -3811,7 +4322,15 @@ window.OEUVRES = [
 "p": 18.0
 },
 "couleur": "#4b3d32",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"From this bronze work emerge curves and forms that express both freedom and inner strength, as in an eternal dance.",
+"Inner strength nourishes, allows us to be free, and this freedom in turn nourishes inner strength, in a kind of vital energy of movement, like a celebration of human dynamism."
+],
+"technique_en": [
+"Bronze from the Chapon foundry, no. 1/8",
+"Height 66, width 18 depth 18"
+]
 },
 {
 "id": "le-cirque",
@@ -3873,7 +4392,14 @@ window.OEUVRES = [
 "p": 18.0
 },
 "couleur": "#57432b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Le cirque is inspired by the sculpture L'Arène, also presented on this site. Le cirque is a piece of enclosed arena, a ring of paradise. It is also the circle, symbol of infinity."
+],
+"technique_en": [
+"Cast No. 1/8, Chapon foundry",
+"H: 52 width 30 depth 18"
+]
 },
 {
 "id": "le-coeur-de-l-arene",
@@ -3941,7 +4467,19 @@ window.OEUVRES = [
 "p": 22.0
 },
 "couleur": "#272423",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Inspired by L'Arène, this sculpture evokes an inner space, at once refuge and tension.",
+"The black structure is made from recycled tyres, while the heart is in bronze.",
+"The dark material embraces a raw, vibrant heart, while the central void breathes like a pause, a heartbeat, a place of silence and presence.",
+"The work invites the eye to move around it, to inhabit its hollows and solids, to feel the dialogue between protection and exposure, matter and absence."
+],
+"technique_en": [
+"bronze and tyre",
+"Height 45 cm",
+"width 54",
+"depth 22"
+]
 },
 {
 "id": "le-cyclope",
@@ -3986,7 +4524,16 @@ window.OEUVRES = [
 "p": 3.0
 },
 "couleur": "#cacaca",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The cyclops has only one eye, but that does not stop him from seeing everything.",
+"We have 2 eyes, but that does not stop us from missing what is essential. Refusal to see, refusal to get involved, fear sometimes?",
+"This cyclops is not monstrous, he is even benevolent. He tells us that what is essential is not what our eyes see, but rather what we wish to see."
+],
+"technique_en": [
+"Dimensions: Height: 20, Depth: 3, width: 4",
+"Bronze sculpture, unique piece (carved on one side only, as it was moulded from a slate piece)."
+]
 },
 {
 "id": "le-de-du-chaos",
@@ -4049,7 +4596,15 @@ window.OEUVRES = [
 "p": 29.0
 },
 "couleur": "#1c1f25",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture takes the form of a reinvented monumental die, in which the geometric faces give way to a tangle of tyre strips. The orange spirals, arranged like the pips on a traditional die, here become symbolic markers: they evoke chance, movement and infinite possibilities.",
+"Precariously balanced on its base, the die seems suspended between falling and stability, like a metaphor for our choices and for the invisible forces that steer destiny. The work repurposes an object universally associated with games, turning it into a reflection on risk, uncertainty..."
+],
+"technique_en": [
+"Unique piece in tyre",
+"Height 55, width 39, depth 29"
+]
 },
 {
 "id": "le-gardien-du-silence",
@@ -4116,7 +4671,19 @@ window.OEUVRES = [
 "p": 24.0
 },
 "couleur": "#262525",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Le Gardien du Silence does not speak, he keeps watch.",
+"He reminds us that beauty sometimes lies in the humblest of materials,",
+"and that even silence has a beating heart.",
+"Born from the worn material of the roads (the tyre), this meditative face embodies transformation and resilience. In the silence of the shaped rubber, the artist evokes a protective presence, a symbol of listening and renewal."
+],
+"technique_en": [
+"Recycled tyre",
+"Height 52",
+"Width 27",
+"Depth 24"
+]
 },
 {
 "id": "le-gardien",
@@ -4163,7 +4730,18 @@ window.OEUVRES = [
 "p": 5.0
 },
 "couleur": "#d8d5d3",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Le gardien.",
+"With a stern, austere air, the guardian keeps watch. Over whom or what does he watch?",
+"Over what is dearest to those who ask him to keep watch...",
+"It may be a material possession, but above all he prefers to watch over the immaterial: time, so that it is put to good use, feelings, so that they do not become overwhelming... He is a protective guardian."
+],
+"technique_en": [
+"height 25 depth 5 width 5",
+"Bronze sculpture, unique piece carved on one side only, as it was moulded from a slate piece.",
+"Plexiglas base"
+]
 },
 {
 "id": "le-phoenyx",
@@ -4207,7 +4785,15 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#cfd0d2",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The phoenix, that legendary bird, characterised by its power to be reborn after being consumed in flames. This sculpture thus symbolises our ability to bounce back, again and again.",
+"From the inert stone, rebirth will emerge."
+],
+"technique_en": [
+"Height 56, Width 27, Depth 14",
+"Slate sculpture, polished, waxed and gilded in places."
+]
 },
 {
 "id": "le-plongeon",
@@ -4287,7 +4873,15 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#585048",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Towards the sky or towards the earth?",
+"Depending on our perception, we can imagine both. Our perception, or perhaps our mood...."
+],
+"technique_en": [
+"Slate sculpture on a wooden base",
+"h38*w30*d8"
+]
 },
 {
 "id": "le-sage",
@@ -4325,7 +4919,13 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#b1b0b0",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"He has come through the years, buried in the earth and revealed once more. The sage was waiting 'sagely' for the sculptor to discover him."
+],
+"technique_en": [
+"Slate sculpture, direct carving, on a wooden base."
+]
 },
 {
 "id": "le-tresor-du-sculpteur",
@@ -4359,7 +4959,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#8e625e",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "le-troisieme-oeil",
@@ -4438,7 +5040,14 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#373435",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"The third eye is a metaphor. It refers to a third gaze, that of self-knowledge. Here there are two symbolic meanings: the desire to escape physically (symbolised by the circle). However, this escape will be all the more satisfying if it is in tune with self-knowledge, allowing one to choose the right destination or the right destiny."
+],
+"technique_en": [
+"slate sculpture, polished and waxed.",
+"Dimensions in cm: height 30 width 40 depth 6"
+]
 },
 {
 "id": "le-veilleur",
@@ -4484,7 +5093,17 @@ window.OEUVRES = [
 "p": 14.0
 },
 "couleur": "#898582",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Le veilleur: it is often said of him that he sleeps with one eye open. The watcher does not watch over others but over himself. He is watchful of his inner being, but also of his attitudes in the visible universe. The closed eye calls us to refocus on ourselves, while the open eye calls for right action in the world. Like Janus, turned towards the past and the present of things, he projects himself into the inside and the outside of beings.",
+"The closed eye watches over the invisible world, while the open eye watches over the visible world...."
+],
+"technique_en": [
+"Slate sculpture on a wooden base",
+"Height with base 68 cm",
+"Width 14 cm",
+"Depth 14 cm"
+]
 },
 {
 "id": "ligne-captive",
@@ -4548,7 +5167,16 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#2b2c30",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture explores continuity. The form unfolds in a closed loop, suggesting uninterrupted movement.",
+"The line becomes an autonomous volume, evoking a frozen movement, contained within a dense and vibrant structure. Between tension and stability, the work invites the eye to travel with neither starting point nor end.",
+"Ligne Captive thus questions the relationships between movement, resistance and space."
+],
+"technique_en": [
+"Sculpture made from recycled tyres and inner tubes",
+"Dimensions in cm: Height: 27, Width: 48, Depth: 8"
+]
 },
 {
 "id": "madame-ba",
@@ -4593,7 +5221,16 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#dbdbdb",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Madame Bâ was inspired by 2 novels by Erik Orsenna, of which she is the heroine.",
+"Born in Mali, daughter of Ousmane, a blacksmith and deputy director of the waterfall, and of Mariama, a “traditionist”, that is to say a scholar of all things of the past, Madame Bâ loves knowledge.",
+"Madame Bâ, when she needs to recharge, withdraws beneath her tree..."
+],
+"technique_en": [
+"Slate sculpture, slate base",
+"Height 33 width 22 depth 6"
+]
 },
 {
 "id": "megaptere",
@@ -4674,7 +5311,16 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#4b3a37",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"MEGAPTERE or HUMPBACK WHALE: a symbol of emotional clarity, it helps us navigate through the sea of our emotions.",
+"Where the land ends, another world begins, the marine world, characterised by its immense dimensions. ... It is for this reason that the whale is fundamentally linked to emotions. It symbolises emotional creativity, well-being, education and emotional depth"
+],
+"technique_en": [
+"height 47 width 40 depth 10",
+"Slate sculpture, polished, waxed and patinated with gold wax in places.",
+"Solid oak base"
+]
 },
 {
 "id": "mignonne",
@@ -4718,7 +5364,15 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#dfdfdf",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Mignonne, allons voir si la rose....",
+"is a famous poem by Ronsard which speaks of the passing of time, of old age. This sculpture also speaks of the passing of time by symbolising this rose, but this time not to speak of old age but of transformation, evolution, movement. It is a positive vision of the passing of time."
+],
+"technique_en": [
+"slate sculpture on a thuja wood base.",
+"Dimensions: height 26cm, width 14cm, depth 7cm"
+]
 },
 {
 "id": "miroir-oh-mon-miroir",
@@ -4761,7 +5415,14 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#c5c7c7",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Miroir, oh mon miroir... Passing in front of the mirror, he looks at himself out of the corner of his eye."
+],
+"technique_en": [
+"slate sculpture, wooden base, MDF surround",
+"Height 30 cm, width 6cm, depth 6cm"
+]
 },
 {
 "id": "monseigneur",
@@ -4795,7 +5456,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#6d665e",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "nale",
@@ -4837,7 +5500,15 @@ window.OEUVRES = [
 "h": 29.0
 },
 "couleur": "#dbdbdc",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"NALE feels beautiful, she walks the streets, standing proudly upright. Even though the years have passed, she has acquired the self-assurance that allows her always to hold her head high."
+],
+"technique_en": [
+"Slate sculpture on a wooden base.",
+"Carved on one side only.",
+"Height 29cm, base 5*5 cm"
+]
 },
 {
 "id": "observer-le-monde",
@@ -4892,7 +5563,15 @@ window.OEUVRES = [
 "l": 6.5
 },
 "couleur": "#45474c",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Unlike the 3 well-known monkeys named Mizaru for the blind one, Kikazaru for the deaf one and Iwazaru for the mute one, the figures in this series absorb and pass on to the world.",
+"This one has an oversized eye, he observes in silence."
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"Height 36 cm, width and depth 6.5 cm"
+]
 },
 {
 "id": "oiseau-feuille",
@@ -4936,7 +5615,15 @@ window.OEUVRES = [
 },
 "couleur": "#dbdbdc",
 "statut": "collection",
-"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel."
+"a_verifier": "Classée en collection privée mais marquée disponible sur le site actuel.",
+"description_en": [
+"Is it a bird, or is it a leaf in the shape of a bird? If it is a leaf, it is no doubt a leaf in autumn colours. The colours are the natural colours of the slate, enhanced with gold wax."
+],
+"technique_en": [
+"Slate piece on a slate base.",
+"Height 15, depth 8 width 30."
+],
+"a_verifier_en": "Listed in a private collection but marked available on the current site."
 },
 {
 "id": "oiseau-plonge",
@@ -4979,7 +5666,14 @@ window.OEUVRES = [
 "p": 4.0
 },
 "couleur": "#d8c9cd",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"He just wants to turn into a fish, for a moment, to taste the sensations of fluidity. Bird or fish? From the depths of the ocean to the sky, we may be tempted to journey through our deepest emotions. This one hesitates, perhaps he does not know that he has the ability. What will he encounter?"
+],
+"technique_en": [
+"height 12, depth 4 width 17",
+"slate figure, polished, waxed and gilded in places. Stone base"
+]
 },
 {
 "id": "paix-en-tension",
@@ -5044,7 +5738,17 @@ window.OEUVRES = [
 "p": 25.0
 },
 "couleur": "#1b191b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"The dark elements of the work, made of tyre, coiled and stretched, represent the tensions, the struggles, the chaotic trajectories of humanity.",
+"The curved, almost organic forms, unfolding around a central axis, convey a movement of withdrawal and protection.",
+"In contrast, a blue sphere with violet glints rests at the centre of the spiral. It embodies peace, fragile, precious, but present. The blue refers to the Earth, the sky and hope. This sphere is protected, almost hidden. Peace does not impose itself, it is cultivated, and defended."
+],
+"technique_en": [
+"height 80 cm",
+"width 70 cm",
+"depth 25 cm"
+]
 },
 {
 "id": "parure-de-fete",
@@ -5087,7 +5791,14 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#cfcdcb",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"He is invited to a party, he is shy, so he has put on his suit of lights. A fallen king, or a wish to be the centre of attention for a moment? We do not know, but that is not what matters. He just wants to treat himself. Shining in society may seem insurmountable to him, as it does to many of us. So tonight he has decided to stand out by donning his golden finery."
+],
+"technique_en": [
+"height 28 width 8 depth 7",
+"Unique piece in slate, wooden base. Slate polished, waxed and gilded in places."
+]
 },
 {
 "id": "pensif",
@@ -5130,7 +5841,14 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#dbdbdb",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"He observes the world, he observes the actions of individuals, he does not know what to make of them. He needs time to understand, but above all time to take it in. He does not judge, he wonders"
+],
+"technique_en": [
+"Slate sculpture on a stone base. (carved on one side only)",
+"DIMENSIONS: H38* D7*W7 cm"
+]
 },
 {
 "id": "pensive-1",
@@ -5192,10 +5910,20 @@ window.OEUVRES = [
 "h": 22.0,
 "l": 5.0,
 "p": 5.0,
-"note": "socle 5 × 5 cm"
+"note": "socle 5 × 5 cm",
+"note_en": "base 5 × 5 cm"
 },
 "couleur": "#2f3035",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Head in the clouds, head in the stars, she is no longer here, with the others. She is lost in her thoughts."
+],
+"technique_en": [
+"Slate sculpture on a Plexiglas base.",
+"Carved on one side only.",
+"height 22 cm",
+"base 5*5 cm"
+]
 },
 {
 "id": "pierrot",
@@ -5239,7 +5967,15 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#d8d9d8",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"A slate portrait, he is like the hero of the nursery rhyme \"Au clair de la lune\", the crescent moon being represented by the metal arc that surrounds him. With his childlike face and his innocence, he symbolises the children listening to this song.",
+"Slate sculpture on a metal base."
+],
+"technique_en": [
+"Slate portrait on a metal base.",
+"Height 36, width 25, depth 6 cm"
+]
 },
 {
 "id": "pleine-lune",
@@ -5286,7 +6022,18 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#bdbebc",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"\"It was late; like a new medal",
+"The full moon spread itself out,",
+"And the solemnity of the night, like a river,",
+"Flowed over sleeping Paris.\"",
+"Les Fleurs du Mal (1857), XLV - Confession by Charles Baudelaire."
+],
+"technique_en": [
+"Slate sculpture with stone inlay on a wooden base",
+"height 40cm, width 8, depth 8"
+]
 },
 {
 "id": "point-de-rencontre",
@@ -5320,7 +6067,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#848486",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "poisson-abyssal",
@@ -5364,7 +6113,15 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#d4b5a3",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"The deep-sea fish lives at the bottom of the ocean, most of them are unable to survive at the surface, they live in the extreme depths, sheltered from predation by man. To date, all attempts to keep them in captivity have failed. There are therefore a large number of undiscovered species, which leave immense room for the imagination. This abyssal fish is a symbol of freedom.",
+"This work is in slate, with a metal base."
+],
+"technique_en": [
+"height 27 width 7 depth 7",
+"Slate piece on a metal base"
+]
 },
 {
 "id": "poisson-vole",
@@ -5398,7 +6155,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#d3cdca",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "premices-d-ouragan",
@@ -5478,10 +6237,21 @@ window.OEUVRES = [
 "dimensions": {
 "h": 72.0,
 "l": 52.0,
-"note": "œuvre murale"
+"note": "œuvre murale",
+"note_en": "wall piece"
 },
 "couleur": "#414145",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This relief work is made from recycled tyres and fragments of slate.",
+"\"Prémices d’ouragan\" evokes that fragile instant when calm becomes heavy, almost oppressive, charged with an invisible force ready to burst out.",
+"The dark materials, marked by time and transformed, intertwine in a palpable tension. They tell of a silent struggle between control and surrender, between stability and tipping over. The pieces of slate appear as signs of life, vulnerable in the face of the rising intensity.",
+"It is a work about waiting, about that suspended moment when one senses that something is going to change — profoundly, irreversibly."
+],
+"technique_en": [
+"wall piece made from recycled tyre and fragments of slate",
+"Height 72, width 52"
+]
 },
 {
 "id": "profil",
@@ -5539,7 +6309,14 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#49484b",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture may symbolise the eloquence of silence. Every curve of the stone tells a story of reflection and inner contemplation. This enigmatic profile, barely sketched, invites meditation, reflection."
+],
+"technique_en": [
+"slate sculpture on a wooden base",
+"Dimensions in cm height 34, width 8, depth 8"
+]
 },
 {
 "id": "racines-d-asphalte",
@@ -5601,7 +6378,14 @@ window.OEUVRES = [
 "p": 35.0
 },
 "couleur": "#313235",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This work explores the tension between anchoring and momentum. Its branching forms belong to a world in transformation, root, organism, movement. An evocation of life at its most instinctive: to attach, to resist, to grow."
+],
+"technique_en": [
+"Unique piece in tyre on a wooden base",
+"Height 30, width 35, depth 35"
+]
 },
 {
 "id": "racines",
@@ -5646,7 +6430,16 @@ window.OEUVRES = [
 "p": 30.0
 },
 "couleur": "#848285",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Like the plant or the tree whose roots are necessary for its survival, human beings build themselves from their roots and transform, develop through their encounters, their journey. RACINES evokes the construction of personal identity, which is built from its roots and fulfilled through social interactions. This identity is in perpetual mutation.",
+"Like a wave, we are carried towards a future where anything is possible. The future belongs to us, we can shape its contours. This face imprinted in the wave, as if engraved in the root of an oak, with its eye wide open, watchful, ready to seize every opportunity, represents our future shaped by our past.",
+"Bronze sculpture, unique piece from the SILVA foundry (Wissous)."
+],
+"technique_en": [
+"Width 50, Depth 30, Height 66",
+"Bronze sculpture, unique piece from the SILVA foundry (Wissous)."
+]
 },
 {
 "id": "retour-aux-sources-2",
@@ -5689,7 +6482,14 @@ window.OEUVRES = [
 "p": 7.0
 },
 "couleur": "#cabfb6",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Retour aux sources 2: This sculpture is the 2nd in the Retour aux sources series, also presented on this site. It speaks of our environment but also of our relationship with it."
+],
+"technique_en": [
+"slate sculpture on a wooden base",
+"dimensions in cm: Height 39, width 11, depth 7"
+]
 },
 {
 "id": "retour-aux-sources",
@@ -5732,7 +6532,14 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#535756",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Retour aux sources 1: This sculpture is the 1st in the Retour aux sources series, the 2nd of which is also presented on the site. It speaks of our environment but also of our relationship with it. Here the vegetation is flourishing, even lush. The clearly drawn face, emerging from the vegetation that surrounds it, symbolises this symbiosis that exists, or should exist, between the human being and their environment."
+],
+"technique_en": [
+"Height 42, width 14, Depth 8,",
+"Slate sculpture, MDF base."
+]
 },
 {
 "id": "retour-des-antilles",
@@ -5766,7 +6573,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#908d8c",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "rythmes",
@@ -5835,7 +6644,19 @@ window.OEUVRES = [
 "p": 15.0
 },
 "couleur": "#e5e7e3",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"This sculpture, highly contrasted in form (horizontal lines, diagonal lines or a smooth swirling surface), evokes the essence of movement and music.",
+"Each line evokes a visual harmony, a rhythm.",
+"They could represent the black keys of a piano, or the fingers of the kora player as he plucks the strings of his instrument.",
+"Rhythm is the very essence of a musical work"
+],
+"technique_en": [
+"Slate sculpture on a wooden base.",
+"height 41cm",
+"width 35 cm",
+"depth 15 cm"
+]
 },
 {
 "id": "sablier-infini",
@@ -5878,7 +6699,14 @@ window.OEUVRES = [
 "p": 6.0
 },
 "couleur": "#b5aeab",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Time, usually measured by the hourglass, is the symbol of evolution, of an irreversible transformation. It is a time that comes to an end. This sculpture symbolises another time, one that is grasped through the cycle of days, of seasons, of moments of life. The world is subject to a cyclical and infinite renewal. This time is a time of permanence and introspection, in which human beings have a role to play in their destiny."
+],
+"technique_en": [
+"Slate sculpture, polished and waxed.",
+"Dimensions in cm: Length 17cm Height 48cm Depth 6cm"
+]
 },
 {
 "id": "sans-titre-1",
@@ -5912,7 +6740,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#352e23",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "scintillante",
@@ -5978,7 +6808,16 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#87827a",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"“By making our light shine, we offer others the possibility of doing the same.”",
+"Quote from Nelson Mandela",
+"The shimmering flame is a symbol. It encourages, it shines, brings gentleness."
+],
+"technique_en": [
+"Slate sculpture on a wooden base",
+"height 40cm, width 25, depth 10"
+]
 },
 {
 "id": "sculptosaure",
@@ -6040,7 +6879,14 @@ window.OEUVRES = [
 "p": 15.0
 },
 "couleur": "#533423",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Sculptosaure is the ancestor of sculpture, its dinosaur. Reptilian in form (some of the bronze finishes evoke skin), this sculpture has the particularity of being able to be placed horizontally or vertically, as one wishes. It thus evokes evolution, our evolution."
+],
+"technique_en": [
+"Height 30, Width 25, depth 15",
+"Bronze piece, unique cast"
+]
 },
 {
 "id": "sous-pression",
@@ -6077,7 +6923,12 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#616164",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"This wall sculpture is made from fragments of tyres and a piece of slate.",
+"The relief of tyre fragments combined with the black blocks of slate, in which a central form is enclosed, evokes tension, constraint and contained energy"
+],
+"technique_en": []
 },
 {
 "id": "tranquille",
@@ -6111,7 +6962,9 @@ window.OEUVRES = [
 "nb_videos_site": 0,
 "dimensions": null,
 "couleur": "#cbb3a3",
-"statut": "collection"
+"statut": "collection",
+"description_en": [],
+"technique_en": []
 },
 {
 "id": "transmettre-au-monde-1",
@@ -6189,7 +7042,16 @@ window.OEUVRES = [
 "l": 9.5
 },
 "couleur": "#505359",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Unlike the 3 well-known monkeys named Mizaru for the blind one, Kikazaru for the deaf one and Iwazaru for the mute one, the figures in this series absorb and transmit to the world.",
+"This one has a large mouth because his role is to pass on what he has learned after going through the initiatory stages of immersing himself in the world by breathing it in (see the sculpture \"humer le monde\") and by observing it (see the sculpture \"observer le monde\").",
+"Slate sculpture, carved on one side"
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"Height 39 cm, width and depth 9.5 cm"
+]
 },
 {
 "id": "transmettre-au-monde",
@@ -6236,7 +7098,18 @@ window.OEUVRES = [
 "p": 6.5
 },
 "couleur": "#d9d9d9",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Unlike the 3 well-known monkeys named Mizaru for the blind one, Kikazaru for the deaf one and Iwazaru for the mute one, the figures in this series absorb and transmit to the world.",
+"This one has a large mouth because his role is to pass on what he has learned after going through the initiatory stages of immersing himself in the world by breathing it in and by observing it.",
+"Slate sculpture, carved on one side"
+],
+"technique_en": [
+"slate sculpture on a wooden base.",
+"Height 36 cm, width and depth 6.5 cm",
+"Slate sculpture, carved on one side",
+"dimensions in cm: height 39 depth 8 width 10"
+]
 },
 {
 "id": "vegetal",
@@ -6279,7 +7152,14 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#d2d7db",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"Végétal speaks of our environment but also of our relationship with it. Here the vegetation is flourishing, even lush. Looking a little more closely, one can discover a face buried among the leaves. What is he thinking, what is he feeling? This sculpture symbolises the thoughts we have about our relationship with the world, with our environment."
+],
+"technique_en": [
+"Height 57, width 10, depth 10",
+"Slate sculpture, highlighted with gold wax. Oak base painted black."
+]
 },
 {
 "id": "virevolte",
@@ -6358,7 +7238,14 @@ window.OEUVRES = [
 "p": 10.0
 },
 "couleur": "#463e3c",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Smooth, calm on one side, dancing and twirling on the other. Virevolte expresses the duality that human beings very often carry within themselves. Provided one seeks it out and explores it."
+],
+"technique_en": [
+"slate sculpture on a wooden base",
+"H 54, D 10, W 18"
+]
 },
 {
 "id": "vue-du-ciel",
@@ -6437,7 +7324,14 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#3a3b43",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"\"Vue du ciel\" is the sculpture of an imaginary landscape, seen from the sky. One can see in it the sea, the foam of the waves or the mountain, the desert... It is the viewer who will encounter this landscape. As the days go by, they will discover in it the place where they would like to be"
+],
+"technique_en": [
+"Slate sculpture, wooden base",
+"Height 29cm, width 45 depth 8"
+]
 },
 {
 "id": "yin-ou-yang",
@@ -6491,7 +7385,21 @@ window.OEUVRES = [
 "p": 20.0
 },
 "couleur": "#4f5355",
-"statut": "disponible"
+"statut": "disponible",
+"description_en": [
+"Yin ou Yang ?",
+"The title « Yin ou Yang ? » refers to the Chinese philosophy of complementary dualism, in which two opposing forces coexist and balance each other.",
+"The curved and twisted lines evoke both tension and harmony, struggle and complementarity.",
+"The recycled material, the tyre, recalls the capacity for transformation: from a utilitarian object destined for the scrap heap, a work of art charged with meaning emerges.",
+"Between shadow and light, the material bends, twists, reinvents itself.",
+"Two opposing forces cross, intertwine, balance each other."
+],
+"technique_en": [
+"Height 53",
+"width 46",
+"depth 20",
+"recycled tyre sculpture, unique piece"
+]
 },
 {
 "id": "you-and-me",
@@ -6536,7 +7444,16 @@ window.OEUVRES = [
 "p": 8.0
 },
 "couleur": "#dedede",
-"statut": "collection"
+"statut": "collection",
+"description_en": [
+"You and me is the illustration of the fusion between 2 beings, a couple, friends, brother and sister, it doesn't matter.",
+"Their morphological difference disappears in the pleasure of being together.",
+"You and Me is a celebration of difference and of understanding."
+],
+"technique_en": [
+"Slate sculpture on a marble and metal base. (carved on one side only, given the thickness of the slate.)",
+"height 36 cm, width 10, depth 8"
+]
 }
 ];
 window.SERIES_ORDRE = {"ardoise": ["l-anneau-du-temps", "premices-d-ouragan", "emergence", "scintillante", "expression", "fleur-eternelle", "rythmes", "la-flamme", "transmettre-au-monde-1", "icare", "introspection", "desir-no-2", "harmonie", "l-ardoisier", "a-contre-courant", "vue-du-ciel", "le-troisieme-oeil", "grosse-fatigue", "megaptere", "virevolte", "le-plongeon"], "bronze": ["la-faille-bleue", "le-coeur-de-l-arene", "le-cerceau", "avis-de-tempete", "le-cirque", "la-reverence", "l-arene", "la-danse", "la-danse-du-voile", "la-petite-arene", "sculptosaure", "corpus"], "pneu": ["racines-d-asphalte", "le-de-du-chaos", "l-anneau-du-temps", "entre-deux-silences", "ce-que-l-on-a-tu", "premices-d-ouragan", "emergence", "etreinte-infinie", "ligne-captive", "le-gardien-du-silence", "le-coeur-de-l-arene", "flamenco", "yin-ou-yang", "paix-en-tension", "allons-danser", "la-mysterieuse"], "petits-formats": ["emergence", "profil", "fierte", "transmettre-au-monde-1", "grands-yeux", "je-reflechis", "empreintes", "dans-les-nuages", "observer-le-monde", "humer-le-monde", "la-baigneuse", "pensive-1", "l-aplomb-de-la-jeunesse-1"], "collection": ["sous-pression", "energies", "homme-2", "oiseau-feuille", "femme-11", "femme-14", "femme-1", "cheveux-au-vent", "fin-hivernale", "pierrot", "le-veilleur", "femme15", "you-and-me", "je-vous-regarde", "pleine-lune", "femme-7", "retour-aux-sources", "ange-gardien", "femme-3", "femme4", "l-ame-des-arbres", "evasion", "oiseau-plonge", "mignonne", "miroir-oh-mon-miroir", "coucher-de-soleil", "arum", "la-promeneuse", "au-loin", "transmettre-au-monde", "madame-ba", "l-ancien", "la-grande-dame", "le-phoenyx", "le-cyclope", "evanescence", "pensif", "le-gardien", "inspiration", "nale", "vegetal", "racines", "parure-de-fete", "sablier-infini", "retour-aux-sources-2", "la-memoire", "poisson-abyssal", "desir", "sans-titre-1", "le-sage", "la-buche-de-noel", "point-de-rencontre", "tranquille", "caravelle", "azur", "retour-des-antilles", "la-femme-d-essaouira", "le-tresor-du-sculpteur", "monseigneur", "poisson-vole"], "livre": ["dialogues-sculptes"]};

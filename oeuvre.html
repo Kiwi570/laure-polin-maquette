@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Œuvre — Laure Polin, sculptures</title>
-  <meta name="description" content="Fiche d’œuvre de Laure Polin&nbsp;: photos, technique, dimensions, prix, vue à l’échelle et demande d’acquisition.">
+  <script>(function(){var l;try{var q=new URLSearchParams(location.search).get('lang');if(q==='fr'||q==='en')l=q;if(!l){var m=JSON.parse(localStorage.getItem('lp-langue'));if(m==='fr'||m==='en')l=m;}}catch(e){}if(!l){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'fr';l=/^fr/i.test(n)?'fr':'en';}document.documentElement.lang=l;if(l==='en')document.documentElement.classList.add('trad-attente');})();</script>
+  <title data-en="Work — Laure Polin, sculptures">Œuvre — Laure Polin, sculptures</title>
+  <meta name="description" content="Fiche d’œuvre de Laure Polin&nbsp;: photos, technique, dimensions, prix, vue à l’échelle et demande d’acquisition." data-en-content="A work by Laure Polin: photos, technique, dimensions, price, scale view and purchase enquiry.">
   <meta name="theme-color" content="#171b20">
   <meta name="robots" content="noindex, nofollow">
   <meta property="og:type" content="website">
-  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale" content="fr_FR" data-en-content="en_GB">
   <meta property="og:site_name" content="Laure Polin, sculptures">
   <meta property="og:title" content="Laure Polin, sculptures en ardoise, bronze et pneu recyclé">
   <meta property="og:description" content="Sculptures mi-figuratives, mi-abstraites nées dans l’atelier de Bagnolet. Œuvres disponibles, livre Dialogues sculptés, visite de l’atelier.">
@@ -26,7 +27,7 @@
   <script>document.documentElement.classList.add('attente');</script>
 </head>
 <body data-page="oeuvre">
-<noscript><nav class="sans-js" aria-label="Navigation principale"><a href="index.html">Laure Polin</a><a href="salle.html?s=ardoise">Ardoise</a><a href="salle.html?s=bronze">Bronze</a><a href="salle.html?s=pneu">Pneu recyclé</a><a href="salle.html?s=petits-formats">Petits formats</a><a href="salle.html?s=collection">Collection privée</a><a href="index.html#contact">L’atelier et contact</a></nav></noscript>
+<noscript><nav class="sans-js" aria-label="Navigation principale"><a href="index.html">Laure Polin</a><a href="salle.html?s=ardoise">Ardoise</a><a href="salle.html?s=bronze">Bronze</a><a href="salle.html?s=pneu">Pneu recyclé</a><a href="salle.html?s=petits-formats">Petits formats</a><a href="salle.html?s=collection">Collection privée</a><a href="index.html#contact">Contact</a></nav></noscript>
 <main id="principal">
 <noscript><p class="sans-js-note">Cette page s’affiche avec JavaScript. Les œuvres sont aussi présentées sur l’accueil.</p></noscript>
   <section class="fiche-entree" aria-labelledby="titre-oeuvre">
@@ -34,8 +35,8 @@
     <div class="fiche-grille">
       <div class="fiche-scene" data-scene></div>
       <div class="fiche-infos">
-        <nav class="fil" aria-label="Fil d’Ariane" data-fil></nav>
-        <h1 id="titre-oeuvre" data-titre>L’Ardoisier</h1>
+        <nav class="fil" aria-label="Fil d’Ariane" data-en-aria-label="Breadcrumb" data-fil></nav>
+        <h1 id="titre-oeuvre" data-titre>Harmonie</h1>
         <p class="technique" data-technique></p>
         <dl data-caracteristiques></dl>
         <p class="prix-grand chiffres" data-prix></p>
@@ -46,13 +47,13 @@
 
   <section class="section vues-oeuvre" aria-labelledby="titre-vues">
     <div class="contenu">
-      <div class="intertitre"><h2 id="titre-vues" data-clive>Toutes les vues</h2><p data-vues-note></p></div>
+      <div class="intertitre"><h2 id="titre-vues" data-clive data-en="All views">Toutes les vues</h2><p data-vues-note></p></div>
       <div class="rang">
-        <div class="visionneuse" data-visionneuse data-curseur="Loupe">
+        <div class="visionneuse" data-visionneuse>
           <img class="vue" data-vue alt="">
           <span class="loupe" aria-hidden="true"></span>
-          <span class="aide">Survolez pour examiner la matière à la loupe.</span>
-          <button class="outil plein" type="button" data-plein aria-label="Afficher en plein écran"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+          <span class="aide" data-en="Hover to examine the material with the magnifier.">Survolez pour examiner la matière à la loupe.</span>
+          <button class="outil plein" type="button" data-plein aria-label="Afficher en plein écran" data-en-aria-label="View full screen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 8V3h5M12 3h5v5M17 12v5h-5M8 17H3v-5" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
         </div>
         <div class="vignettes-vues" data-vignettes></div>
       </div>
@@ -62,7 +63,7 @@
   <section class="section recit" aria-labelledby="titre-recit" style="padding-top:0">
     <div class="contenu rang">
       <div class="texte">
-        <h2 id="titre-recit" class="sr">À propos de l’œuvre</h2>
+        <h2 id="titre-recit" class="sr" data-en="About the work">À propos de l’œuvre</h2>
         <div data-description></div>
       </div>
       <div class="matieres-liste" data-matieres></div>
@@ -71,12 +72,10 @@
 
   <section class="section echelle" id="echelle" aria-labelledby="titre-echelle" data-echelle>
     <div class="contenu">
-      <div class="intertitre"><h2 id="titre-echelle" data-clive>Voir à l’échelle</h2><p>La sculpture à sa vraie taille, à côté d’une silhouette de 1,70 m. Changez de mise en situation.</p></div>
-      <div class="scene-echelle" data-scene-echelle>
-        <div class="fond-piece" data-fond-piece></div>
-      </div>
+      <div class="intertitre"><h2 id="titre-echelle" data-clive data-en="See it to scale">Voir à l’échelle</h2><p data-en="The sculpture at its real size, next to a 1.70 m figure.">La sculpture à sa vraie taille, à côté d’une silhouette de 1,70 m.</p></div>
+      <div class="scene-echelle" data-scene-echelle></div>
       <div class="commandes">
-        <div class="filtres" role="group" aria-label="Mise en situation" data-modes></div>
+        <div class="filtres" role="group" aria-label="Mise en situation" data-en-aria-label="Setting" data-modes></div>
         <p class="mini" data-echelle-note></p>
       </div>
     </div>
@@ -88,34 +87,34 @@
         <h2 id="titre-acquerir" data-titre-acquerir>Acquérir cette œuvre</h2>
         <p class="petit" data-texte-acquerir></p>
         <div class="actions" data-actions-bas></div>
-        <p class="mini">Livraison, emballage ou retrait à l’atelier de Bagnolet&nbsp;: <span class="a-completer">conditions à compléter</span></p>
-        <p class="mini">Vous pouvez aussi joindre Laure Polin au <a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a> ou à <a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a>.</p>
+        <p class="mini" data-en="Delivery, packing or collection from the Bagnolet studio: &lt;span class=&quot;a-completer&quot;&gt;terms to be completed&lt;/span&gt;">Livraison, emballage ou retrait à l’atelier de Bagnolet&nbsp;: <span class="a-completer">conditions à compléter</span></p>
+        <p class="mini" data-en="You can also reach Laure Polin on &lt;a class=&quot;lien chiffres tel&quot; href=&quot;tel:+33677805960&quot;&gt;+33 6 77 80 59 60&lt;/a&gt; or at &lt;a class=&quot;lien&quot; href=&quot;mailto:contact@sculptures-fr.com&quot;&gt;contact@sculptures-fr.com&lt;/a&gt;.">Vous pouvez aussi joindre Laure Polin au <a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a> ou à <a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a>.</p>
       </div>
       <form class="formulaire acq-form" data-formulaire-fiche novalidate aria-labelledby="titre-form-fiche">
-        <h3 id="titre-form-fiche">Écrire à Laure Polin</h3>
+        <h3 id="titre-form-fiche" data-en="Write to Laure Polin">Écrire à Laure Polin</h3>
         <div class="deux">
-          <div class="champ"><label for="ff-nom">Nom</label><input id="ff-nom" name="nom" autocomplete="name" required></div>
-          <div class="champ"><label for="ff-email">E-mail</label><input id="ff-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="champ"><label for="ff-nom" data-en="Name">Nom</label><input id="ff-nom" name="nom" autocomplete="name" required></div>
+          <div class="champ"><label for="ff-email" data-en="Email">E-mail</label><input id="ff-email" name="email" type="email" autocomplete="email" required></div>
         </div>
-        <div class="champ"><label for="ff-tel">Téléphone (facultatif)</label><input id="ff-tel" name="tel" type="tel" autocomplete="tel"></div>
+        <div class="champ"><label for="ff-tel" data-en="Phone (optional)">Téléphone (facultatif)</label><input id="ff-tel" name="tel" type="tel" autocomplete="tel"></div>
         <div class="champ"><label for="ff-msg">Message</label><textarea data-lenis-prevent id="ff-msg" name="message" required data-message-fiche></textarea></div>
         <p class="mini" data-erreur role="alert"></p>
-        <div><button class="bouton bouton--plein" type="submit"><span>Envoyer la demande</span></button></div>
-        <p class="mini">Maquette&nbsp;: le message n’est pas envoyé.</p>
+        <div><button class="bouton bouton--plein" type="submit"><span data-en="Send the request">Envoyer la demande</span></button></div>
+        <p class="mini" data-en="Mock-up: the message is not sent.">Maquette&nbsp;: le message n’est pas envoyé.</p>
       </form>
     </div>
   </section>
 
-  <nav class="suite-oeuvres" aria-label="Œuvres précédente et suivante" data-suite></nav>
+  <nav class="suite-oeuvres" aria-label="Œuvres précédente et suivante" data-en-aria-label="Previous and next works" data-suite></nav>
 
   <section class="voisines" aria-labelledby="titre-voisines" style="padding-bottom:clamp(80px,12vh,140px)">
-    <div class="contenu intertitre"><h2 id="titre-voisines" data-clive data-titre-voisines>Dans la même salle</h2><a class="lien petit" data-lien-salle href="salle.html?s=ardoise">Toute la salle</a></div>
+    <div class="contenu intertitre"><h2 id="titre-voisines" data-clive data-titre-voisines>Dans la même salle</h2><a class="lien petit" data-lien-salle href="salle.html?s=ardoise" data-en="The whole room">Toute la salle</a></div>
     <div class="piste-voisines" data-voisines></div>
   </section>
 </main>
 
-<div class="plein-ecran" data-plein-ecran role="dialog" aria-modal="true" aria-label="Photo en plein écran">
-  <button class="outil fermer" type="button" data-fermer-plein aria-label="Fermer"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.4"/></svg></button>
+<div class="plein-ecran" data-plein-ecran role="dialog" aria-modal="true" aria-label="Photo en plein écran" data-en-aria-label="Full-screen photo">
+  <button class="outil fermer" type="button" data-fermer-plein aria-label="Fermer" data-en-aria-label="Close"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.4"/></svg></button>
   <img alt="">
 </div>
 
@@ -123,11 +122,11 @@
   <div class="grand-nom" data-grand-nom aria-label="Laure Polin"></div>
   <div class="bas">
     <address class="pied-coord">Laure Polin, sculptures<br>51 rue Lénine, 93170 Bagnolet<br><a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a><br><a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a><span class="reseaux"><a class="lien" href="https://www.instagram.com/laurepolin/" target="_blank" rel="noopener">Instagram</a><a class="lien" href="https://www.facebook.com/sculptureslaure/" target="_blank" rel="noopener">Facebook</a></span></address>
-    <nav aria-label="Liens de pied de page">
-      <a class="lien" href="salle.html?s=ardoise">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats">Petits formats</a><a class="lien" href="salle.html?s=collection">Collection privée</a><a class="lien" href="mentions.html">Mentions légales et CGV</a>
+    <nav aria-label="Liens de pied de page" data-en-aria-label="Footer links">
+      <a class="lien" href="salle.html?s=ardoise" data-en="Slate">Ardoise</a><a class="lien" href="salle.html?s=bronze">Bronze</a><a class="lien" href="salle.html?s=pneu" data-en="Recycled tyre">Pneu recyclé</a><a class="lien" href="salle.html?s=petits-formats" data-en="Small works">Petits formats</a><a class="lien" href="salle.html?s=collection" data-en="Private collection">Collection privée</a><a class="lien" href="index.html#contact">Contact</a><a class="lien" href="mentions.html" data-en="Legal notice and terms of sale">Mentions légales et CGV</a>
     </nav>
   </div>
-  <p class="note">Maquette de démonstration&nbsp;: le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.</p>
+  <p class="note" data-en="Demonstration mock-up: the basket, payment and forms are simulated. Some background images are temporary, pending the final images.">Maquette de démonstration&nbsp;: le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.</p>
 </footer>
 
 <script src="assets/vendor/gsap.min.js"></script>

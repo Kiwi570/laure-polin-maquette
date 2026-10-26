@@ -4,41 +4,49 @@ import { fondArdoise } from './ardoise-gl.js';
 import { carteOeuvre, imgOeuvre, teinteSombre } from './cartes.js';
 
 demarrer();
-const { gsap, ScrollTrigger, calme } = LP;
+const { gsap, ScrollTrigger, calme, tr } = LP;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const bureau = () => !LP.etroit();
 
 const SALLES = {
   ardoise: {
-    nom: 'Ardoise', fond: 'g-carriere-ardoise-16x9', fondMobile: 'g-carriere-ardoise-9x16', couleur: '#8fa3b5',
-    intro: "Taille directe dans l’ardoise, parfois de Trélazé : la pierre est polie, cirée, quelquefois patinée ou rehaussée à la cire dorée, puis posée sur un socle de bois, d’ardoise, de marbre ou de métal.",
-    citation: "Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie. Je construis une forme qui me fait reconnaître le sentiment que je porte.",
-    imgCitation: 'oeuvres/transmettre-au-monde-1/transmettre-au-monde-1-02', altCitation: 'Détail du visage taillé dans Transmettre au monde, ardoise.',
+    nom: LP.NOMS_SERIES.ardoise, fond: 'g-carriere-ardoise-16x9', fondMobile: 'g-carriere-ardoise-9x16', couleur: '#8fa3b5',
+    intro: tr("Taille directe dans l’ardoise, parfois de Trélazé : la pierre est polie, cirée, quelquefois patinée ou rehaussée à la cire dorée, puis posée sur un socle de bois, d’ardoise, de marbre ou de métal.",
+      'Direct carving in slate, sometimes from Trélazé: the stone is polished and waxed, sometimes patinated or highlighted with gold wax, then set on a base of wood, slate, marble or metal.'),
+    citation: tr("Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie. Je construis une forme qui me fait reconnaître le sentiment que je porte.",
+      'When I sculpt, whether carving slate directly or working in plaster to give birth to the bronzes, I am not trying to illustrate a predetermined form. I build a form that lets me recognise the feeling I carry.'),
+    imgCitation: 'oeuvres/transmettre-au-monde-1/transmettre-au-monde-1-02', altCitation: tr('Détail du visage taillé dans Transmettre au monde, ardoise.', 'Detail of the face carved in Transmettre au monde, slate.'),
   },
   bronze: {
-    nom: 'Bronze', fond: 'g-bronze-fusion-16x9', couleur: '#c4874a',
-    intro: "Façonnées en plâtre puis fondues par les fonderies Chapon et Avangini, le plus souvent en tirages numérotés. Certaines pièces associent le bronze au pneu, au cuivre ou au ciment pigmenté.",
-    citation: "Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie.",
-    imgCitation: 'oeuvres/la-danse/la-danse-01', altCitation: 'La danse, bronze de Laure Polin, photographiée à l’atelier.',
+    nom: LP.NOMS_SERIES.bronze, fond: 'g-bronze-fusion-16x9', couleur: '#c4874a',
+    intro: tr('Façonnées en plâtre puis fondues par les fonderies Chapon et Avangini, le plus souvent en tirages numérotés. Certaines pièces associent le bronze au pneu, au cuivre ou au ciment pigmenté.',
+      'Modelled in plaster, then cast by the Chapon and Avangini foundries, most often in numbered editions. Some pieces combine bronze with tyre, copper or pigmented cement.'),
+    citation: tr("Lorsque je sculpte, que ce soit en taille directe sur l’ardoise ou en plâtre pour donner naissance aux bronzes, je ne cherche pas à illustrer une forme préétablie.",
+      'When I sculpt, whether carving slate directly or working in plaster to give birth to the bronzes, I am not trying to illustrate a predetermined form.'),
+    imgCitation: 'oeuvres/la-danse/la-danse-01', altCitation: tr('La danse, bronze de Laure Polin, photographiée à l’atelier.', 'La danse, bronze by Laure Polin, photographed in the studio.'),
   },
   pneu: {
-    nom: 'Pneu recyclé', fond: 'g-pneu-gomme-16x9', couleur: '#9aa1a8',
-    intro: "Pneus et chambres à air recyclés, découpés puis assemblés, parfois avec une pièce d’ardoise ou de bronze.",
-    citation: "Je taille, je ponce, je bouscule la matière, alors quelque chose survient ; un détail infime parfois, comme un écho ou au contraire comme un appel.",
-    imgCitation: 'oeuvres/premices-d-ouragan/premices-d-ouragan-02', altCitation: 'Détail de Prémices d’ouragan : bandes de pneu recyclé et fragment d’ardoise.',
+    nom: LP.NOMS_SERIES.pneu, fond: 'g-pneu-gomme-16x9', couleur: '#9aa1a8',
+    intro: tr('Pneus et chambres à air recyclés, découpés puis assemblés, parfois avec une pièce d’ardoise ou de bronze.',
+      'Recycled tyres and inner tubes, cut and then assembled, sometimes with a piece of slate or bronze.'),
+    citation: tr('Je taille, je ponce, je bouscule la matière, alors quelque chose survient ; un détail infime parfois, comme un écho ou au contraire comme un appel.',
+      'I carve, I sand, I shake up the material, and then something happens; sometimes a tiny detail, like an echo or, on the contrary, like a call.'),
+    imgCitation: 'oeuvres/premices-d-ouragan/premices-d-ouragan-02', altCitation: tr('Détail de Prémices d’ouragan : bandes de pneu recyclé et fragment d’ardoise.', 'Detail of Prémices d’ouragan: strips of recycled tyre and a fragment of slate.'),
   },
   'petits-formats': {
-    nom: 'Petits formats', fond: 'g-ardoise-relief-16x9', fondMobile: 'g-ardoise-relief-9x16', couleur: '#a7b8c7',
-    intro: "Des ardoises de 20 à 40 cm, sur socle de bois, de marbre ou de plexiglas.",
-    citation: "Dans les courbes et les déliés naissent des visages, des corps, des sensations, des mouvements, des rythmes.",
-    imgCitation: 'oeuvres/introspection/introspection-02', altCitation: 'Détail d’Introspection : un visage affleure dans l’ardoise.',
+    nom: LP.NOMS_SERIES['petits-formats'], fond: 'g-ardoise-relief-16x9', fondMobile: 'g-ardoise-relief-9x16', couleur: '#a7b8c7',
+    intro: tr('Des ardoises de 20 à 40 cm, sur socle de bois, de marbre ou de plexiglas.', 'Slate pieces from 20 to 40 cm, on bases of wood, marble or Plexiglas.'),
+    citation: tr('Dans les courbes et les déliés naissent des visages, des corps, des sensations, des mouvements, des rythmes.', 'In the curves and flowing lines, faces, bodies, sensations, movements and rhythms are born.'),
+    imgCitation: 'oeuvres/introspection/introspection-02', altCitation: tr('Détail d’Introspection : un visage affleure dans l’ardoise.', 'Detail of Introspection: a face surfaces in the slate.'),
   },
   collection: {
-    nom: 'Collection privée', fond: 'g-salle-socles-16x9', couleur: '#8a929b',
-    intro: "Ces œuvres ont rejoint des collections particulières. Elles restent visibles ici ; certaines existent en d’autres tirages, renseignez-vous auprès de Laure Polin.",
-    citation: "La sculpture me conduit dans des territoires de recherche, sans a priori, où je vais trouver le chemin qui va matérialiser ce flux qui me traverse en modelant la matière.",
-    imgCitation: 'site/laure-polin-exposition', altCitation: 'Laure Polin parmi ses sculptures.',
+    nom: LP.NOMS_SERIES.collection, fond: 'g-salle-socles-16x9', couleur: '#8a929b',
+    intro: tr('Ces œuvres ont rejoint des collections particulières. Elles restent visibles ici ; certaines existent en d’autres tirages, renseignez-vous auprès de Laure Polin.',
+      'These works have joined private collections. They remain on view here; some exist in other casts, so ask Laure Polin.'),
+    citation: tr('La sculpture me conduit dans des territoires de recherche, sans a priori, où je vais trouver le chemin qui va matérialiser ce flux qui me traverse en modelant la matière.',
+      'Sculpture leads me into territories of exploration, without preconceptions, where I find the path that will give material form to the flow running through me as I model the material.'),
+    imgCitation: 'site/laure-polin-exposition', altCitation: tr('Laure Polin parmi ses sculptures.', 'Laure Polin among her sculptures.'),
   },
 };
 
@@ -46,8 +54,8 @@ const q = new URLSearchParams(location.search);
 const cle = SALLES[q.get('s')] ? q.get('s') : 'ardoise';
 const S = SALLES[cle];
 const OEUVRES = LP.serie(cle);
-document.title = `Salle ${S.nom} — Laure Polin, sculptures`;
-document.querySelector('meta[name="description"]')?.setAttribute('content', `${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`);
+document.title = tr(`Salle ${S.nom} — Laure Polin, sculptures`, `${S.nom} room — Laure Polin, sculptures`);
+document.querySelector('meta[name="description"]')?.setAttribute('content', tr(`${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`, `${S.nom}: ${OEUVRES.length} sculptures by Laure Polin. ${S.intro}`));
 
 /* ---------- entree ---------- */
 const fondImg = $('[data-fond-salle]');
@@ -55,14 +63,14 @@ fondImg.src = `assets/img/ambiance/${innerWidth < innerHeight && S.fondMobile ? 
 $('[data-fil-salle]').textContent = S.nom;
 $('[data-titre-salle]').textContent = S.nom;
 $('[data-compte-salle]').textContent = OEUVRES.length;
-$('[data-compte-salle] + small').textContent = OEUVRES.length > 1 ? 'œuvres dans la salle' : 'œuvre dans la salle';
+$('[data-compte-salle] + small').textContent = OEUVRES.length > 1 ? tr('œuvres dans la salle', 'works in the room') : tr('œuvre dans la salle', 'work in the room');
 let intro = S.intro;
 if (cle === 'petits-formats') {
   const min = Math.min(...OEUVRES.filter((x) => x.statut === 'disponible' && x.prix).map((x) => x.prix));
-  intro += ` À partir de ${LP.prix(min)}.`;
+  intro += tr(` À partir de ${LP.prix(min)}.`, ` From ${LP.prix(min)}.`);
 }
 $('[data-intro-salle]').textContent = intro;
-$('[data-citation]').textContent = `« ${S.citation} »`;
+$('[data-citation]').textContent = tr(`« ${S.citation} »`, `“${S.citation}”`);
 const ic = $('[data-image-citation]');
 ic.src = `assets/img/${S.imgCitation}-800.webp`;
 ic.alt = S.altCitation || '';
@@ -133,10 +141,10 @@ function nettoyer() {
 function rendre(defiler = false) {
   const liste = filtrer();
   $$('[data-vue]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.vue === etat.vue)));
-  $('[data-nb-affiche]').textContent = `${liste.length} ${liste.length > 1 ? 'œuvres' : 'œuvre'}`;
+  $('[data-nb-affiche]').textContent = LP.oeuvresTxt(liste.length);
   nettoyer();
   if (!liste.length) {
-    zone.innerHTML = `<div class="vide-filtres"><p class="lead">Aucune œuvre ne correspond à ces filtres.</p><button class="bouton" type="button" data-raz><span>Afficher toute la salle</span></button></div>`;
+    zone.innerHTML = `<div class="vide-filtres"><p class="lead">${tr('Aucune œuvre ne correspond à ces filtres.', 'No work matches these filters.')}</p><button class="bouton" type="button" data-raz><span>${tr('Afficher toute la salle', 'Show the whole room')}</span></button></div>`;
     $('[data-raz]', zone).addEventListener('click', () => { etat.dispo = false; etat.taille = null; etat.prix = null; $$('[data-filtres] .filtre').forEach((x) => x.setAttribute('aria-pressed', 'false')); rendre(); });
   } else if (etat.vue === 'salle') salleHorizontale(liste);
   else grille(liste);
@@ -161,7 +169,7 @@ function salleHorizontale(liste) {
   const H = bureau() ? Math.max(260, Math.min(600, innerHeight - 260)) : Math.min(innerHeight * 0.5, 440);
   const hs = hauteurs(liste, H);
   piste.innerHTML = liste.map((o, i) => carteOeuvre(o, { hauteurPx: hs[i] })).join('') +
-    `<div class="fin"><p class="lead">Fin de la salle ${LP.esc(S.nom)}.</p><a class="bouton" href="#titre-autres"><span>Voir les autres salles</span></a></div>`;
+    `<div class="fin"><p class="lead">${tr(`Fin de la salle ${LP.esc(S.nom)}.`, `End of the ${LP.esc(S.nom)} room.`)}</p><a class="bouton" href="#titre-autres"><span>${tr('Voir les autres salles', 'See the other rooms')}</span></a></div>`;
   const cartes = $$('.oeuvre-carte', piste);
   const teinter = (c) => {
     if (!c) return;
@@ -179,9 +187,9 @@ function salleHorizontale(liste) {
     const distance = () => piste.scrollWidth - innerWidth;
     const tw = gsap.to(piste, { x: () => -distance(), ease: 'none' });
     zone.insertAdjacentHTML('beforeend', `<div class="hud-salle" aria-hidden="false">
-      <button class="outil" type="button" data-hud="-1" aria-label="Œuvre précédente"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+      <button class="outil" type="button" data-hud="-1" aria-label="${tr('Œuvre précédente', 'Previous work')}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
       <p><span class="chiffres" data-hud-n>1 / ${cartes.length}</span><span data-hud-t></span></p>
-      <button class="outil" type="button" data-hud="1" aria-label="Œuvre suivante"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
+      <button class="outil" type="button" data-hud="1" aria-label="${tr('Œuvre suivante', 'Next work')}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
       <span class="hud-barre" aria-hidden="true"><i data-hud-barre></i></span></div>`);
     const hudN = $('[data-hud-n]', zone); const hudT = $('[data-hud-t]', zone); const hudB = $('[data-hud-barre]', zone);
     const majHud = (c) => { const k = cartes.indexOf(c); hudN.textContent = `${k + 1} / ${cartes.length}`; hudT.textContent = LP.parId[c.dataset.id]?.titre || ''; };
@@ -231,10 +239,10 @@ function grille(liste) {
 const VEDETTES = { ardoise: 'a-contre-courant', bronze: 'la-danse', pneu: 'paix-en-tension', 'petits-formats': 'profil', collection: 'energies' };
 $('[data-autres]').innerHTML = Object.keys(SALLES).filter((k) => k !== cle).slice(0, 3).map((k) => {
   const v = LP.parId[VEDETTES[k]];
-  return `<a class="carte-salle" href="salle.html?s=${k}" data-tilt data-curseur="Entrer">
+  return `<a class="carte-salle" href="salle.html?s=${k}" data-tilt>
     <div class="fond-image" aria-hidden="true"><img src="assets/img/ambiance/${SALLES[k].fond}.webp" alt="" loading="lazy"></div>
     ${v ? imgOeuvre(v, { sizes: '20vw' }) : ''}
-    <h3>${SALLES[k].nom}</h3><span class="mini">${LP.serie(k).length} œuvres</span></a>`;
+    <h3>${SALLES[k].nom}</h3><span class="mini">${LP.oeuvresTxt(LP.serie(k).length)}</span></a>`;
 }).join('');
 $$('.autres-salles [data-clive]').forEach((t) => LP.cliver(t, { strates: 4, ecart: 70 }));
 LP.inclinaison();
