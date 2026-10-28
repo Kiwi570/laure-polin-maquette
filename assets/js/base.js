@@ -1,6 +1,6 @@
 /* Laure Polin — socle commun : langue, en-tete, defilement, panier, transitions, ouverture. */
 import { Lenis } from '../vendor/lenis.mjs';
-import { NOM } from './formes.js?v=20261028';
+import { NOM } from './formes.js?v=20261028-2';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -614,14 +614,14 @@ function ouverture() {
     const passer = () => { if (tl.progress() < 1) tl.progress(1); };
     addEventListener('pointerdown', passer, { once: true });
     addEventListener('keydown', passer, { once: true });
-    tl.from(lettres, { opacity: 0, y: 18, filter: 'blur(8px)', duration: 0.7, stagger: 0.045, ease: 'power3.out' }, 0.1)
-      .to(chemin, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 0.55)
-      .add(souffle, 1.6)
-      .to(o.querySelector('.signature'), { opacity: 0, scale: 0.96, filter: 'blur(8px)', duration: 0.45, ease: 'power2.in' }, 1.6)
-      .add(() => resoudre(), 1.75)
+    tl.from(lettres, { opacity: 0, y: 18, filter: 'blur(8px)', duration: 0.6, stagger: 0.035, ease: 'power3.out' }, 0.05)
+      .to(chemin, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' }, 0.35)
+      .add(souffle, 1.1)
+      .to(o.querySelector('.signature'), { opacity: 0, scale: 0.96, filter: 'blur(8px)', duration: 0.4, ease: 'power2.in' }, 1.1)
+      .add(() => resoudre(), 1.2)
       .to(o.querySelectorAll('.feuillet'), {
-        xPercent: (i) => (i % 2 ? 104 : -104), duration: 0.95, ease: 'expo.inOut', stagger: { each: 0.05, from: 'center' },
-      }, 1.7);
+        xPercent: (i) => (i % 2 ? 104 : -104), duration: 0.85, ease: 'expo.inOut', stagger: { each: 0.04, from: 'center' },
+      }, 1.15);
   });
 }
 

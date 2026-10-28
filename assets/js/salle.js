@@ -1,7 +1,7 @@
 /* Salle d'exposition : une serie, en defilement horizontal ou en grille, avec filtres. */
-import LP, { demarrer } from './base.js?v=20261028';
-import { fondArdoise } from './ardoise-gl.js?v=20261028';
-import { carteOeuvre, imgOeuvre, teinteSombre } from './cartes.js?v=20261028';
+import LP, { demarrer } from './base.js?v=20261028-2';
+import { fondArdoise } from './ardoise-gl.js?v=20261028-2';
+import { carteOeuvre, imgOeuvre, teinteSombre } from './cartes.js?v=20261028-2';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;

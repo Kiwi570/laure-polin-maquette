@@ -254,10 +254,11 @@ main { display: block; }
 .poussiere-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; }
 
 /* ---------- manifeste ---------- */
-.manifeste { overflow: hidden; }
+.manifeste { overflow: clip; }
 .manifeste .rang { align-items: start; }
-.manifeste .portrait { grid-column: 1 / span 5; position: sticky; top: calc(var(--header-h) + 24px); }
-.manifeste .portrait .cadre { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--ardoise-2); }
+/* portrait collant : borne a la hauteur de l'ecran sous l'en-tete, legende comprise */
+.manifeste .portrait { grid-column: 1 / span 5; position: sticky; top: calc(var(--header-h) + 24px); display: flex; flex-direction: column; max-height: calc(100svh - var(--header-h) - 48px); }
+.manifeste .portrait .cadre { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--ardoise-2); flex: 0 1 auto; min-height: 0; }
 .manifeste .portrait img { position: absolute; inset: -8% 0; width: 100%; height: 116%; object-fit: cover; object-position: 62% 50%; }
 .manifeste .portrait figcaption { margin-top: 12px; }
 .manifeste .texte { grid-column: 7 / span 6; display: grid; gap: clamp(28px, 4vw, 48px); padding-top: 4vh; }
@@ -267,7 +268,7 @@ main { display: block; }
 .geste { display: inline-block; position: relative; }
 .geste .eclat { display: inline-block; }
 @media (max-width: 860px) {
-  .manifeste .portrait { grid-column: 1 / -1; position: relative; top: 0; }
+  .manifeste .portrait { grid-column: 1 / -1; position: relative; top: 0; max-height: none; }
   .manifeste .texte { grid-column: 1 / -1; }
 }
 
@@ -320,7 +321,7 @@ main { display: block; }
 .oeuvre-carte .cartel > div { min-width: 0; }
 .oeuvre-carte .photo-cadre { background: var(--ardoise-2); padding: 10px; box-shadow: 0 30px 40px -18px rgba(0,0,0,.6); }
 .oeuvre-carte .photo-cadre img { width: auto; object-fit: contain; }
-.etat { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--ardoise-4); color: var(--craie-2); white-space: nowrap; }
+.etat { display: inline-block; font-size: max(12px, .6875rem); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--ardoise-4); color: var(--craie-2); white-space: nowrap; }
 .etat--dispo { border-color: color-mix(in srgb, var(--cuivre) 60%, transparent); color: var(--cuivre-clair); }
 .ajout { flex: none; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ardoise-4); display: grid; place-items: center; transition: background .3s, border-color .3s, color .3s; }
 .ajout svg { width: 16px; height: 16px; }
@@ -608,7 +609,7 @@ html.calme .salle-h .piste-scroll, html.calme .salle-zone .piste-scroll { overfl
 .suite img { width: 46px; height: 56px; object-fit: contain; flex: none; }
 .suite span { display: grid; font-family: var(--f-display); font-size: 1.25rem; line-height: 1.15; min-width: 0; }
 .suite.suiv span { text-align: right; }
-.suite small { font-family: var(--f-texte); font-size: 11px; color: var(--graphite); }
+.suite small { font-family: var(--f-texte); font-size: max(12px, .6875rem); color: var(--graphite); }
 @media (max-width: 860px) { .acq-form { grid-column: 1 / -1; } .suite-oeuvres > .mini { display: none; } .suite img { display: none; } .suite span { font-size: 1.05rem; } }
 @media (max-width: 860px) {
   .acq-texte { grid-column: 1 / -1; }
@@ -743,3 +744,22 @@ body[data-page="introuvable"] .pied .bas { margin-top: 0; }
 
 /* page anglaise : masquee le temps de poser les textes traduits (au plus 1,5 s) */
 html.trad-attente body { opacity: 0; animation: lp-montrer 0s 1.5s forwards; }
+
+/* telephone : cibles tactiles de 44 px et etiquette « Bagnolet » du plan lisible */
+@media (max-width: 860px) {
+  .marque { min-height: 44px; }
+  .langues { gap: 0; }
+  .langues button { min-width: 44px; height: 44px; padding: 0 4px; }
+  .hero-points { flex: 1 1 100%; gap: 0; }
+  .hero-pause { width: 44px; height: 44px; margin-right: 0; }
+  .hero-point { flex: 1 1 0; max-width: 44px; height: 44px; }
+  .lien { display: inline-flex; align-items: center; min-height: 44px; padding-bottom: 0; }
+  .lien::after { bottom: calc(50% - .85em); }
+  .fil a { display: inline-flex; align-items: center; min-height: 44px; }
+  .suite { min-height: 44px; }
+  .plan text.ici { font-size: 14px; }
+}
+@media (max-width: 359px) {
+  .marque { font-size: 1.25rem; white-space: nowrap; }
+  .langues { margin-right: 0; }
+}

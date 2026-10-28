@@ -1,9 +1,9 @@
 /* Accueil */
-import LP, { demarrer } from './base.js?v=20261028';
-import { fondArdoise } from './ardoise-gl.js?v=20261028';
-import { poussiere } from './poussiere.js?v=20261028';
-import { FRANCE, PLAN } from './formes.js?v=20261028';
-import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, monterFormulaire } from './cartes.js?v=20261028';
+import LP, { demarrer } from './base.js?v=20261028-2';
+import { fondArdoise } from './ardoise-gl.js?v=20261028-2';
+import { poussiere } from './poussiere.js?v=20261028-2';
+import { FRANCE, PLAN } from './formes.js?v=20261028-2';
+import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, monterFormulaire } from './cartes.js?v=20261028-2';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;
@@ -57,6 +57,8 @@ const tlClive = titres.map((t, i) => LP.cliver(t, { strates: 5, ecart: 160, decl
 if (!calme) {
   gsap.set(heroImg, { opacity: 0 });
   gsap.set(['.hero-texte > *', '.hero-pied', '.indice'], { opacity: 0, y: 20 });
+  // le cadre part de l'ardoise : pas d'aplat clair avant que la photo se recompose
+  gsap.set(heroZone, { '--fond-cadre': teinteSombre(fondDe(HEROS[0]), 0.12) });
 }
 
 /* diaporama : change seul toutes les 6 secondes ; pause au survol, bouton pause, points cliquables */
@@ -134,6 +136,7 @@ LP.pret.then(() => {
   if (calme) { lancerMinuteur(); return; }
   tlClive.forEach((t) => t && t.play());
   gsap.to(['.hero-texte > *', '.hero-pied', '.indice'], { opacity: 1, y: 0, duration: 1.1, stagger: 0.12, ease: 'power3.out', delay: 0.6 });
+  gsap.to(heroZone, { '--fond-cadre': fondDe(HEROS[0]), duration: 0.9, ease: 'power1.inOut', delay: LP.gl ? 1.3 : 0.3 });
   const entree = LP.gl ? poussiere(heroImg, heroZone, { duree: 2.1, depuis: 'gauche' }) : gsap.to(heroImg, { opacity: 1, duration: 1.2, delay: 0.3 });
   Promise.resolve(entree).then(() => { charger($('img', diapos[1])); lancerMinuteur(); });
   // parallaxe de sortie

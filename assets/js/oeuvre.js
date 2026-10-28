@@ -1,8 +1,8 @@
 /* Fiche d'oeuvre : apparition, vues avec loupe, recit, vue a l'echelle, acquisition. */
-import LP, { demarrer } from './base.js?v=20261028';
-import { fondArdoise } from './ardoise-gl.js?v=20261028';
-import { poussiere } from './poussiere.js?v=20261028';
-import { imgOeuvre, carteOeuvre, altOeuvre, monterFormulaire } from './cartes.js?v=20261028';
+import LP, { demarrer } from './base.js?v=20261028-2';
+import { fondArdoise } from './ardoise-gl.js?v=20261028-2';
+import { poussiere } from './poussiere.js?v=20261028-2';
+import { imgOeuvre, carteOeuvre, altOeuvre, monterFormulaire } from './cartes.js?v=20261028-2';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;
@@ -104,7 +104,8 @@ if (LP.gl) {
 }
 const titreClive = LP.cliver($('[data-titre]'), { strates: 4, ecart: 120, declencheur: false, duree: 1.5 });
 if (!calme) {
-  if (imgScene.tagName === 'IMG') gsap.set(imgScene, { opacity: 0 });
+  // presque invisible mais peinte des son chargement : la photo compte pour le LCP sans attendre l'animation
+  if (imgScene.tagName === 'IMG') gsap.set(imgScene, { opacity: 0.01 });
   gsap.set(['.fiche-infos > *:not(h1)'], { opacity: 0, y: 18 });
 }
 LP.pret.then(() => {
