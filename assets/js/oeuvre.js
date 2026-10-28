@@ -1,8 +1,8 @@
 /* Fiche d'oeuvre : apparition, vues avec loupe, recit, vue a l'echelle, acquisition. */
-import LP, { demarrer } from './base.js';
-import { fondArdoise } from './ardoise-gl.js';
-import { poussiere } from './poussiere.js';
-import { imgOeuvre, carteOeuvre, altOeuvre, monterFormulaire } from './cartes.js';
+import LP, { demarrer } from './base.js?v=20261028';
+import { fondArdoise } from './ardoise-gl.js?v=20261028';
+import { poussiere } from './poussiere.js?v=20261028';
+import { imgOeuvre, carteOeuvre, altOeuvre, monterFormulaire } from './cartes.js?v=20261028';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;

@@ -1,6 +1,6 @@
 /* Laure Polin — socle commun : langue, en-tete, defilement, panier, transitions, ouverture. */
 import { Lenis } from '../vendor/lenis.mjs';
-import { NOM } from './formes.js';
+import { NOM } from './formes.js?v=20261028';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;

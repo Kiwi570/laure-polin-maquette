@@ -1,9 +1,9 @@
 /* Accueil */
-import LP, { demarrer } from './base.js';
-import { fondArdoise } from './ardoise-gl.js';
-import { poussiere } from './poussiere.js';
-import { FRANCE, PLAN } from './formes.js';
-import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, monterFormulaire } from './cartes.js';
+import LP, { demarrer } from './base.js?v=20261028';
+import { fondArdoise } from './ardoise-gl.js?v=20261028';
+import { poussiere } from './poussiere.js?v=20261028';
+import { FRANCE, PLAN } from './formes.js?v=20261028';
+import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, monterFormulaire } from './cartes.js?v=20261028';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;
