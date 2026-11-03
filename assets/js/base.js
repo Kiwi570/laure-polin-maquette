@@ -1,6 +1,6 @@
 /* Laure Polin — socle commun : langue, en-tete, defilement, panier, transitions, ouverture. */
 import { Lenis } from '../vendor/lenis.mjs';
-import { NOM } from './formes.js?v=20261028-2';
+import { NOM } from './formes.js?v=20261103-1';
 
 const gsap = window.gsap;
 const ScrollTrigger = window.ScrollTrigger;
@@ -113,10 +113,21 @@ LP.statut = (o) => {
 };
 LP.lienOeuvre = (o) => `oeuvre.html?o=${encodeURIComponent(o.id)}`;
 LP.serie = (s) => (LP.ordre[s] || []).filter((id, i, a) => a.indexOf(id) === i).map((id) => LP.parId[id]).filter(Boolean);
+/* les salles, dans l'ordre de toutes les navigations (menus, autres salles, liens de fin de parcours).
+   « Petits formats » est une categorie de formats, pas une matiere : la matiere des oeuvres reste dans leurs donnees. */
+LP.SALLES = ['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'];
 LP.NOMS_SERIES = en
   ? { ardoise: 'Slate', bronze: 'Bronze', pneu: 'Recycled tyre', 'petits-formats': 'Small works', collection: 'Private collection' }
   : { ardoise: 'Ardoise', bronze: 'Bronze', pneu: 'Pneu recyclé', 'petits-formats': 'Petits formats', collection: 'Collection privée' };
 LP.oeuvresTxt = (n) => (en ? `${n} ${n > 1 ? 'works' : 'work'}` : `${n} ${n > 1 ? 'œuvres' : 'œuvre'}`);
+/* la collection privee n'affiche jamais de nombre d'oeuvres */
+LP.compteSalle = (k) => (k === 'collection' ? '' : LP.oeuvresTxt(LP.serie(k).length));
+/* le logo officiel (fichier fourni par Laure Polin, fond retire, proportions et couleurs d'origine) */
+LP.LOGO = { ratio: 625 / 673, tailles: [120, 180, 240, 360] };
+LP.logoHTML = ({ cls = 'logo', sizes = '80px', alt = 'Laure Polin, sculptures', charge = 'eager' } = {}) => {
+  const srcset = LP.LOGO.tailles.map((h) => `assets/img/logo/laure-polin-logo-${h}.webp ${Math.round(h * LP.LOGO.ratio)}w`).join(', ');
+  return `<img class="${cls}" src="assets/img/logo/laure-polin-logo-180.webp" srcset="${srcset}" sizes="${sizes}" alt="${alt}" width="625" height="673" loading="${charge}" decoding="async">`;
+};
 
 const ICO = {
   plus: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.4" fill="none"/></svg>',
@@ -150,19 +161,20 @@ const boutonsLangue = () => LANGUES.map((l) => `<button type="button" data-langu
 /* ---------- chrome : en-tete, menu, panier ---------- */
 const VEDETTES = { ardoise: 'a-contre-courant', bronze: 'la-danse-du-voile', pneu: 'le-de-du-chaos', 'petits-formats': 'profil', collection: 'cheveux-au-vent' };
 function salles() {
-  return ['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => {
+  return LP.SALLES.map((k) => {
     const v = LP.parId[VEDETTES[k]];
     const im = v ? LP.visuel(v) : null;
-    return `<a class="salle-lien" href="salle.html?s=${k}"><span class="vig">${im ? `<img src="${LP.src(im, 300)}" alt="" loading="lazy">` : ''}</span><span class="t">${LP.NOMS_SERIES[k]}</span><span class="n chiffres">${LP.oeuvresTxt(LP.serie(k).length)}</span></a>`;
+    const n = LP.compteSalle(k);
+    return `<a class="salle-lien" href="salle.html?s=${k}"><span class="vig">${im ? `<img src="${LP.src(im, 300)}" alt="" loading="lazy">` : ''}</span><span class="t">${LP.NOMS_SERIES[k]}</span>${n ? `<span class="n chiffres">${n}</span>` : ''}</a>`;
   }).join('');
 }
 function monterChrome() {
   const page = document.body.dataset.page || '';
   const entete = document.createElement('header');
   entete.className = 'entete';
-  // logo : le nom en toutes lettres en attendant le fichier du vrai logo de Laure Polin
+  // logo officiel : son image porte le nom « Laure Polin », le lien ramene a l'accueil
   entete.innerHTML = `
-    <a class="marque" href="index.html" aria-label="${tr('Laure Polin, accueil', 'Laure Polin, home')}"><span>Laure Polin</span></a>
+    <a class="marque" href="index.html" aria-label="${tr('Laure Polin, sculptures : retour à l’accueil', 'Laure Polin, sculptures: back to the home page')}">${LP.logoHTML({ cls: 'marque-logo', sizes: '(max-width: 940px) 68px, 80px', alt: '' })}</a>
     <nav class="nav" aria-label="${tr('Navigation principale', 'Main navigation')}">
       <div class="nav-oeuvres">
         <button type="button" class="nav-bouton"${page === 'salle' || page === 'oeuvre' ? ' aria-current="page"' : ''} aria-expanded="false" aria-controls="panneau-oeuvres">${tr('Les œuvres', 'The works')}<svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button>
@@ -188,9 +200,14 @@ function monterChrome() {
     if (on) { panO.hidden = false; requestAnimationFrame(() => panO.classList.add('ouvert')); }
     else { panO.classList.remove('ouvert'); tempo = setTimeout(() => { panO.hidden = true; }, 350); }
   };
-  btnO.addEventListener('click', () => ouvrirO(btnO.getAttribute('aria-expanded') !== 'true'));
+  // un clic juste apres l'ouverture au survol garde le panneau ouvert (il le refermait aussitot)
+  let parSurvol = false;
+  btnO.addEventListener('click', () => {
+    if (parSurvol && btnO.getAttribute('aria-expanded') === 'true') { parSurvol = false; return; }
+    parSurvol = false; ouvrirO(btnO.getAttribute('aria-expanded') !== 'true');
+  });
   if (pointeurFin) {
-    navO.addEventListener('pointerenter', () => ouvrirO(true));
+    navO.addEventListener('pointerenter', () => { if (btnO.getAttribute('aria-expanded') !== 'true') parSurvol = true; ouvrirO(true); });
     navO.addEventListener('pointerleave', () => { tempo = setTimeout(() => ouvrirO(false), 220); });
   }
   navO.addEventListener('focusout', (e) => { if (!navO.contains(e.relatedTarget)) ouvrirO(false); });
@@ -204,8 +221,10 @@ function monterChrome() {
   menu.className = 'menu-plein'; menu.id = 'menu-plein'; menu.inert = true; menu.setAttribute('data-lenis-prevent', '');
   menu.setAttribute('role', 'dialog'); menu.setAttribute('aria-modal', 'true'); menu.setAttribute('aria-label', 'Menu');
   menu.innerHTML = `
+    <a class="menu-logo" href="index.html" aria-label="${tr('Laure Polin, sculptures : retour à l’accueil', 'Laure Polin, sculptures: back to the home page')}">${LP.logoHTML({ cls: 'marque-logo', sizes: '68px', alt: '', charge: 'lazy' })}</a>
     <button class="outil fermer" type="button" data-menu-fermer aria-label="${tr('Fermer le menu', 'Close the menu')}">${ICO.croix}</button>
-    ${['ardoise', 'bronze', 'pneu', 'petits-formats', 'collection'].map((k) => `<a href="salle.html?s=${k}">${LP.NOMS_SERIES[k]}<small>${LP.serie(k).length}</small></a>`).join('')}
+    <p class="menu-titre mini">${tr('Les salles', 'The rooms')}</p>
+    ${LP.SALLES.map((k) => `<a class="menu-salle" href="salle.html?s=${k}"${k === 'collection' ? '' : ` aria-label="${LP.NOMS_SERIES[k]}, ${LP.oeuvresTxt(LP.serie(k).length)}"`}><span>${LP.NOMS_SERIES[k]}</span>${k === 'collection' ? '' : `<small class="chiffres" aria-hidden="true">${LP.serie(k).length}</small>`}</a>`).join('')}
     <span class="menu-sep" aria-hidden="true"></span>
     <a class="menu-second" href="index.html#livre">${tr('Le livre', 'The book')}</a><a class="menu-second" href="index.html#ou-voir">${tr('Expositions', 'Exhibitions')}</a><a class="menu-second" href="index.html#contact">Contact</a>
     <div class="langues langues--menu" role="group" aria-label="Langue / Language">${boutonsLangue()}</div>`;
@@ -243,7 +262,7 @@ function monterChrome() {
     btnMenu.setAttribute('aria-expanded', String(on));
     LP.isoler(menu, on);
     menu.inert = !on;
-    if (on) { LP.lenis?.stop(); menu.querySelector('a').focus(); } else { LP.lenis?.start(); btnMenu.focus(); }
+    if (on) { LP.lenis?.stop(); menu.querySelector('.menu-salle').focus(); } else { LP.lenis?.start(); btnMenu.focus(); }
   };
   btnMenu.addEventListener('click', () => ouvrirMenu(true));
   menu.querySelector('[data-menu-fermer]').addEventListener('click', () => ouvrirMenu(false));
@@ -564,7 +583,10 @@ function monterTransitions() {
   addEventListener('pageshow', (e) => { if (e.persisted) gsap.set(lames, { scaleX: 0 }); });
 }
 
-/* ---------- ouverture : le nom ecrit a la craie, poussiere, feuillets ---------- */
+/* ---------- ouverture : le logo apparait, reste lisible, puis l'ardoise s'ouvre en feuillets ----------
+   Rythme : apparition 0,9 s, logo pleinement visible environ 1,6 s, sortie 0,45 s, feuillets 0,85 s.
+   Seulement a la premiere visite de la session ; un toucher ou une touche la passe ; jamais si
+   l'appareil demande de reduire les animations. */
 function ouverture() {
   return new Promise((resoudre) => {
     const premiere = memo.session('lp-vu') !== '1';
@@ -578,7 +600,7 @@ function ouverture() {
     o.innerHTML = `${feuillets}
       <svg width="0" height="0" style="position:absolute"><filter id="craie"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter></svg>
       <div class="scene"><div class="signature">
-        <div class="nom">${'Laure Polin'.split('').map((c) => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>
+        ${LP.logoHTML({ cls: 'logo-ouverture', sizes: '(max-width: 600px) 46vw, 260px', alt: '' })}
         <svg class="trait" viewBox="0 0 400 14" preserveAspectRatio="none"><path d="M4 9 C 90 3, 210 13, 396 5"/></svg>
       </div></div>
       <div class="compteur chiffres">${tr('Sculptures, Bagnolet', 'Sculptures, Bagnolet, France')}</div>
@@ -587,7 +609,7 @@ function ouverture() {
     const chemin = o.querySelector('.trait path');
     const L = chemin.getTotalLength();
     gsap.set(chemin, { strokeDasharray: L, strokeDashoffset: L });
-    const lettres = o.querySelectorAll('.nom span');
+    const logo = o.querySelector('.logo-ouverture');
     const cv = o.querySelector('canvas');
     const ctx = cv.getContext('2d');
     const dpr = Math.min(2, devicePixelRatio || 1);
@@ -614,14 +636,14 @@ function ouverture() {
     const passer = () => { if (tl.progress() < 1) tl.progress(1); };
     addEventListener('pointerdown', passer, { once: true });
     addEventListener('keydown', passer, { once: true });
-    tl.from(lettres, { opacity: 0, y: 18, filter: 'blur(8px)', duration: 0.6, stagger: 0.035, ease: 'power3.out' }, 0.05)
-      .to(chemin, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' }, 0.35)
-      .add(souffle, 1.1)
-      .to(o.querySelector('.signature'), { opacity: 0, scale: 0.96, filter: 'blur(8px)', duration: 0.4, ease: 'power2.in' }, 1.1)
-      .add(() => resoudre(), 1.2)
+    tl.from(logo, { opacity: 0, y: 16, filter: 'blur(8px)', duration: 0.9, ease: 'power3.out' }, 0.05)
+      .to(chemin, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, 0.5)
+      .add(souffle, 2.5)
+      .to(o.querySelector('.signature'), { opacity: 0, scale: 0.97, filter: 'blur(8px)', duration: 0.45, ease: 'power2.in' }, 2.5)
+      .add(() => resoudre(), 2.6)
       .to(o.querySelectorAll('.feuillet'), {
         xPercent: (i) => (i % 2 ? 104 : -104), duration: 0.85, ease: 'expo.inOut', stagger: { each: 0.04, from: 'center' },
-      }, 1.15);
+      }, 2.55);
   });
 }
 
@@ -629,6 +651,8 @@ function ouverture() {
 function monterPied() {
   const pied = document.querySelector('.pied');
   if (!pied) return;
+  // le logo officiel signe aussi le pied de page
+  pied.querySelector('.bas')?.insertAdjacentHTML('afterbegin', `<a class="pied-logo" href="index.html" aria-label="${tr('Laure Polin, sculptures : retour à l’accueil', 'Laure Polin, sculptures: back to the home page')}">${LP.logoHTML({ cls: 'marque-logo', sizes: '96px', alt: '', charge: 'lazy' })}</a>`);
   const zone = pied.querySelector('[data-grand-nom]');
   if (zone) {
     zone.innerHTML = `<svg viewBox="-20 0 ${NOM.w + 40} ${NOM.h}" role="img" aria-label="Laure Polin">${NOM.paths.map((d) => `<path d="${d}"/>`).join('')}</svg>`;

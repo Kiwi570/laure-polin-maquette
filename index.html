@@ -19,13 +19,13 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Laure Polin","jobTitle":"Sculptrice","url":"https://www.sculptures-fr.com","email":"contact@sculptures-fr.com","telephone":"+33677805960","address":{"@type":"PostalAddress","streetAddress":"51 rue Lénine","postalCode":"93170","addressLocality":"Bagnolet","addressCountry":"FR"},"sameAs":["https://www.instagram.com/laurepolin/","https://www.facebook.com/sculptureslaure/","https://www.riseart.com/fr/artiste/130832/laure-polin","https://www.majestic-gallery.com/collections/laure-polin"]}</script>
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-tight.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/oeuvres/harmonie/harmonie-01-800.webp" as="image" fetchpriority="high">
   <link rel="stylesheet" href="assets/vendor/lenis.css">
-  <link rel="stylesheet" href="assets/css/site.css?v=20261028-2">
+  <link rel="stylesheet" href="assets/css/site.css?v=20261103-1">
   <noscript><style>.matieres .piste { height: auto; overflow: visible; } .matiere { position: relative; inset: auto; min-height: 100svh; }</style></noscript>
 </head>
 <body data-page="accueil">
@@ -85,13 +85,14 @@
     </div>
   </section>
 
-  <!-- Trois matieres : coulee de bronze, feuilletage d'ardoise, empreinte de pneu -->
-  <section class="matieres" id="matieres" aria-label="Les trois matières" data-en-aria-label="The three materials">
+  <!-- Les salles : coulee de bronze, feuilletage d'ardoise, empreinte de pneu, puis les petits formats -->
+  <section class="matieres" id="matieres" aria-label="Les salles" data-en-aria-label="The rooms">
     <div class="piste" data-piste-matieres>
-      <nav class="index-matieres" data-index-matieres aria-label="Aller à une matière" data-en-aria-label="Go to a material">
+      <nav class="index-matieres" data-index-matieres aria-label="Aller à une salle" data-en-aria-label="Go to a room">
         <button type="button" aria-current="true"><span>Bronze</span></button>
         <button type="button" aria-current="false"><span data-en="Slate">Ardoise</span></button>
         <button type="button" aria-current="false"><span data-en="Tyre">Pneu</span></button>
+        <button type="button" aria-current="false"><span data-en="Small works">Petits formats</span></button>
       </nav>
       <article class="matiere" data-matiere="bronze" aria-labelledby="m-bronze">
         <div class="fond-image" aria-hidden="true"><img src="assets/img/ambiance/g-bronze-fusion-16x9.webp" alt="" loading="lazy"></div>
@@ -135,6 +136,20 @@
           <div class="trio" data-trio="racines-d-asphalte,le-de-du-chaos,paix-en-tension"></div>
         </div>
       </article>
+      <article class="matiere" data-matiere="petits-formats" aria-labelledby="m-petits">
+        <div class="fond-image" aria-hidden="true"><img src="assets/img/ambiance/g-ardoise-relief-16x9.webp" alt="" loading="lazy"></div>
+        <div class="contenu">
+          <div>
+            <h2 class="mot-matiere mot-petits" id="m-petits" data-mot-petits data-en="Small&lt;br&gt;works">Petits<br>formats</h2>
+            <div class="infos">
+              <p class="nombre chiffres"><span class="compte" data-compte-serie="petits-formats">13</span> <span data-en="works">œuvres</span></p>
+              <p data-en="Discover a selection of sculptures at affordable prices.">Découvrez ici une sélection de sculptures à petit prix.</p>
+              <a class="bouton" href="salle.html?s=petits-formats"><span data-en="Enter the Small works room">Entrer dans la salle Petits formats</span></a>
+            </div>
+          </div>
+          <div class="trio" data-trio="profil,dans-les-nuages,la-baigneuse"></div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -149,23 +164,12 @@
     <div class="piste-scroll"><div class="piste-h" data-piste-dispo></div></div>
   </section>
 
-  <!-- Petits formats -->
-  <section class="section petits" id="petits" aria-labelledby="titre-petits">
-    <div class="contenu">
-      <div class="intertitre">
-        <h2 id="titre-petits" data-clive data-en="Small works">Petits formats</h2>
-        <p><span data-en="Slate pieces from 20 to 40 cm, on bases of wood, marble or Plexiglas.">Des ardoises de 20 à 40 cm, sur socle de bois, de marbre ou de plexiglas.</span> <span data-prix-min></span></p>
-      </div>
-      <div class="grille-petits" data-grille-petits></div>
-    </div>
-  </section>
-
   <!-- Collection privee : deux bandes en sens contraire -->
   <section class="section collection" id="collection" aria-labelledby="titre-collection" style="padding-left:0;padding-right:0">
     <div class="contenu">
       <div class="intertitre">
         <h2 id="titre-collection" data-clive data-en="Private collection">Collection privée</h2>
-        <p><span data-nb-collection>60</span> <span data-en="works have already joined private collections. They remain on view here.">œuvres ont déjà rejoint des collections particulières. Elles restent visibles ici.</span></p>
+        <p data-en="These works have joined private collections. They remain on view here.">Ces œuvres ont rejoint des collections privées. Elles restent à découvrir ici.</p>
       </div>
     </div>
     <div class="bandeau"><div class="rail" data-rail="1"></div></div>
@@ -205,13 +209,14 @@
   <!-- Ou voir les oeuvres -->
   <section class="section ou-voir" id="ou-voir" aria-labelledby="titre-ouvoir">
     <div class="contenu">
-      <div class="intertitre"><h2 id="titre-ouvoir" data-clive data-en="Where to see the works">Où voir les œuvres</h2></div>
+      <div class="intertitre"><h2 id="titre-ouvoir" data-clive data-en="Where to see the works">Où voir les œuvres</h2><p data-en="Today: the studio in Bagnolet, by appointment, and the places that show the sculptures all year round.">Aujourd’hui&nbsp;: l’atelier de Bagnolet, sur rendez-vous, et les lieux qui présentent les sculptures toute l’année.</p></div>
       <div class="rang">
         <div class="carte-fr" data-carte-fr></div>
         <div class="lieux">
           <div class="lieu">
             <h3 data-en="Bagnolet studio">Atelier de Bagnolet</h3><span class="passe" data-en="Seine-Saint-Denis, east of Paris">Seine-Saint-Denis</span>
-            <p data-en="51 rue Lénine, 93170 Bagnolet, France. Visits: &lt;span class=&quot;a-completer&quot;&gt;arrangements and opening hours to be completed&lt;/span&gt;">51 rue Lénine, 93170 Bagnolet. Visites&nbsp;: <span class="a-completer">modalités et horaires à compléter</span></p>
+            <p data-en="51 rue Lénine, 93170 Bagnolet, France.&lt;br&gt;Studio visits by appointment. To arrange a visit: &lt;a class=&quot;lien chiffres tel&quot; href=&quot;tel:+33677805960&quot;&gt;+33 6 77 80 59 60&lt;/a&gt;.">51 rue Lénine, 93170 Bagnolet.<br>Visites de l’atelier sur rendez-vous. Pour convenir d’une visite&nbsp;: <a class="lien chiffres tel" href="tel:+33677805960">06 77 80 59 60</a>.</p>
+            <p><a class="lien mini" href="https://www.google.com/maps/dir/?api=1&amp;destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France" target="_blank" rel="noopener" data-en="Directions to the studio&lt;span class=&quot;sr&quot;&gt; (Google Maps, new tab)&lt;/span&gt;">Itinéraire vers l’atelier<span class="sr"> (Google Maps, nouvel onglet)</span></a></p>
           </div>
           <div class="lieu">
             <h3 data-en="Majestic Gallery">Galerie Majestic</h3><a class="lien mini" href="https://www.majestic-gallery.com/collections/laure-polin" target="_blank" rel="noopener" data-en="See the gallery&lt;span class=&quot;sr&quot;&gt; Majestic (new tab)&lt;/span&gt;">Voir la galerie<span class="sr"> Majestic</span><span class="sr"> (nouvel onglet)</span></a>
@@ -221,18 +226,22 @@
             <h3>Rise Art</h3><a class="lien mini" href="https://www.riseart.com/fr/artiste/130832/laure-polin" target="_blank" rel="noopener" data-en="See the page&lt;span class=&quot;sr&quot;&gt; Rise Art (new tab)&lt;/span&gt;">Voir la page<span class="sr"> Rise Art</span><span class="sr"> (nouvel onglet)</span></a>
             <p data-en="Works shown on the online contemporary art platform.">Œuvres présentées sur la plateforme d’art contemporain en ligne.</p>
           </div>
-          <div class="lieu">
-            <h3>Vendée Art Show 2025</h3><span class="passe" data-en="Past fair">Salon passé</span>
-            <p data-en="31 October to 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne.">Du 31 octobre au 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne.</p>
+          <!-- expositions en cours ou a venir : classees par leurs dates dans accueil.js -->
+          <div class="lieu lieu-expos" data-expos-actuelles>
+            <h3 data-en="Exhibitions and fairs">Expositions et salons</h3><span class="passe" data-en="Current and upcoming">En cours et à venir</span>
+            <p data-en="No exhibition is announced for the moment. Upcoming dates will be published here.">Aucune exposition n’est annoncée pour le moment. Les prochaines dates seront publiées ici.</p>
           </div>
-          <div class="lieu">
-            <h3 data-en="Upcoming fairs">Prochains salons</h3><span class="passe" data-en="Coming soon">À venir</span>
-            <p><span class="a-completer" data-en="Dates, venues and ticket links to be completed">Dates, lieux et liens de billetterie à compléter</span></p>
-          </div>
-          <figure class="affiche">
-            <img src="assets/img/site/vendee-art-show-2025-1121.webp" alt="Affiche du Vendée Art Show, 31 octobre, 1er et 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne." data-en-alt="Poster for the Vendée Art Show, 31 October, 1 and 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne." loading="lazy" width="1121" height="598">
-          </figure>
         </div>
+      </div>
+      <!-- historique : les evenements termines restent consultables, sans etre presentes comme des destinations -->
+      <div class="expos-passees" data-expos-passees>
+        <h3 data-en="Past exhibitions">Expositions passées</h3>
+        <ul class="liste-passees">
+          <li class="expo-passee">
+            <img src="assets/img/site/vendee-art-show-2025-1121.webp" alt="Affiche du Vendée Art Show, 31 octobre, 1er et 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne." data-en-alt="Poster for the Vendée Art Show, 31 October, 1 and 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne." loading="lazy" width="1121" height="598">
+            <div><strong>Vendée Art Show 2025</strong><span data-en="31 October to 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne.">Du 31 octobre au 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne.</span></div>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -252,7 +261,8 @@
             <a class="lien chiffres tel" href="tel:+33677805960">+33 6 77 80 59 60</a>
             <a class="lien" href="mailto:contact@sculptures-fr.com">contact@sculptures-fr.com</a>
           </div>
-          <p class="ouvert" data-ouvert><i></i><span data-en="Studio opening hours to be completed">Horaires de l’atelier à compléter</span></p>
+          <p class="visites" data-en="Studio visits by appointment. To arrange a visit: &lt;a class=&quot;lien chiffres tel&quot; href=&quot;tel:+33677805960&quot;&gt;+33 6 77 80 59 60&lt;/a&gt;.">Visites de l’atelier sur rendez-vous. Pour convenir d’une visite&nbsp;: <a class="lien chiffres tel" href="tel:+33677805960">06 77 80 59 60</a>.</p>
+          <p><a class="lien mini" href="https://www.google.com/maps/dir/?api=1&amp;destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France" target="_blank" rel="noopener" data-en="Directions to the studio&lt;span class=&quot;sr&quot;&gt; (Google Maps, new tab)&lt;/span&gt;">Itinéraire vers l’atelier<span class="sr"> (Google Maps, nouvel onglet)</span></a></p>
           <div class="plan" data-plan></div>
           <div class="actions">
             <a class="bouton" href="https://www.instagram.com/laurepolin/" target="_blank" rel="noopener"><span>Instagram</span></a>
@@ -300,7 +310,7 @@
 <script src="assets/vendor/gsap.min.js"></script>
 <script src="assets/vendor/ScrollTrigger.min.js"></script>
 <script src="assets/vendor/CustomEase.min.js"></script>
-<script src="data/oeuvres.js?v=20261028-2"></script>
-<script type="module" src="assets/js/accueil.js?v=20261028-2"></script>
+<script src="data/oeuvres.js?v=20261103-1"></script>
+<script type="module" src="assets/js/accueil.js?v=20261103-1"></script>
 </body>
 </html>

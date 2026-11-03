@@ -1243,16 +1243,16 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/entre-deux-silences/entre-deux-silences-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+600
 ],
 [
 1600,
-1600
+1200
 ]
 ],
 "fond": "#cec9c1",
@@ -1261,16 +1261,16 @@ window.OEUVRES = [
 ],
 "detoure": {
 "src": "img/oeuvres/entre-deux-silences/entre-deux-silences-detoure",
-"w": 1287,
-"h": 695,
+"w": 695,
+"h": 1287,
 "tailles": [
 [
 600,
-600
+324
 ],
 [
 1200,
-1200
+648
 ]
 ],
 "couleur": "#28282b"
@@ -2245,16 +2245,16 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/grosse-fatigue/grosse-fatigue-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+600
 ],
 [
 1600,
-1600
+1200
 ]
 ],
 "fond": "#d4c5b7",
@@ -2262,16 +2262,16 @@ window.OEUVRES = [
 },
 {
 "src": "img/oeuvres/grosse-fatigue/grosse-fatigue-02",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+600
 ],
 [
 1600,
-1600
+1200
 ]
 ],
 "fond": "#d2c4b4",
@@ -2280,16 +2280,16 @@ window.OEUVRES = [
 ],
 "detoure": {
 "src": "img/oeuvres/grosse-fatigue/grosse-fatigue-detoure",
-"w": 1558,
-"h": 385,
+"w": 385,
+"h": 1558,
 "tailles": [
 [
 600,
-600
+148
 ],
 [
 1200,
-1200
+297
 ]
 ],
 "couleur": "#352d23"
@@ -2623,12 +2623,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/inspiration/inspiration-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+525
 ]
 ],
 "fond": "#bfbdbe",
@@ -2689,16 +2689,16 @@ window.OEUVRES = [
 },
 {
 "src": "img/oeuvres/introspection/introspection-02",
-"w": 1600,
-"h": 720,
+"w": 720,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+360
 ],
 [
 1600,
-1600
+720
 ]
 ],
 "fond": "#d6d4ce",
@@ -3081,16 +3081,16 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/l-aplomb-de-la-jeunesse-1/l-aplomb-de-la-jeunesse-1-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+600
 ],
 [
 1600,
-1600
+1200
 ]
 ],
 "fond": "#d7cdca",
@@ -3099,16 +3099,16 @@ window.OEUVRES = [
 ],
 "detoure": {
 "src": "img/oeuvres/l-aplomb-de-la-jeunesse-1/l-aplomb-de-la-jeunesse-1-detoure",
-"w": 1571,
-"h": 594,
+"w": 594,
+"h": 1571,
 "tailles": [
 [
 600,
-600
+227
 ],
 [
 1200,
-1200
+454
 ]
 ],
 "couleur": "#373031"
@@ -3313,20 +3313,20 @@ window.OEUVRES = [
 },
 {
 "src": "img/oeuvres/l-ardoisier/l-ardoisier-09",
-"w": 2600,
-"h": 1171,
+"w": 1171,
+"h": 2600,
 "tailles": [
 [
 800,
-800
+360
 ],
 [
 1400,
-1400
+631
 ],
 [
 2200,
-2200
+991
 ]
 ],
 "fond": "#9b9490",
@@ -3977,12 +3977,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/la-memoire/la-memoire-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+525
 ]
 ],
 "fond": "#b4a788",
@@ -4024,16 +4024,16 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/la-mysterieuse/la-mysterieuse-01",
-"w": 1600,
-"h": 739,
+"w": 739,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+370
 ],
 [
 1600,
-1600
+739
 ]
 ],
 "fond": "#bcbfbf",
@@ -4042,16 +4042,16 @@ window.OEUVRES = [
 ],
 "detoure": {
 "src": "img/oeuvres/la-mysterieuse/la-mysterieuse-detoure",
-"w": 1131,
-"h": 549,
+"w": 549,
+"h": 1131,
 "tailles": [
 [
 600,
-600
+291
 ],
 [
 1200,
-1131
+549
 ]
 ],
 "couleur": "#202125"
@@ -4709,12 +4709,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/le-gardien/le-gardien-01",
-"w": 1600,
-"h": 777,
+"w": 777,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+340
 ]
 ],
 "fond": "#d7d4d1",
@@ -5770,12 +5770,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/parure-de-fete/parure-de-fete-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+525
 ]
 ],
 "fond": "#cfcdcb",
@@ -6092,12 +6092,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/poisson-abyssal/poisson-abyssal-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+525
 ]
 ],
 "fond": "#d5b7a6",
@@ -6678,12 +6678,12 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/sablier-infini/sablier-infini-01",
-"w": 1600,
-"h": 1200,
+"w": 1200,
+"h": 1600,
 "tailles": [
 [
 700,
-700
+525
 ]
 ],
 "fond": "#afa8a5",
@@ -7181,16 +7181,16 @@ window.OEUVRES = [
 "photos": [
 {
 "src": "img/oeuvres/virevolte/virevolte-01",
-"w": 1600,
-"h": 777,
+"w": 777,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+388
 ],
 [
 1600,
-1600
+777
 ]
 ],
 "fond": "#d7d0cd",
@@ -7198,16 +7198,16 @@ window.OEUVRES = [
 },
 {
 "src": "img/oeuvres/virevolte/virevolte-02",
-"w": 1600,
-"h": 777,
+"w": 777,
+"h": 1600,
 "tailles": [
 [
 800,
-800
+388
 ],
 [
 1600,
-1600
+777
 ]
 ],
 "fond": "#ddd5cf",
@@ -7216,16 +7216,16 @@ window.OEUVRES = [
 ],
 "detoure": {
 "src": "img/oeuvres/virevolte/virevolte-detoure",
-"w": 1295,
-"h": 458,
+"w": 458,
+"h": 1295,
 "tailles": [
 [
 600,
-600
+212
 ],
 [
 1200,
-1200
+424
 ]
 ],
 "couleur": "#463e3c"

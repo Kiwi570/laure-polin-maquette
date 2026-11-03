@@ -1,7 +1,7 @@
 /* Salle d'exposition : une serie, en defilement horizontal ou en grille, avec filtres. */
-import LP, { demarrer } from './base.js?v=20261028-2';
-import { fondArdoise } from './ardoise-gl.js?v=20261028-2';
-import { carteOeuvre, imgOeuvre, teinteSombre } from './cartes.js?v=20261028-2';
+import LP, { demarrer } from './base.js?v=20261103-1';
+import { fondArdoise } from './ardoise-gl.js?v=20261103-1';
+import { carteOeuvre, imgOeuvre, teinteSombre } from './cartes.js?v=20261103-1';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;
@@ -36,14 +36,14 @@ const SALLES = {
   },
   'petits-formats': {
     nom: LP.NOMS_SERIES['petits-formats'], fond: 'g-ardoise-relief-16x9', fondMobile: 'g-ardoise-relief-9x16', couleur: '#a7b8c7',
-    intro: tr('Des ardoises de 20 à 40 cm, sur socle de bois, de marbre ou de plexiglas.', 'Slate pieces from 20 to 40 cm, on bases of wood, marble or Plexiglas.'),
+    intro: tr('Découvrez ici une sélection de sculptures à petit prix.', 'Discover a selection of sculptures at affordable prices.'),
     citation: tr('Dans les courbes et les déliés naissent des visages, des corps, des sensations, des mouvements, des rythmes.', 'In the curves and flowing lines, faces, bodies, sensations, movements and rhythms are born.'),
     imgCitation: 'oeuvres/introspection/introspection-02', altCitation: tr('Détail d’Introspection : un visage affleure dans l’ardoise.', 'Detail of Introspection: a face surfaces in the slate.'),
   },
   collection: {
     nom: LP.NOMS_SERIES.collection, fond: 'g-salle-socles-16x9', couleur: '#8a929b',
-    intro: tr('Ces œuvres ont rejoint des collections particulières. Elles restent visibles ici ; certaines existent en d’autres tirages, renseignez-vous auprès de Laure Polin.',
-      'These works have joined private collections. They remain on view here; some exist in other casts, so ask Laure Polin.'),
+    intro: tr('Ces œuvres ont rejoint des collections privées. Elles restent à découvrir ici. Certaines existent en d’autres tirages : renseignez-vous auprès de Laure Polin.',
+      'These works have joined private collections. They remain on view here. Some exist in other casts: ask Laure Polin.'),
     citation: tr('La sculpture me conduit dans des territoires de recherche, sans a priori, où je vais trouver le chemin qui va matérialiser ce flux qui me traverse en modelant la matière.',
       'Sculpture leads me into territories of exploration, without preconceptions, where I find the path that will give material form to the flow running through me as I model the material.'),
     imgCitation: 'site/laure-polin-exposition', altCitation: tr('Laure Polin parmi ses sculptures.', 'Laure Polin among her sculptures.'),
@@ -54,22 +54,25 @@ const q = new URLSearchParams(location.search);
 const cle = SALLES[q.get('s')] ? q.get('s') : 'ardoise';
 const S = SALLES[cle];
 const OEUVRES = LP.serie(cle);
+// la collection privee n'affiche aucun nombre d'oeuvres (entree, filtres, reperes, description)
+const SANS_COMPTE = cle === 'collection';
 document.title = tr(`Salle ${S.nom} — Laure Polin, sculptures`, `${S.nom} room — Laure Polin, sculptures`);
-document.querySelector('meta[name="description"]')?.setAttribute('content', tr(`${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`, `${S.nom}: ${OEUVRES.length} sculptures by Laure Polin. ${S.intro}`));
+document.querySelector('meta[name="description"]')?.setAttribute('content', SANS_COMPTE
+  ? tr(`${S.nom} : sculptures de Laure Polin. ${S.intro}`, `${S.nom}: sculptures by Laure Polin. ${S.intro}`)
+  : tr(`${S.nom} : ${OEUVRES.length} sculptures de Laure Polin. ${S.intro}`, `${S.nom}: ${OEUVRES.length} sculptures by Laure Polin. ${S.intro}`));
 
 /* ---------- entree ---------- */
 const fondImg = $('[data-fond-salle]');
 fondImg.src = `assets/img/ambiance/${innerWidth < innerHeight && S.fondMobile ? S.fondMobile : S.fond}.webp`;
 $('[data-fil-salle]').textContent = S.nom;
 $('[data-titre-salle]').textContent = S.nom;
-$('[data-compte-salle]').textContent = OEUVRES.length;
-$('[data-compte-salle] + small').textContent = OEUVRES.length > 1 ? tr('œuvres dans la salle', 'works in the room') : tr('œuvre dans la salle', 'work in the room');
-let intro = S.intro;
-if (cle === 'petits-formats') {
-  const min = Math.min(...OEUVRES.filter((x) => x.statut === 'disponible' && x.prix).map((x) => x.prix));
-  intro += tr(` À partir de ${LP.prix(min)}.`, ` From ${LP.prix(min)}.`);
+if (SANS_COMPTE) $('.compte-grand').remove();
+else {
+  $('[data-compte-salle]').textContent = OEUVRES.length;
+  $('[data-compte-salle] + small').textContent = OEUVRES.length > 1 ? tr('œuvres dans la salle', 'works in the room') : tr('œuvre dans la salle', 'work in the room');
 }
-$('[data-intro-salle]').textContent = intro;
+// (Petits formats : plus de mention « À partir de … € » ; les prix restent sur chaque oeuvre)
+$('[data-intro-salle]').textContent = S.intro;
 $('[data-citation]').textContent = tr(`« ${S.citation} »`, `“${S.citation}”`);
 const ic = $('[data-image-citation]');
 ic.src = `assets/img/${S.imgCitation}-800.webp`;
@@ -89,6 +92,7 @@ LP.pret.then(() => {
   tlTitre && tlTitre.play();
   gsap.to(['.fil', '.salle-entree .bas > *'], { opacity: 1, y: 0, duration: 1, stagger: 0.12, delay: 0.5, ease: 'power3.out' });
   // compteur qui defile
+  if (SANS_COMPTE) return;
   const n = { v: 0 };
   gsap.to(n, { v: OEUVRES.length, duration: 1.6, delay: 0.6, ease: 'power2.out', onUpdate: () => { $('[data-compte-salle]').textContent = Math.round(n.v); } });
 });
@@ -141,7 +145,7 @@ function nettoyer() {
 function rendre(defiler = false) {
   const liste = filtrer();
   $$('[data-vue]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.vue === etat.vue)));
-  $('[data-nb-affiche]').textContent = LP.oeuvresTxt(liste.length);
+  $('[data-nb-affiche]').textContent = SANS_COMPTE ? '' : LP.oeuvresTxt(liste.length);
   nettoyer();
   if (!liste.length) {
     zone.innerHTML = `<div class="vide-filtres"><p class="lead">${tr('Aucune œuvre ne correspond à ces filtres.', 'No work matches these filters.')}</p><button class="bouton" type="button" data-raz><span>${tr('Afficher toute la salle', 'Show the whole room')}</span></button></div>`;
@@ -192,7 +196,7 @@ function salleHorizontale(liste) {
       <button class="outil" type="button" data-hud="1" aria-label="${tr('Œuvre suivante', 'Next work')}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" fill="none"/></svg></button>
       <span class="hud-barre" aria-hidden="true"><i data-hud-barre></i></span></div>`);
     const hudN = $('[data-hud-n]', zone); const hudT = $('[data-hud-t]', zone); const hudB = $('[data-hud-barre]', zone);
-    const majHud = (c) => { const k = cartes.indexOf(c); hudN.textContent = `${k + 1} / ${cartes.length}`; hudT.textContent = LP.parId[c.dataset.id]?.titre || ''; };
+    const majHud = (c) => { const k = cartes.indexOf(c); hudN.textContent = SANS_COMPTE ? '' : `${k + 1} / ${cartes.length}`; hudT.textContent = LP.parId[c.dataset.id]?.titre || ''; };
     st = ScrollTrigger.create({
       trigger: zone, start: 'top top', end: () => `+=${Math.max(distance(), 10)}`, pin: true, scrub: 0.6, animation: tw, invalidateOnRefresh: true, anticipatePin: 1,
       onUpdate: (self) => {
@@ -235,14 +239,15 @@ function grille(liste) {
   if (!calme) gsap.from($$('.oeuvre-carte', g), { y: 50, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: { each: 0.05, grid: 'auto' }, scrollTrigger: { trigger: g, start: 'top 85%', once: true } });
 }
 
-/* ---------- autres salles ---------- */
+/* ---------- autres salles : toutes les autres, dans l'ordre commun des navigations ---------- */
 const VEDETTES = { ardoise: 'a-contre-courant', bronze: 'la-danse', pneu: 'paix-en-tension', 'petits-formats': 'profil', collection: 'energies' };
-$('[data-autres]').innerHTML = Object.keys(SALLES).filter((k) => k !== cle).slice(0, 3).map((k) => {
+$('[data-autres]').innerHTML = LP.SALLES.filter((k) => k !== cle && SALLES[k]).map((k) => {
   const v = LP.parId[VEDETTES[k]];
+  const n = LP.compteSalle(k);
   return `<a class="carte-salle" href="salle.html?s=${k}" data-tilt>
     <div class="fond-image" aria-hidden="true"><img src="assets/img/ambiance/${SALLES[k].fond}.webp" alt="" loading="lazy"></div>
-    ${v ? imgOeuvre(v, { sizes: '20vw' }) : ''}
-    <h3>${SALLES[k].nom}</h3><span class="mini">${LP.oeuvresTxt(LP.serie(k).length)}</span></a>`;
+    ${v ? imgOeuvre(v, { sizes: '(max-width: 600px) 60vw, 20vw' }) : ''}
+    <h3>${SALLES[k].nom}</h3>${n ? `<span class="mini">${n}</span>` : ''}</a>`;
 }).join('');
 $$('.autres-salles [data-clive]').forEach((t) => LP.cliver(t, { strates: 4, ecart: 70 }));
 LP.inclinaison();

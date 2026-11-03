@@ -1,5 +1,5 @@
 /* Gabarits communs : image d'oeuvre, carte de salle, carte petit format, vignette. */
-import LP from './base.js?v=20261028-2';
+import LP from './base.js?v=20261103-1';
 
 const e = LP.esc;
 const tr = LP.tr;

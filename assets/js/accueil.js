@@ -1,9 +1,9 @@
 /* Accueil */
-import LP, { demarrer } from './base.js?v=20261028-2';
-import { fondArdoise } from './ardoise-gl.js?v=20261028-2';
-import { poussiere } from './poussiere.js?v=20261028-2';
-import { FRANCE, PLAN } from './formes.js?v=20261028-2';
-import { imgOeuvre, cartelHTML, carteOeuvre, cartePetit, vignette, teinteSombre, monterFormulaire } from './cartes.js?v=20261028-2';
+import LP, { demarrer } from './base.js?v=20261103-1';
+import { fondArdoise } from './ardoise-gl.js?v=20261103-1';
+import { poussiere } from './poussiere.js?v=20261103-1';
+import { FRANCE, PLAN } from './formes.js?v=20261103-1';
+import { imgOeuvre, cartelHTML, carteOeuvre, vignette, teinteSombre, monterFormulaire } from './cartes.js?v=20261103-1';
 
 demarrer();
 const { gsap, ScrollTrigger, calme, tr } = LP;
@@ -13,8 +13,8 @@ const bureau = () => !LP.etroit();
 const o = (id) => LP.parId[id];
 
 /* ---------------- compteurs reels ---------------- */
+// (la collection privee n'affiche volontairement aucun nombre d'oeuvres)
 $$('[data-compte-serie]').forEach((el) => { el.textContent = LP.serie(el.dataset.compteSerie).length; });
-$$('[data-nb-collection]').forEach((el) => { el.textContent = LP.serie('collection').length; });
 const livre = o('dialogues-sculptes');
 if (livre) $('[data-prix-livre]').textContent = LP.prix(livre.prix);
 {
@@ -61,9 +61,13 @@ if (!calme) {
   gsap.set(heroZone, { '--fond-cadre': teinteSombre(fondDe(HEROS[0]), 0.12) });
 }
 
-/* diaporama : change seul toutes les 6 secondes ; pause au survol, bouton pause, points cliquables */
-const DUREE = calme ? 8 : 6;
-let actif = 0; let enCours = false; let minuteur = null; let pauseManuelle = false; let survol = false; let visible = true;
+/* diaporama : chaque oeuvre reste pleinement visible 4 secondes, puis un fondu-glisse de 1,1 s amene la suivante
+   (cycle complet d'environ 5 s, contre 7,3 s auparavant).
+   Commandes : pause au survol et au focus, bouton pause, points cliquables, fleches du clavier, balayage au doigt.
+   Reglage « reduire les animations » : le diaporama ne defile pas seul (bouton lecture disponible), simple fondu. */
+const DUREE = 4;
+const TRANSITION = 1.1;
+let actif = 0; let enCours = false; let minuteur = null; let pauseManuelle = calme; let survol = false; let visible = true;
 const charger = (img) => {
   if (!img) return Promise.resolve();
   if (img.loading === 'lazy') img.loading = 'eager';
@@ -105,22 +109,47 @@ async function aller(n) {
   }
   // la nouvelle photo monte comme une feuille d'ardoise qu'on degage, le cadre prend ses proportions
   const fente = $('.hero-fente', cadre);
+  const T = TRANSITION;
   gsap.timeline({ onComplete: fini })
-    .to(heroZone, { '--ratio': ratioDe(x), '--fond-cadre': fondDe(x), duration: 1.3, ease: 'expo.inOut' }, 0)
-    .fromTo(nouveau, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut' }, 0)
-    .fromTo(img, { scale: 1.14, yPercent: 5 }, { scale: 1, yPercent: 0, duration: 1.7, ease: 'expo.out' }, 0.15)
-    .to($('img', ancien), { scale: 0.94, opacity: 0.35, duration: 1.3, ease: 'expo.inOut' }, 0)
-    .fromTo(fente, { top: '100%', opacity: 0 }, { top: '0%', opacity: 1, duration: 1.3, ease: 'expo.inOut' }, 0)
-    .to(fente, { opacity: 0, duration: 0.3 }, 1.05)
-    .to(cartelHero, { opacity: 0, y: -8, duration: 0.35, ease: 'power2.in' }, 0)
-    .add(() => { cartelHero.innerHTML = nouveauCartel; }, 0.4)
-    .fromTo(cartelHero, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.5);
+    .to(heroZone, { '--ratio': ratioDe(x), '--fond-cadre': fondDe(x), duration: T, ease: 'expo.inOut' }, 0)
+    .fromTo(nouveau, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: T, ease: 'expo.inOut' }, 0)
+    .fromTo(img, { scale: 1.1, yPercent: 4 }, { scale: 1, yPercent: 0, duration: T + 0.3, ease: 'expo.out' }, 0.12)
+    .to($('img', ancien), { scale: 0.95, opacity: 0.35, duration: T, ease: 'expo.inOut' }, 0)
+    .fromTo(fente, { top: '100%', opacity: 0 }, { top: '0%', opacity: 1, duration: T, ease: 'expo.inOut' }, 0)
+    .to(fente, { opacity: 0, duration: 0.3 }, T - 0.25)
+    .to(cartelHero, { opacity: 0, y: -8, duration: 0.3, ease: 'power2.in' }, 0)
+    .add(() => { cartelHero.innerHTML = nouveauCartel; }, 0.35)
+    .fromTo(cartelHero, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.45);
 }
+const suivante = (sens) => aller((actif + sens + HEROS.length) % HEROS.length);
 boutonsPoints.forEach((b, k) => b.addEventListener('click', () => aller(k)));
+// clavier : fleches gauche et droite depuis les commandes du diaporama
+pointsHero.addEventListener('keydown', (ev) => {
+  if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft') return;
+  ev.preventDefault();
+  const n = (actif + (ev.key === 'ArrowRight' ? 1 : -1) + HEROS.length) % HEROS.length;
+  aller(n); boutonsPoints[n].focus();
+});
+// toucher : un balayage horizontal sur la photo passe a l'oeuvre suivante ou precedente (sans ouvrir la fiche)
+{
+  let x0 = null; let y0 = null; let balaye = false;
+  cadre.addEventListener('pointerdown', (ev) => { if (ev.pointerType === 'mouse') return; x0 = ev.clientX; y0 = ev.clientY; balaye = false; });
+  cadre.addEventListener('pointercancel', () => { x0 = null; });
+  cadre.addEventListener('pointerup', (ev) => {
+    if (x0 === null) return;
+    const dx = ev.clientX - x0; const dy = ev.clientY - y0; x0 = null;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) { balaye = true; suivante(dx < 0 ? 1 : -1); }
+  });
+  cadre.addEventListener('click', (ev) => { if (balaye) { ev.preventDefault(); ev.stopPropagation(); balaye = false; } }, true);
+}
+const majPause = () => {
+  btnPause.setAttribute('aria-pressed', String(pauseManuelle));
+  btnPause.setAttribute('aria-label', pauseManuelle ? tr('Lancer le diaporama', 'Play the slideshow') : tr('Mettre le diaporama en pause', 'Pause the slideshow'));
+};
+majPause();
 btnPause.addEventListener('click', () => {
   pauseManuelle = !pauseManuelle;
-  btnPause.setAttribute('aria-pressed', String(pauseManuelle));
-  btnPause.setAttribute('aria-label', pauseManuelle ? tr('Relancer le diaporama', 'Play the slideshow') : tr('Mettre le diaporama en pause', 'Pause the slideshow'));
+  majPause();
   if (pauseManuelle) suspendre(); else reprendre();
 });
 if (LP.pointeurFin) {
@@ -245,13 +274,16 @@ function construireEmpreinte(svg) {
   return { tl: gsap.timeline({ paused: true, onUpdate: maj }).to(etat, { p: 1, duration: 1, ease: 'none' }) };
 }
 
-let coulee, empreinte, feuillets;
+let coulee, empreinte, feuillets, petits;
 const preparerMatieres = () => {
   coulee = construireCoulee($('[data-coulee]'));
   empreinte = construireEmpreinte($('[data-empreinte]'));
   feuillets = LP.cliver($('[data-feuillets]'), { strates: 6, ecart: 220, declencheur: false, duree: 1 });
+  // petits formats : le titre se recompose en strates plus fines, comme une piece qu'on assemble a la main
+  petits = LP.cliver($('[data-mot-petits]'), { strates: 5, ecart: 120, declencheur: false, duree: 1.1 });
 };
 
+/* les quatre salles du parcours : Bronze, Ardoise, Pneu, puis Petits formats (avant « Disponibles ») */
 function animerMatieres() {
   const panneaux = $$('.matiere');
   const index = $('[data-index-matieres]');
@@ -262,49 +294,54 @@ function animerMatieres() {
   }
   // les images des panneaux suivants se chargent avant d'etre devoilees
   ScrollTrigger.create({ trigger: '[data-piste-matieres]', start: 'top bottom+=150%', once: true, onEnter: () => $$('.matiere img[loading="lazy"]').forEach((i) => { i.loading = 'eager'; }) });
-  const jouerCoulee = () => gsap.to(coulee.tl, { progress: 1, duration: 2.6, ease: 'power1.inOut', overwrite: true });
-  const jouerFeuillets = () => feuillets && feuillets.restart();
-  const jouerEmpreinte = () => gsap.to(empreinte.tl, { progress: 1, duration: 2, ease: 'power1.inOut', overwrite: true });
+  const jouer = {
+    bronze: () => gsap.to(coulee.tl, { progress: 1, duration: 2.6, ease: 'power1.inOut', overwrite: true }),
+    ardoise: () => feuillets && feuillets.restart(),
+    pneu: () => gsap.to(empreinte.tl, { progress: 1, duration: 2, ease: 'power1.inOut', overwrite: true }),
+    'petits-formats': () => petits && petits.restart(),
+  };
+  const jouerPanneau = (p) => (jouer[p.dataset.matiere] || (() => {}))();
   // le premier panneau est complet des son arrivee a l'ecran
   gsap.from($$('.trio a', panneaux[0]), { y: 70, opacity: 0, stagger: 0.12, duration: 1.1, ease: 'power3.out', scrollTrigger: { trigger: panneaux[0], start: 'top 65%', once: true } });
-  ScrollTrigger.create({ trigger: panneaux[0], start: 'top 60%', once: true, onEnter: jouerCoulee });
+  ScrollTrigger.create({ trigger: panneaux[0], start: 'top 60%', once: true, onEnter: () => jouerPanneau(panneaux[0]) });
   if (bureau()) {
     gsap.set(panneaux.slice(1), { clipPath: 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)' });
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '[data-piste-matieres]', start: 'top top', end: '+=300%', pin: true, scrub: 0.8, anticipatePin: 1,
-        onUpdate: (st) => activer(st.progress < 0.36 ? 0 : st.progress < 0.72 ? 1 : 2),
-      },
+    const tl = gsap.timeline({ paused: true });
+    const debuts = [0]; // instant ou chaque panneau commence a se devoiler
+    tl.to({}, { duration: 0.5 });
+    panneaux.slice(1).forEach((p, i) => {
+      debuts.push(tl.duration());
+      tl.to(p, { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.7, ease: 'power2.inOut' })
+        .from($('.fond-image img', p), { scale: 1.25, duration: 0.7, ease: 'power2.out' }, '<')
+        .from($$('.trio a', p), { x: 120, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }, '<0.1')
+        .call(() => jouerPanneau(p), null, '<0.2')
+        .to({}, { duration: i === panneaux.length - 2 ? 0.45 : 0.5 });
     });
-    tl.to({}, { duration: 0.5 })
-      .to(panneaux[1], { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.7, ease: 'power2.inOut' })
-      .from($('.fond-image img', panneaux[1]), { scale: 1.25, duration: 0.7, ease: 'power2.out' }, '<')
-      .from($$('.trio a', panneaux[1]), { x: 120, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }, '<0.1')
-      .call(jouerFeuillets, null, '<0.2')
-      .to({}, { duration: 0.5 })
-      .to(panneaux[2], { clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)', duration: 0.7, ease: 'power2.inOut' })
-      .from($('.fond-image img', panneaux[2]), { scale: 1.25, duration: 0.7, ease: 'power2.out' }, '<')
-      .from($$('.trio a', panneaux[2]), { x: 120, opacity: 0, stagger: 0.08, duration: 0.6, ease: 'power2.out' }, '<0.1')
-      .call(jouerEmpreinte, null, '<0.2')
-      .to({}, { duration: 0.45 });
-    const st = tl.scrollTrigger;
+    const total = tl.duration();
+    const seuils = debuts.map((t, k) => (k ? (t + 0.35) / total : 0));
+    const actuel = (pr) => seuils.reduce((n, s, k) => (pr >= s ? k : n), 0);
+    const reperes = debuts.map((t, k) => (k ? Math.min(0.98, (t + 0.75) / total) : 0.02));
+    const st = ScrollTrigger.create({
+      trigger: '[data-piste-matieres]', start: 'top top', end: `+=${(panneaux.length - 1) * 100}%`, pin: true, scrub: 0.8, anticipatePin: 1,
+      animation: tl, onUpdate: (s) => activer(actuel(s.progress)),
+    });
     const allerPanneau = (k, doux) => {
-      const cible = st.start + (st.end - st.start) * [0.02, 0.5, 0.95][k];
+      const cible = st.start + (st.end - st.start) * reperes[k];
       if (LP.lenis) LP.lenis.scrollTo(cible, doux ? { duration: 1.4 } : { immediate: true, force: true }); else scrollTo(0, cible);
       if (!doux) { ScrollTrigger.update(); st.getTween?.()?.progress(1); }
     };
     $$('button', index).forEach((b, k) => b.addEventListener('click', () => allerPanneau(k, true)));
     // au clavier, le focus amene directement au panneau qui le contient
     panneaux.forEach((p, k) => p.addEventListener('focusin', () => {
-      const pr = st.progress; const actuel = pr < 0.36 ? 0 : pr < 0.72 ? 1 : 2;
-      if (actuel !== k || (k > 0 && !st.isActive)) allerPanneau(k, false);
+      if (actuel(st.progress) !== k || (k > 0 && !st.isActive)) allerPanneau(k, false);
     }));
     activer(0);
   } else {
     index.remove();
-    ScrollTrigger.create({ trigger: panneaux[1], start: 'top 65%', once: true, onEnter: jouerFeuillets });
-    ScrollTrigger.create({ trigger: panneaux[2], start: 'top 65%', once: true, onEnter: jouerEmpreinte });
-    panneaux.slice(1).forEach((p) => gsap.from($$('.trio a', p), { y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 60%', once: true } }));
+    panneaux.slice(1).forEach((p) => {
+      ScrollTrigger.create({ trigger: p, start: 'top 65%', once: true, onEnter: () => jouerPanneau(p) });
+      gsap.from($$('.trio a', p), { y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: p, start: 'top 60%', once: true } });
+    });
   }
 }
 
@@ -325,8 +362,14 @@ const rendreDispo = () => {
     const h = x.dimensions?.h || 40;
     const k = 0.48 + 0.52 * Math.pow(h / hMax, 0.6);
     return carteOeuvre(x, { hauteurPx: Math.round(H * k) });
-  }).join('') + `<div class="fin"><p class="lead">${tr('Toutes les œuvres sont présentées par matière, dans les salles.', 'All the works are shown by material, in the rooms.')}</p><div class="actions"><a class="bouton bouton--plein" href="salle.html?s=ardoise"><span>${tr('Salle Ardoise', 'Slate room')}</span></a><a class="bouton" href="salle.html?s=bronze"><span>${tr('Salle Bronze', 'Bronze room')}</span></a><a class="bouton" href="salle.html?s=pneu"><span>${tr('Salle Pneu', 'Tyre room')}</span></a></div></div>`;
+  }).join('') + finDispo();
 };
+// fin du parcours : les salles ou trouver toutes les oeuvres disponibles, Petits formats compris
+function finDispo() {
+  const NOMS = { ardoise: tr('Salle Ardoise', 'Slate room'), bronze: tr('Salle Bronze', 'Bronze room'), pneu: tr('Salle Pneu', 'Tyre room'), 'petits-formats': tr('Salle Petits formats', 'Small works room') };
+  const liens = LP.SALLES.filter((k) => NOMS[k]).map((k, i) => `<a class="bouton${i === 0 ? ' bouton--plein' : ''}" href="salle.html?s=${k}"><span>${NOMS[k]}</span></a>`).join('');
+  return `<div class="fin"><p class="lead">${tr('Toutes les œuvres sont à découvrir dans les salles.', 'All the works can be seen in the rooms.')}</p><nav class="actions" aria-label="${tr('Les salles', 'The rooms')}">${liens}</nav></div>`;
+}
 rendreDispo();
 function animerDispo() {
   const sec = $('#disponibles');
@@ -365,14 +408,7 @@ function animerDispo() {
   });
 }
 
-/* ---------------- petits formats ---------------- */
-const PETITS = LP.serie('petits-formats');
-$('[data-grille-petits]').innerHTML = PETITS.map(cartePetit).join('');
-const prixMin = Math.min(...PETITS.filter((x) => x.statut === 'disponible' && x.prix).map((x) => x.prix));
-$('[data-prix-min]').textContent = tr(`À partir de ${LP.prix(prixMin)}.`, `From ${LP.prix(prixMin)}.`);
-if (!calme) {
-  gsap.from('.carte-petit', { y: 60, opacity: 0, rotationX: -12, transformOrigin: '50% 100%', duration: 1, stagger: { each: 0.06, grid: 'auto', from: 'start' }, ease: 'power3.out', scrollTrigger: { trigger: '[data-grille-petits]', start: 'top 80%', once: true } });
-}
+/* (Petits formats : desormais quatrieme salle du parcours, plus haut ; plus de section separee) */
 
 /* ---------------- collection privee : deux rails ---------------- */
 const COLL = LP.serie('collection').filter((x) => x.photos.length);
@@ -420,27 +456,48 @@ if (!calme) {
 /* ---------------- carte de France ---------------- */
 function construireCarte() {
   const z = $('[data-carte-fr]');
-  const P = FRANCE.pts;
-  const [bx, by] = P.bagnolet; const [sx, sy] = P.sables;
-  const cx = (bx + sx) / 2 - 40; const cy = (by + sy) / 2 - 140;
-  z.innerHTML = `<svg viewBox="0 0 ${FRANCE.w} ${FRANCE.h}" role="img" aria-label="${tr('Carte de France : l’atelier à Bagnolet et le salon des Sables-d’Olonne', 'Map of France: the studio in Bagnolet and the fair in Les Sables-d’Olonne')}">
+  // carte illustrative : le contour de la France et l'atelier. Aucun itineraire n'est calcule ;
+  // l'ancien trait pointille vers Les Sables-d'Olonne (salon passe) etait un simple trace decoratif, il est retire.
+  const [bx, by] = FRANCE.pts.bagnolet;
+  z.innerHTML = `<svg viewBox="0 0 ${FRANCE.w} ${FRANCE.h}" role="img" aria-label="${tr('Carte de France : l’atelier de Laure Polin à Bagnolet, à l’est de Paris', 'Map of France: Laure Polin’s studio in Bagnolet, east of Paris')}">
     <path class="pays" d="${FRANCE.d}"/>
-    <path class="trajet" d="M${bx},${by} Q${cx},${cy} ${sx},${sy}"/>
     <circle class="halo" cx="${bx}" cy="${by}" r="10"/><circle class="point" cx="${bx}" cy="${by}" r="6"/>
-    <circle class="point" cx="${sx}" cy="${sy}" r="5" style="fill:#8a929b"/>
     <text class="etiquette" x="${bx + 16}" y="${by - 12}">${tr('Atelier, Bagnolet', 'Studio, Bagnolet')}</text>
-    <text class="etiquette discret" x="${sx - 14}" y="${sy + 34}" text-anchor="end">Les Sables-d’Olonne, 2025</text>
   </svg>`;
   if (calme) return;
   const pays = $('.pays', z); const L = pays.getTotalLength();
   pays.style.strokeDasharray = L; pays.style.strokeDashoffset = L;
-  const trajet = $('.trajet', z); const L2 = trajet.getTotalLength();
   gsap.timeline({ scrollTrigger: { trigger: z, start: 'top 75%', once: true } })
     .to(pays, { strokeDashoffset: 0, duration: 2.6, ease: 'power2.inOut' })
     .from(pays, { fillOpacity: 0, duration: 1 }, 1.4)
-    .from($$('.point, .halo, .etiquette', z), { opacity: 0, scale: 0, transformOrigin: 'center', stagger: 0.12, duration: 0.6, ease: 'back.out(2)' }, 1.8)
-    .fromTo(trajet, { strokeDasharray: `0 ${L2}` }, { strokeDasharray: `${L2} 0`, duration: 1.4, ease: 'power1.inOut', onComplete: () => { trajet.style.strokeDasharray = ''; } }, 2.1);
+    .from($$('.point, .halo, .etiquette', z), { opacity: 0, scale: 0, transformOrigin: 'center', stagger: 0.12, duration: 0.6, ease: 'back.out(2)' }, 1.8);
 }
+
+/* ---------------- expositions : classees selon leurs vraies dates ----------------
+   A completer ici quand une exposition est annoncee : { nom, debut: 'AAAA-MM-JJ', fin: 'AAAA-MM-JJ', texte, lien? }.
+   En cours ou a venir : listee dans « Où voir les œuvres ». Terminee : rangee dans « Expositions passées ». */
+const EXPOSITIONS = [
+  {
+    nom: 'Vendée Art Show 2025', debut: '2025-10-31', fin: '2025-11-02',
+    texte: tr('Du 31 octobre au 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne.', '31 October to 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne.'),
+    affiche: { src: 'assets/img/site/vendee-art-show-2025-1121.webp', w: 1121, h: 598, alt: tr('Affiche du Vendée Art Show, 31 octobre, 1er et 2 novembre 2025, Centre de congrès Les Atlantes, Les Sables-d’Olonne.', 'Poster for the Vendée Art Show, 31 October, 1 and 2 November 2025, Les Atlantes conference centre, Les Sables-d’Olonne.') },
+  },
+];
+function rendreExpositions() {
+  const jour = (s) => { const [a, m, j] = s.split('-').map(Number); return new Date(a, m - 1, j); };
+  const auj = new Date(); auj.setHours(0, 0, 0, 0);
+  const actuelles = EXPOSITIONS.filter((x) => jour(x.fin) >= auj).sort((a, b) => jour(a.debut) - jour(b.debut));
+  const passees = EXPOSITIONS.filter((x) => jour(x.fin) < auj).sort((a, b) => jour(b.fin) - jour(a.fin));
+  const zoneA = $('[data-expos-actuelles]');
+  if (zoneA && actuelles.length) {
+    zoneA.querySelector('p').outerHTML = actuelles.map((x) => `<p><strong>${LP.esc(x.nom)}</strong> <span class="etat etat--dispo">${jour(x.debut) <= auj ? tr('En ce moment', 'Now on') : tr('À venir', 'Upcoming')}</span><br>${LP.esc(x.texte)}${x.lien ? ` <a class="lien" href="${x.lien}" target="_blank" rel="noopener">${tr('En savoir plus', 'Find out more')}</a>` : ''}</p>`).join('');
+  }
+  const zoneP = $('[data-expos-passees]');
+  if (!zoneP) return;
+  if (!passees.length) { zoneP.hidden = true; return; }
+  $('.liste-passees', zoneP).innerHTML = passees.map((x) => `<li class="expo-passee">${x.affiche ? `<img src="${x.affiche.src}" alt="${LP.esc(x.affiche.alt)}" loading="lazy" width="${x.affiche.w}" height="${x.affiche.h}">` : ''}<div><strong>${LP.esc(x.nom)}</strong><span>${LP.esc(x.texte)}</span></div></li>`).join('');
+}
+rendreExpositions();
 
 /* ---------------- plan de Bagnolet ---------------- */
 function construirePlan() {
@@ -458,18 +515,7 @@ function construirePlan() {
   if (!calme) gsap.from($$('.commune, .paris', z), { opacity: 0, duration: 0.8, stagger: 0.06, scrollTrigger: { trigger: z, start: 'top 85%', once: true } });
 }
 
-/* ---------------- horaires : ouvert maintenant ---------------- */
-// A completer avec les vrais horaires, ex. { 3: [[14, 19]], 6: [[10, 18]] } (0 = dimanche)
-const HORAIRES = null;
-function ouvertMaintenant() {
-  const el = $('[data-ouvert]');
-  if (!HORAIRES) return;
-  const d = new Date(); const h = d.getHours() + d.getMinutes() / 60;
-  const ok = (HORAIRES[d.getDay()] || []).some(([a, b]) => h >= a && h < b);
-  el.classList.toggle('oui', ok);
-  $('span', el).textContent = ok ? tr('L’atelier est ouvert en ce moment', 'The studio is open now') : tr('L’atelier est fermé en ce moment', 'The studio is closed now');
-}
-ouvertMaintenant();
+/* (atelier : visites sur rendez-vous uniquement, plus d'indicateur d'horaires d'ouverture) */
 
 /* ---------------- formulaire ---------------- */
 function formulaire() {
