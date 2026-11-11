@@ -48,6 +48,7 @@ export const produits = OEUVRES.filter((o) => o.statut === 'disponible').map((o)
         }),
       },
     },
+    inventory: { availabilityStatus: 'IN_STOCK' },
     infoSections: o.id === 'dialogues-sculptes' ? [] : [{ title: 'Caractéristiques', uniqueName: 'caracteristiques', plainDescription: lignes.join('') }],
   };
 });

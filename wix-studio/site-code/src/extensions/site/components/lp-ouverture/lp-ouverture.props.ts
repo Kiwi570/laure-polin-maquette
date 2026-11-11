@@ -12,16 +12,24 @@ export type LpOuvertureProps = {
   titreLigne2?: string;
   /** Texte sous le titre */
   texte?: string;
+  /** Texte sous le titre (anglais) */
+  texteEn?: string;
   /** Bouton plein : texte */
   boutonPrincipalTexte?: string;
+  /** Bouton plein : texte (anglais) */
+  boutonPrincipalTexteEn?: string;
   /** Bouton plein : adresse */
   boutonPrincipalLien?: string;
   /** Bouton contour : texte */
   boutonSecondaireTexte?: string;
+  /** Bouton contour : texte (anglais) */
+  boutonSecondaireTexteEn?: string;
   /** Bouton contour : adresse */
   boutonSecondaireLien?: string;
   /** Lien « Défiler » en bas : texte */
   texteDefiler?: string;
+  /** Lien « Défiler » en bas : texte (anglais) */
+  texteDefilerEn?: string;
   /** Lien « Défiler » : adresse (section suivante) */
   lienDefiler?: string;
   /** Fond d’ardoise (écran horizontal) */
@@ -52,11 +60,15 @@ export const defaultProps = {
   titreLigne1: 'Laure',
   titreLigne2: 'Polin',
   texte: 'Sculptures en ardoise taillée, en bronze et en pneu recyclé. Mi-figuratives, mi-abstraites, elles naissent dans l’atelier de Bagnolet.',
+  texteEn: 'Sculptures in carved slate, bronze and recycled tyre. Half-figurative, half-abstract, they are born in the studio in Bagnolet, just outside Paris.',
   boutonPrincipalTexte: 'Voir les œuvres disponibles',
+  boutonPrincipalTexteEn: 'See the available works',
   boutonPrincipalLien: '#disponibles',
   boutonSecondaireTexte: 'Visiter l’atelier',
+  boutonSecondaireTexteEn: 'Visit the studio',
   boutonSecondaireLien: '#contact',
   texteDefiler: 'Défiler',
+  texteDefilerEn: 'Scroll',
   lienDefiler: '#manifeste',
   fondArdoise: {
     url: 'https://static.wixstatic.com/media/2d5176_1b52ead1106b455195f467be7d080081~mv2.webp',

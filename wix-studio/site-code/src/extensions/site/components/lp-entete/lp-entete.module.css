@@ -137,6 +137,16 @@
   .menu-bouton { display: inline-flex; }
 }
 
+/* sélecteur FR / EN */
+.langues { display: inline-flex; align-items: center; gap: 2px; margin-right: 6px; font-size: var(--t-xs); color: var(--graphite); }
+.langues button:global(.lp-entete-langue--hover), .langues button:hover { color: var(--craie); }
+.langues button { min-width: 34px; height: 34px; padding: 0 6px; border-radius: 999px; color: var(--craie-2); letter-spacing: .06em; transition: color .3s, background .3s; pointer-events: auto; }
+.langues button[aria-pressed="true"] { color: var(--craie); background: color-mix(in srgb, var(--craie) 12%, transparent); }
+.langues--menu { margin-top: 26px; font-size: var(--t-s); }
+.langues--menu button { min-width: 48px; height: 44px; font-size: var(--t-s); }
+@media (max-width: 860px) { .langues { gap: 0; } .langues button { min-width: 44px; height: 44px; padding: 0 4px; } }
+@media (max-width: 359px) { .langues { margin-right: 0; } }
+
 /* menu déroulant des salles */
 .nav-oeuvres { position: relative; }
 .nav-bouton { display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-s); color: var(--craie-2); transition: color .3s; padding: 10px 0; }

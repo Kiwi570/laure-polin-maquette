@@ -27,6 +27,8 @@ export type Oeuvre = {
   hauteur: number | null;
   edition: string;
   lien: string;
+  /** stock épuisé (quantité 0) : affichée « Vendue », pas d'ajout au panier */
+  vendue: boolean;
 };
 export type Categorie = { id: string; nom: string; slug: string; nombre: number; visible: boolean; lien: string };
 
@@ -45,9 +47,13 @@ const cache = (): Cache => {
 };
 
 /* ---------- formats (identiques à la maquette) ---------- */
-const fmt = typeof Intl !== 'undefined' ? new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }) : null;
-export const prix = (n: number | null | undefined, surDemande = 'Prix sur demande'): string =>
-  (n ? `${fmt ? fmt.format(n) : String(n)} €` : surDemande);
+const fmtFr = typeof Intl !== 'undefined' ? new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 0 }) : null;
+const fmtEn = typeof Intl !== 'undefined' ? new Intl.NumberFormat('en-GB', { maximumFractionDigits: 0 }) : null;
+/** « 2 800 € » en français, « €2,800 » en anglais (LP.prix) */
+export const prix = (n: number | null | undefined, langue: 'fr' | 'en' = 'fr'): string => {
+  if (!n) return langue === 'en' ? 'Price on request' : 'Prix sur demande';
+  return langue === 'en' ? `€${fmtEn ? fmtEn.format(n) : String(n)}` : `${fmtFr ? fmtFr.format(n) : String(n)} €`;
+};
 export const lienProduit = (slug: string): string => `/product-page/${slug}`;
 export const lienCategorie = (slug: string): string => `/category/${slug}`;
 
@@ -128,6 +134,7 @@ type ProduitBrut = {
   actualPriceRange?: { minValue?: { amount?: string } };
   media?: { main?: MediaBrut; itemsInfo?: { items?: Array<MediaBrut> } };
   infoSections?: Array<{ title?: string; uniqueName?: string; plainDescription?: string }>;
+  inventory?: { availabilityStatus?: string };
 };
 
 const decoder = (s: string) => s
@@ -179,6 +186,7 @@ function versOeuvre(p: ProduitBrut): Oeuvre {
     hauteur: hauteurDe(dims),
     edition: c['édition'] || c.edition || '',
     lien: p.slug ? lienProduit(p.slug) : '',
+    vendue: p.inventory?.availabilityStatus === 'OUT_OF_STOCK',
   };
 }
 
@@ -251,7 +259,8 @@ export function etatPanier(forcer = false): Promise<EtatPanier> {
 
 export type DetailAjout = { titre: string; image?: string; depuis?: DOMRect | null; etat?: EtatPanier; erreur?: boolean; deja?: boolean };
 /** ajoute une œuvre au panier Wix (variante unique des sculptures), puis prévient l'en-tête */
-export async function ajouterAuPanier(o: Pick<Oeuvre, 'id' | 'titre' | 'photos'>, depuis?: Element | null, unique = true): Promise<boolean> {
+export async function ajouterAuPanier(o: Pick<Oeuvre, 'id' | 'titre' | 'photos' | 'vendue'>, depuis?: Element | null, unique = true): Promise<boolean> {
+  if (o.vendue) return false;
   const rect = depuis ? (depuis.closest('[data-carte]')?.querySelector('img') || depuis).getBoundingClientRect() : null;
   const image = o.photos[0] ? tailleWix(o.photos[0], 200) : undefined;
   try {

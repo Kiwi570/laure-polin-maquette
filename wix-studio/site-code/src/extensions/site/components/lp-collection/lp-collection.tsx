@@ -5,12 +5,16 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-collection.module.css';
 import type { LpCollectionProps, OeuvreCollection } from './lp-collection.props';
-import { ARIA } from './constants';
+import { ARIAS } from './constants';
 import { moteur, calme, animerClive, rafraichir, lenis } from '../../../../lp-commun/moteur';
 import { tailleWix } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates } from '../../../../lp-commun/react';
 
-const LpCollection: FC<LpCollectionProps> = (props) => {
+const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const { id, className, direction, titre, texte, oeuvres, legendeStatut, autoPlay, pauseButtonVisibility, elementProps } = props;
   const edition = useEdition();
   const secRef = useRef<HTMLElement>(null);
@@ -84,7 +88,7 @@ const LpCollection: FC<LpCollectionProps> = (props) => {
     const cle = `${copie ? 'c' : 'o'}-${k}`;
     const commun = { ...part('lpCollectionVignette', 'lp-collection-vignette', 'vignette'), ...(copie ? { 'aria-hidden': true as const, tabIndex: -1 } : {}) };
     return o.lien
-      ? <a key={cle} {...commun} href={o.lien}>{contenu}</a>
+      ? <a key={cle} {...commun} href={lien(o.lien)}>{contenu}</a>
       : <span key={cle} {...commun} tabIndex={copie ? -1 : 0}>{contenu}</span>;
   };
 

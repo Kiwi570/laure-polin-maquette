@@ -6,10 +6,11 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-ouverture.module.css';
 import type { LpOuvertureProps } from './lp-ouverture.props';
-import { ARIA } from './constants';
+import { ARIAS } from './constants';
 import { moteur, calme, glDispo, pointeurFin, attendrePret, animerClive, rafraichir, aimants } from '../../../../lp-commun/moteur';
 import { oeuvresDe, couleursPhoto, tailleWix, srcsetWix, prix, teinteSombre } from '../../../../lp-commun/donnees';
 import type { Oeuvre } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates, gabarit } from '../../../../lp-commun/react';
 import { fondArdoise } from '../../../../lp-commun/ardoise-gl';
 import { poussiere } from '../../../../lp-commun/poussiere';
@@ -18,7 +19,7 @@ const DUREE = 4;
 const TRANSITION = 1.1;
 const altOeuvre = (o: Oeuvre) => `${o.titre}${o.matiere ? `, sculpture en ${o.matiere.toLowerCase()}` : ''}, de Laure Polin`;
 
-const Cartel: FC<{ o: Oeuvre | null }> = ({ o }) => {
+const Cartel: FC<{ o: Oeuvre | null; langue: 'fr' | 'en' }> = ({ o, langue }) => {
   if (!o) return null;
   return (
     <>
@@ -26,12 +27,15 @@ const Cartel: FC<{ o: Oeuvre | null }> = ({ o }) => {
       {o.matiere}
       {o.matiere && o.dimensions ? ', ' : ''}
       {o.dimensions ? <span className={s.chiffres}>{o.dimensions}</span> : null}
-      {o.prix ? <><br /><span className={s.prix}>{prix(o.prix)}</span></> : null}
+      {o.prix && !o.vendue ? <><br /><span className={s.prix}>{prix(o.prix, langue)}</span></> : null}
     </>
   );
 };
 
-const LpOuverture: FC<LpOuvertureProps> = (props) => {
+const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const {
     id, className, direction, titreLigne1, titreLigne2, texte, boutonPrincipalTexte, boutonPrincipalLien,
     boutonSecondaireTexte, boutonSecondaireLien, texteDefiler, lienDefiler, fondArdoise: fondImg, fondArdoisePortrait,
@@ -265,7 +269,7 @@ const LpOuverture: FC<LpOuvertureProps> = (props) => {
                     key={o.id}
                     className={cx(s, 'hero-diapo', active && 'est-active')}
                     data-diapo=""
-                    href={o.lien}
+                    href={lien(o.lien)}
                     aria-label={gabarit(ARIA.voirFiche, { titre: o.titre })}
                     aria-hidden={k !== actif ? 'true' : undefined}
                     tabIndex={k !== actif ? -1 : undefined}
@@ -289,7 +293,7 @@ const LpOuverture: FC<LpOuvertureProps> = (props) => {
               <span className={s['hero-fente']} data-fente-cadre="" aria-hidden="true" />
             </div>
             <div className={s['hero-pied']} data-entree="">
-              <p {...part('lpOuvertureCartel', 'lp-ouverture-cartel', 'cartel', 'chiffres')} ref={cartelRef} aria-live={lecture ? 'off' : 'polite'} aria-atomic="false"><Cartel o={cartelO} /></p>
+              <p {...part('lpOuvertureCartel', 'lp-ouverture-cartel', 'cartel', 'chiffres')} ref={cartelRef} aria-live={lecture ? 'off' : 'polite'} aria-atomic="false"><Cartel o={cartelO} langue={langue} /></p>
               <div className={s['hero-points']} ref={pointsRef} onKeyDown={surTouche}>
                 <button
                   type="button"

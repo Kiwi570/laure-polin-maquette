@@ -5,16 +5,20 @@ import type { FC, FormEvent } from 'react';
 import clsx from 'clsx';
 import s from './lp-contact.module.css';
 import type { LpContactProps } from './lp-contact.props';
-import { SR } from './constants';
+import { SRS } from './constants';
 import { moteur, calme, animerClive, rafraichir, aimants } from '../../../../lp-commun/moteur';
 import { oeuvresDe, prix } from '../../../../lp-commun/donnees';
 import type { Oeuvre } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates, gabarit } from '../../../../lp-commun/react';
 import { PLAN } from '../../../../lp-commun/formes';
 
 type Manque = 'nom' | 'email' | 'message';
 
-const LpContact: FC<LpContactProps> = (props) => {
+const LpContact: FC<LpContactProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const SR = SRS[langue];
   const { id, className, direction, titre, texte, demandes, categoriesOeuvres, elementProps } = props;
   const edition = useEdition();
   const uid = useId().replace(/:/g, '');
@@ -38,7 +42,7 @@ const LpContact: FC<LpContactProps> = (props) => {
     Promise.all(noms.map((n) => oeuvresDe(n).catch(() => [] as Array<Oeuvre>))).then((ls) => {
       if (!vivant) return;
       const vus = new Map<string, Oeuvre>();
-      ls.flat().forEach((o) => { if (!vus.has(o.id)) vus.set(o.id, o); });
+      ls.flat().forEach((o) => { if (!o.vendue && !vus.has(o.id)) vus.set(o.id, o); });
       const liste = [...vus.values()].sort((a, b) => a.titre.localeCompare(b.titre, 'fr'));
       setOeuvres(liste);
       const q = new URLSearchParams(location.search).get('oeuvre');
@@ -139,7 +143,7 @@ const LpContact: FC<LpContactProps> = (props) => {
                     <label {...part('lpContactLibelle', 'lp-contact-libelle', 'libelle')} htmlFor={f('oeuvre')}>{props.libelleOeuvre}</label>
                     <select {...part('lpContactChamp', 'lp-contact-champ', 'saisie', 'liste')} id={f('oeuvre')} name="oeuvre" value={choix} onChange={(e) => setChoix(e.currentTarget.value)}>
                       <option value="">{props.optionAucune}</option>
-                      {oeuvres.map((o) => <option key={o.id} value={o.slug}>{o.titre}{o.prix ? ` (${prix(o.prix)})` : ''}</option>)}
+                      {oeuvres.map((o) => <option key={o.id} value={o.slug}>{o.titre}{o.prix ? ` (${prix(o.prix, langue)})` : ''}</option>)}
                     </select>
                   </div>
                   <div className={s.deux}>

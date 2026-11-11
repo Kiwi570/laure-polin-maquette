@@ -7,10 +7,11 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-salles.module.css';
 import type { LpSallesProps } from './lp-salles.props';
-import { ARIA } from './constants';
+import { ARIAS } from './constants';
 import { moteur, calme, etroit, polices, animerClive, rafraichir, piegeFixe, lenis, aimants } from '../../../../lp-commun/moteur';
 import { categorie, oeuvresDe, tailleWix, srcsetWix, prix } from '../../../../lp-commun/donnees';
 import type { Oeuvre } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates, nombreOeuvres } from '../../../../lp-commun/react';
 import { construireCoulee, construireEmpreinte } from './lp-salles-engine';
 import type { Moteurs } from './lp-salles-engine';
@@ -19,7 +20,10 @@ type Cle = 'bronze' | 'ardoise' | 'pneu' | 'petits-formats';
 type Panneau = { cle: Cle; index: string; fond?: { url: string; uri?: string }; categorie?: string; texte?: string; bouton?: string; trio?: string };
 const altOeuvre = (o: Oeuvre) => `${o.titre}${o.matiere ? `, sculpture en ${o.matiere.toLowerCase()}` : ''}, de Laure Polin`;
 
-const LpSalles: FC<LpSallesProps> = (props) => {
+const LpSalles: FC<LpSallesProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const { id, className, direction, motOeuvre, motOeuvres, elementProps } = props;
   const edition = useEdition();
   const uid = useId().replace(/:/g, '');
@@ -197,19 +201,19 @@ const LpSalles: FC<LpSallesProps> = (props) => {
                         <span className={s.compte}>{inf ? inf.nombre : ''}</span> <span>{compte(inf ? inf.nombre : 2)}</span>
                       </p>
                       <p {...part('lpSallesTexte', 'lp-salles-texte', 'texte')}>{p.texte}</p>
-                      <a {...part('lpSallesBouton', 'lp-salles-bouton', 'bouton')} data-bouton="" href={inf?.lien || undefined}><span>{p.bouton}</span></a>
+                      <a {...part('lpSallesBouton', 'lp-salles-bouton', 'bouton')} data-bouton="" href={lien(inf?.lien) || undefined}><span>{p.bouton}</span></a>
                     </div>
                   </div>
                   <div className={s.trio} data-trio="">
                     {trio.map((o) => {
                       const ph = o.photos[0];
                       return (
-                        <a key={o.id} {...part('lpSallesOeuvre', 'lp-salles-oeuvre', 'trio-lien')} href={o.lien} data-carte="">
+                        <a key={o.id} {...part('lpSallesOeuvre', 'lp-salles-oeuvre', 'trio-lien')} href={lien(o.lien)} data-carte="">
                           {ph ? <img className={s.oeuvre} src={tailleWix(ph, 800)} srcSet={srcsetWix(ph, [800])} sizes="(max-width: 860px) 30vw, 16vw" alt={ph.alt || altOeuvre(o)} width={ph.w} height={ph.h} loading="lazy" decoding="async" /> : null}
                           <span className={s.cartel}>
                             <strong>{o.titre}</strong>
                             <span className={cx(s, 'dims-l chiffres')}>{o.dimensions.replace(/ \(.*\)$/, '')}</span>
-                            {o.prix ? <span className={cx(s, 'prix chiffres')}>{prix(o.prix)}</span> : null}
+                            {o.prix && !o.vendue ? <span className={cx(s, 'prix chiffres')}>{prix(o.prix, langue)}</span> : null}
                           </span>
                         </a>
                       );

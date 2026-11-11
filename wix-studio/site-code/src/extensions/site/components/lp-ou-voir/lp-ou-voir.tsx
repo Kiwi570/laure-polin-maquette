@@ -5,13 +5,17 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-ou-voir.module.css';
 import type { LpOuVoirProps } from './lp-ou-voir.props';
-import { SR } from './constants';
+import { SRS } from './constants';
 import { moteur, calme, animerClive, rafraichir } from '../../../../lp-commun/moteur';
 import { tailleWix } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates } from '../../../../lp-commun/react';
 import { FRANCE } from '../../../../lp-commun/formes';
 
-const LpOuVoir: FC<LpOuVoirProps> = (props) => {
+const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const SR = SRS[langue];
   const { id, className, direction, titre, texte, etiquetteCarte, descriptionCarte, passeeAffiche, elementProps } = props;
   const edition = useEdition();
   const secRef = useRef<HTMLElement>(null);

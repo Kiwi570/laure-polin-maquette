@@ -8,9 +8,12 @@ import type { LpLivreProps } from './lp-livre.props';
 import { moteur, calme, animerClive, rafraichir, aimants } from '../../../../lp-commun/moteur';
 import { oeuvresDe, tailleWix, srcsetWix, prix, ajouterAuPanier } from '../../../../lp-commun/donnees';
 import type { Oeuvre } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates } from '../../../../lp-commun/react';
 
-const LpLivre: FC<LpLivreProps> = (props) => {
+const LpLivre: FC<LpLivreProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
   const { id, className, direction, titre, chapo, couverture, dosCouverture, doublePage, categorie, boutonTexte, elementProps } = props;
   const edition = useEdition();
   const secRef = useRef<HTMLElement>(null);
@@ -76,7 +79,7 @@ const LpLivre: FC<LpLivreProps> = (props) => {
             <dl {...part('lpLivreCredits', 'lp-livre-credits', 'credits')}>
               {credits.map(([a, b], i) => <React.Fragment key={i}><dt>{a}</dt><dd>{b}</dd></React.Fragment>)}
             </dl>
-            <p {...part('lpLivrePrix', 'lp-livre-prix', 'prix-grand', 'chiffres')} style={livre?.prix ? undefined : { visibility: 'hidden' }}>{livre?.prix ? prix(livre.prix) : ' '}</p>
+            <p {...part('lpLivrePrix', 'lp-livre-prix', 'prix-grand', 'chiffres')} style={livre?.prix ? undefined : { visibility: 'hidden' }}>{livre?.prix ? prix(livre.prix, langue) : ' '}</p>
             <div className={s.actions}>
               <button
                 type="button"

@@ -7,9 +7,12 @@ import s from './lp-demarche.module.css';
 import type { LpDemarcheProps } from './lp-demarche.props';
 import { moteur, calme, rafraichir } from '../../../../lp-commun/moteur';
 import { tailleWix, srcsetWix } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx } from '../../../../lp-commun/react';
 
-const LpDemarche: FC<LpDemarcheProps> = (props) => {
+const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
   const { id, className, direction, portrait, legende, titreCache, paragraphe1, paragraphe2, paragraphe3, geste1, geste2, geste3, paragraphe4, signature, elementProps } = props;
   const edition = useEdition();
   const secRef = useRef<HTMLElement>(null);

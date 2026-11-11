@@ -18,12 +18,18 @@ export type LpCollectionProps = {
 
   /** Titre de la section */
   titre?: string;
+  /** Titre de la section (anglais) */
+  titreEn?: string;
   /** Texte à côté du titre */
   texte?: string;
+  /** Texte à côté du titre (anglais) */
+  texteEn?: string;
   /** Les œuvres des deux bandeaux (la première moitié en haut, la seconde en bas) */
   oeuvres: Array<OeuvreCollection>;
   /** Mention sous le titre, au survol d’une vignette */
   legendeStatut?: string;
+  /** Mention sous le titre, au survol d’une vignette (anglais) */
+  legendeStatutEn?: string;
   /** Défilement automatique des bandeaux */
   autoPlay?: boolean;
   /** Bouton pause des bandeaux : toujours visible ou au survol */
@@ -39,7 +45,9 @@ export type LpCollectionProps = {
 
 export const defaultProps = {
   titre: 'Collection privée',
+  titreEn: 'Private collection',
   texte: 'Ces œuvres ont rejoint des collections privées. Elles restent à découvrir ici.',
+  texteEn: 'These works have joined private collections. They remain on view here.',
   oeuvres: [
     { titre: 'Sous pression', photo: { url: 'https://static.wixstatic.com/media/2d5176_50bb728ac75d4a4295ddb02acb834a17~mv2.webp', uri: '2d5176_50bb728ac75d4a4295ddb02acb834a17~mv2.webp', alt: 'Sous pression, de Laure Polin' }, lien: '' },
     { titre: 'Énergies', photo: { url: 'https://static.wixstatic.com/media/2d5176_07df3c7fca564a6b8d02fab39060ead3~mv2.webp', uri: '2d5176_07df3c7fca564a6b8d02fab39060ead3~mv2.webp', alt: 'Énergies, sculpture en bronze, de Laure Polin' }, lien: '' },
@@ -103,6 +111,7 @@ export const defaultProps = {
     { titre: 'Poisson vole', photo: { url: 'https://static.wixstatic.com/media/2d5176_f770037bd20e416387dc246efaa8b6a3~mv2.webp', uri: '2d5176_f770037bd20e416387dc246efaa8b6a3~mv2.webp', alt: 'Poisson vole, de Laure Polin' }, lien: '' },
   ],
   legendeStatut: 'En collection privée',
+  legendeStatutEn: 'In a private collection',
   autoPlay: true,
   pauseButtonVisibility: 'showOnHover',
   a11y: {},

@@ -143,3 +143,5 @@
 .hud-salle p .hud-t { font-family: var(--f-display); font-size: 1.1rem; color: var(--craie); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hud-barre { grid-column: 1 / -1; height: 1px; background: var(--ardoise-3); }
 .hud-barre i { display: block; height: 100%; background: var(--cuivre-clair); transform-origin: left; transform: scaleX(0); }
+
+.etat { display: inline-block; font-size: max(12px, .6875rem); padding: 3px 9px; border-radius: 999px; border: 1px solid var(--ardoise-4); color: var(--craie-2); white-space: nowrap; }

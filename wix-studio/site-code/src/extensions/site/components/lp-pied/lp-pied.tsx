@@ -5,13 +5,17 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-pied.module.css';
 import type { LpPiedProps } from './lp-pied.props';
-import { ARIA } from './constants';
+import { ARIAS } from './constants';
 import { moteur, calme, rafraichir } from '../../../../lp-commun/moteur';
 import { categorie, tailleWix, srcsetWix } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx } from '../../../../lp-commun/react';
 import { NOM } from '../../../../lp-commun/formes';
 
-const LpPied: FC<LpPiedProps> = (props) => {
+const LpPied: FC<LpPiedProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const { id, className, direction, nomAccessible, logo, logoTexteAccessible, lienAccueil, liens, note, elementProps } = props;
   const edition = useEdition();
   const piedRef = useRef<HTMLElement>(null);
@@ -59,7 +63,7 @@ const LpPied: FC<LpPiedProps> = (props) => {
           </svg>
         </div>
         <div className={s.bas}>
-          <a {...part('lpPiedLogo', 'lp-pied-logo', 'pied-logo')} href={lienAccueil} aria-label={logoTexteAccessible}>
+          <a {...part('lpPiedLogo', 'lp-pied-logo', 'pied-logo')} href={lien(lienAccueil)} aria-label={logoTexteAccessible}>
             <img className={s['marque-logo']} src={tailleWix(logoP, 240)} srcSet={srcsetWix(logoP, [111, 167, 223, 334])} sizes="96px" alt="" width={625} height={673} loading="lazy" decoding="async" />
           </a>
           <address {...part('lpPiedCoordonnees', 'lp-pied-coordonnees', 'pied-coord')}>
@@ -73,7 +77,7 @@ const LpPied: FC<LpPiedProps> = (props) => {
           </address>
           <nav className={s.liens} aria-label={ARIA.liens}>
             {(liens || []).map((l, k) => (
-              <a key={`${l.texte}-${k}`} {...part('lpPiedLien', 'lp-pied-lien', 'lien')} href={l.lien || liensCat[k] || undefined}>{l.texte}</a>
+              <a key={`${l.texte}-${k}`} {...part('lpPiedLien', 'lp-pied-lien', 'lien')} href={lien(l.lien || liensCat[k]) || undefined}>{l.texte}</a>
             ))}
           </nav>
         </div>

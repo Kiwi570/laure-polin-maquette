@@ -8,10 +8,11 @@ import clsx from 'clsx';
 import Lenis from 'lenis';
 import s from './lp-entete.module.css';
 import type { LpEnteteProps, Salle } from './lp-entete.props';
-import { ARIA } from './constants';
+import { ARIAS, NOMS_LANGUES } from './constants';
 import { moteur, calme, pointeurFin, session, signalerPret, piegeFixe, rafraichir, polices, lenis as lenisActif, attendrePret } from '../../../../lp-commun/moteur';
 import { categorie, etatPanier, tailleWix, srcsetWix } from '../../../../lp-commun/donnees';
 import type { DetailAjout } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, gabarit, nombreOeuvres } from '../../../../lp-commun/react';
 
 const inerte = (on: boolean): HTMLAttributes<HTMLElement> => (on ? ({ inert: '' } as unknown as HTMLAttributes<HTMLElement>) : {});
@@ -99,12 +100,15 @@ const Ouverture: FC<{ logo: string; logoSrcset?: string; fond: string; texte: st
   );
 };
 
-const LpEntete: FC<LpEnteteProps> = (props) => {
+const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
+  const { langue, lien, autre } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const {
     id, className, direction, logo, logoTexteAccessible, lienAccueil, libelleOeuvres, salles, motOeuvre, motOeuvres,
     libelleLivre, lienLivre, libelleExpositions, lienExpositions, libelleContact, lienContact, titreMenuSalles,
     lienPanier, texteOuverture, fondOuverture, messageAjout, messageDeja, messageErreur,
-    ouvertureAnimee, defilementDoux, transitionsPages, isOpen, elementProps,
+    ouvertureAnimee, defilementDoux, transitionsPages, isOpen, elementProps, selecteurLangue, boutonFrancais, boutonAnglais,
   } = props;
   const edition = useEdition();
   const idPanneau = `panneau-oeuvres-${useId().replace(/:/g, '')}`;
@@ -232,7 +236,7 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
       gsap.ticker.lagSmoothing(0);
       html.style.scrollBehavior = 'auto';
       // après un défilement natif provoqué par le focus clavier, Lenis repart de la vraie position
-      surFocus = () => requestAnimationFrame(() => requestAnimationFrame(() => { if (nouveau.isScrolling !== 'smooth') nouveau.reset(); }));
+      surFocus = () => requestAnimationFrame(() => requestAnimationFrame(() => { if (nouveau.isScrolling !== 'smooth') (nouveau as unknown as { reset: () => void }).reset(); }));
       document.addEventListener('focusin', surFocus);
       rafraichir();
     }
@@ -372,10 +376,23 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
   const libellePanier = nombre ? gabarit(ARIA.panierArticles, { n: String(nombre), articles: nombre > 1 ? ARIA.articles : ARIA.article }) : ARIA.panier;
   const imgLogo = <img className={s['marque-logo']} src={logoSrc} srcSet={logoSrcset} sizes="(max-width: 940px) 68px, 80px" alt="" width={625} height={673} decoding="async" />;
 
+  const langues = (menuPlein: boolean) => (selecteurLangue ? (
+    <div className={cx(s, 'langues', menuPlein && 'langues--menu')} role="group" aria-label={ARIA.langues}>
+      {(['fr', 'en'] as const).map((l, k) => (
+        <React.Fragment key={l}>
+          {k ? <span aria-hidden="true">/</span> : null}
+          <button type="button" {...part('lpEnteteLangue', 'lp-entete-langue', 'langue')} lang={l} aria-pressed={langue === l} aria-label={NOMS_LANGUES[l]} onClick={() => { if (l !== langue) allerVers(autre(l)); }}>
+            {l === 'fr' ? boutonFrancais : boutonAnglais}
+          </button>
+        </React.Fragment>
+      ))}
+    </div>
+  ) : null);
+
   const contenu = (
     <>
       <header ref={enteteRef} className={cx(s, 'entete', plein && 'est-plein', cache && !menu && 'est-cache')} onFocus={() => setCache(false)}>
-        <a {...part('lpEnteteLogo', 'lp-entete-logo', 'marque')} href={lienAccueil} aria-label={logoTexteAccessible}>{imgLogo}</a>
+        <a {...part('lpEnteteLogo', 'lp-entete-logo', 'marque')} href={lien(lienAccueil)} aria-label={logoTexteAccessible}>{imgLogo}</a>
         <nav className={s.nav} aria-label={ARIA.navigation}>
           <div
             className={s['nav-oeuvres']}
@@ -405,7 +422,7 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
                 const inf = infoDe(sa, k);
                 const im = sa.image?.url ? { url: sa.image.url, uri: sa.image.uri || '', w: sa.image.width || 800, h: sa.image.height || 1100 } : null;
                 return (
-                  <a key={`${sa.titre}-${k}`} {...part('lpEnteteSalle', 'lp-entete-salle', 'salle-lien')} href={inf.lien || undefined}>
+                  <a key={`${sa.titre}-${k}`} {...part('lpEnteteSalle', 'lp-entete-salle', 'salle-lien')} href={lien(inf.lien) || undefined}>
                     <span className={s.vig}>{im ? <img src={tailleWix(im, 300)} alt="" loading="lazy" /> : null}</span>
                     <span className={s.t}>{sa.titre}</span>
                     <span className={cx(s, 'n chiffres')} hidden={!sa.categorie || !inf.nombre}>{inf.nombre ? compte(inf.nombre) : ''}</span>
@@ -414,12 +431,13 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
               })}
             </div>
           </div>
-          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lienLivre}>{libelleLivre}</a>
-          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lienExpositions}>{libelleExpositions}</a>
-          <a {...part('lpEnteteContact', 'lp-entete-contact', 'nav-lien', 'nav-contact')} href={lienContact}>{libelleContact}</a>
+          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lien(lienLivre)}>{libelleLivre}</a>
+          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lien(lienExpositions)}>{libelleExpositions}</a>
+          <a {...part('lpEnteteContact', 'lp-entete-contact', 'nav-lien', 'nav-contact')} href={lien(lienContact)}>{libelleContact}</a>
         </nav>
         <div className={s.outils}>
-          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lienPanier || '/cart-page')}>
+          {langues(false)}
+          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lien(lienPanier || '/cart-page') || '/cart-page')}>
             {ICO.sac}
             <span className={s.sr}>{libellePanier}</span>
             <span className={cx(s, 'pastille', nombre > 0 && 'on')} aria-hidden="true">{nombre}</span>
@@ -440,7 +458,7 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
         data-ouvert={menu ? '1' : undefined}
         {...inerte(!menu)}
       >
-        <a className={s['menu-logo']} href={lienAccueil} aria-label={logoTexteAccessible} onClick={() => ouvrirMenu(false)}>{imgLogo}</a>
+        <a className={s['menu-logo']} href={lien(lienAccueil)} aria-label={logoTexteAccessible} onClick={() => ouvrirMenu(false)}>{imgLogo}</a>
         <button type="button" className={cx(s, 'outil fermer')} aria-label={ARIA.fermerMenu} onClick={() => ouvrirMenu(false)}>{ICO.croix}</button>
         <p {...part('lpEnteteMenuTitre', 'lp-entete-menu-titre', 'menu-titre', 'mini')}>{titreMenuSalles}</p>
         {salles.map((sa, k) => {
@@ -450,7 +468,7 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
               key={`${sa.titre}-${k}`}
               {...part('lpEnteteMenuSalle', 'lp-entete-menu-salle', 'menu-salle')}
               data-menu-salle=""
-              href={inf.lien || undefined}
+              href={lien(inf.lien) || undefined}
               aria-label={sa.categorie && inf.nombre ? `${sa.titre}, ${compte(inf.nombre)}` : undefined}
               onClick={() => ouvrirMenu(false)}
             >
@@ -460,9 +478,10 @@ const LpEntete: FC<LpEnteteProps> = (props) => {
           );
         })}
         <span className={s['menu-sep']} aria-hidden="true" />
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lienLivre} onClick={() => ouvrirMenu(false)}>{libelleLivre}</a>
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lienExpositions} onClick={() => ouvrirMenu(false)}>{libelleExpositions}</a>
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lienContact} onClick={() => ouvrirMenu(false)}>{libelleContact}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienLivre)} onClick={() => ouvrirMenu(false)}>{libelleLivre}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienExpositions)} onClick={() => ouvrirMenu(false)}>{libelleExpositions}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienContact)} onClick={() => ouvrirMenu(false)}>{libelleContact}</a>
+        {langues(true)}
       </div>
       <div className={s['empreinte-progression']} aria-hidden="true"><div className={s.trace} ref={traceRef} /></div>
       <div {...part('lpEnteteNotification', 'lp-entete-notification', 'toast', toast.on && 'on')} role="status" aria-live="polite">{toast.txt}</div>

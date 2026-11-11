@@ -6,10 +6,11 @@ import type { FC } from 'react';
 import clsx from 'clsx';
 import s from './lp-disponibles.module.css';
 import type { LpDisponiblesProps } from './lp-disponibles.props';
-import { ARIA } from './constants';
+import { ARIAS } from './constants';
 import { moteur, calme, etroit, animerClive, rafraichir, piegeFixe, lenis, aimants } from '../../../../lp-commun/moteur';
 import { categorie, oeuvresDe, couleursPhoto, tailleWix, srcsetWix, prix, teinteSombre, ajouterAuPanier, etatPanier } from '../../../../lp-commun/donnees';
 import type { Oeuvre, EtatPanier } from '../../../../lp-commun/donnees';
+import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx, Strates, gabarit } from '../../../../lp-commun/react';
 
 const ICO = {
@@ -18,7 +19,10 @@ const ICO = {
 };
 const altOeuvre = (o: Oeuvre) => `${o.titre}${o.matiere ? `, sculpture en ${o.matiere.toLowerCase()}` : ''}, de Laure Polin`;
 
-const LpDisponibles: FC<LpDisponiblesProps> = (props) => {
+const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
+  const { langue, lien } = useLangue();
+  const props = traduire(propsBrutes, langue);
+  const ARIA = ARIAS[langue];
   const { id, className, direction, titre, texte, categorie: nomCategorie, finTexte, elementProps } = props;
   const edition = useEdition();
   const secRef = useRef<HTMLElement>(null);
@@ -173,7 +177,7 @@ const LpDisponibles: FC<LpDisponiblesProps> = (props) => {
               const dedans = panier.includes(o.id);
               return (
                 <article key={o.id} {...part('lpDisponiblesCarte', 'lp-disponibles-carte', 'oeuvre-carte')} data-carte="" data-couleur={c?.couleur || '#3c444e'} data-titre={o.titre} style={{ width: `${Math.max(largeur, 220)}px` }}>
-                  <a href={o.lien} aria-label={gabarit(ARIA.voirFiche, { titre: o.titre })}>
+                  <a href={lien(o.lien)} aria-label={gabarit(ARIA.voirFiche, { titre: o.titre })}>
                     <div className={s['socle-zone']} style={{ height: `${hauteurPx}px` }}>
                       <div className={s['photo-cadre']}>
                         {ph ? <img className={s.oeuvre} src={tailleWix(ph, 800)} srcSet={srcsetWix(ph)} sizes="(max-width: 860px) 70vw, 30vw" alt={ph.alt || altOeuvre(o)} width={ph.w} height={ph.h} loading="lazy" decoding="async" style={{ height: `${hImg}px`, backgroundColor: c?.fond }} /> : null}
@@ -184,9 +188,10 @@ const LpDisponibles: FC<LpDisponiblesProps> = (props) => {
                     <div>
                       <strong>{o.titre}</strong>
                       {o.matiere}{o.matiere && o.dimensions ? ', ' : ''}{o.dimensions ? <span className={s.chiffres}>{o.dimensions}</span> : null}
-                      {o.prix ? <><br /><span className={s.prix}>{prix(o.prix)}</span></> : null}
+                      {o.prix && !o.vendue ? <><br /><span className={s.prix}>{prix(o.prix, langue)}</span></> : null}
+                      {o.vendue ? <><br /><span className={s.etat}>{props.statutVendue}</span></> : null}
                     </div>
-                    {o.prix ? (
+                    {o.prix && !o.vendue ? (
                       <button
                         type="button"
                         {...part('lpDisponiblesAjout', 'lp-disponibles-ajout', 'ajout', dedans && 'dans-panier')}
@@ -204,7 +209,7 @@ const LpDisponibles: FC<LpDisponiblesProps> = (props) => {
               <p {...part('lpDisponiblesFinTexte', 'lp-disponibles-fin-texte', 'lead')}>{finTexte}</p>
               <nav className={s.actions} aria-label={ARIA.salles}>
                 {fins.map((f, i) => (
-                  <a key={i} {...part('lpDisponiblesFinBouton', 'lp-disponibles-fin-bouton', 'bouton', i === 0 && 'bouton--plein')} data-bouton="" href={liensFin[i] || undefined}><span>{f.t}</span></a>
+                  <a key={i} {...part('lpDisponiblesFinBouton', 'lp-disponibles-fin-bouton', 'bouton', i === 0 && 'bouton--plein')} data-bouton="" href={lien(liensFin[i]) || undefined}><span>{f.t}</span></a>
                 ))}
               </nav>
             </div>

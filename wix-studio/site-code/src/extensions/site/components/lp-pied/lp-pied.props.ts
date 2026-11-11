@@ -4,6 +4,8 @@ import type { A11y, Direction, Image } from '@wix/editor-react-types';
 export type LienPied = {
   /** Texte du lien */
   texte?: string;
+  /** Texte du lien (anglais) */
+  texteEn?: string;
   /** Catégorie Wix Stores (nom exact) : l’adresse de sa page est utilisée */
   categorie?: string;
   /** Adresse du lien (si pas de catégorie) */
@@ -22,6 +24,8 @@ export type LpPiedProps = {
   logo?: Image;
   /** Texte lu par les lecteurs d’écran sur le logo */
   logoTexteAccessible?: string;
+  /** Texte lu par les lecteurs d’écran sur le logo (anglais) */
+  logoTexteAccessibleEn?: string;
   /** Adresse de l’accueil */
   lienAccueil?: string;
   /** Coordonnées, première ligne */
@@ -46,6 +50,8 @@ export type LpPiedProps = {
   liens: Array<LienPied>;
   /** Note en bas */
   note?: string;
+  /** Note en bas (anglais) */
+  noteEn?: string;
 
   elementProps?: {
     lpPiedNom?: { className?: string };
@@ -64,6 +70,7 @@ export const defaultProps = {
     alt: 'Laure Polin, sculptures',
   },
   logoTexteAccessible: 'Laure Polin, sculptures : retour à l’accueil',
+  logoTexteAccessibleEn: 'Laure Polin, sculptures: back to the home page',
   lienAccueil: '/',
   coordLigne1: 'Laure Polin, sculptures',
   coordLigne2: '51 rue Lénine, 93170 Bagnolet',
@@ -75,14 +82,15 @@ export const defaultProps = {
   facebookTexte: 'Facebook',
   facebookLien: 'https://www.facebook.com/sculptureslaure/',
   liens: [
-    { texte: 'Ardoise', categorie: 'Ardoise', lien: '' },
-    { texte: 'Bronze', categorie: 'Bronze', lien: '' },
-    { texte: 'Pneu recyclé', categorie: 'Pneu recyclé', lien: '' },
-    { texte: 'Petits formats', categorie: 'Petits formats', lien: '' },
-    { texte: 'Collection privée', categorie: '', lien: '/#collection' },
-    { texte: 'Contact', categorie: '', lien: '/#contact' },
-    { texte: 'Mentions légales et CGV', categorie: '', lien: '' },
+    { texte: 'Ardoise', texteEn: 'Slate', categorie: 'Ardoise', lien: '' },
+    { texte: 'Bronze', texteEn: 'Bronze', categorie: 'Bronze', lien: '' },
+    { texte: 'Pneu recyclé', texteEn: 'Recycled tyre', categorie: 'Pneu recyclé', lien: '' },
+    { texte: 'Petits formats', texteEn: 'Small works', categorie: 'Petits formats', lien: '' },
+    { texte: 'Collection privée', texteEn: 'Private collection', categorie: '', lien: '/#collection' },
+    { texte: 'Contact', texteEn: 'Contact', categorie: '', lien: '/#contact' },
+    { texte: 'Mentions légales et CGV', texteEn: 'Legal notice and terms of sale', categorie: '', lien: '' },
   ],
   note: 'Maquette de démonstration : le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.',
+  noteEn: 'Demonstration mock-up: the basket, payment and forms are simulated. Some background images are temporary, pending the final images.',
   a11y: {},
 } as const satisfies Omit<LpPiedProps, 'id' | 'className'>;
