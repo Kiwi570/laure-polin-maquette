@@ -87,8 +87,8 @@ const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
     );
     const cle = `${copie ? 'c' : 'o'}-${k}`;
     const commun = { ...part('lpCollectionVignette', 'lp-collection-vignette', 'vignette'), ...(copie ? { 'aria-hidden': true as const, tabIndex: -1 } : {}) };
-    return o.lien
-      ? <a key={cle} {...commun} href={lien(o.lien)}>{contenu}</a>
+    return o.lien?.href
+      ? <a key={cle} {...commun} href={lien(o.lien.href)} target={o.lien.target}>{contenu}</a>
       : <span key={cle} {...commun} tabIndex={copie ? -1 : 0}>{contenu}</span>;
   };
 

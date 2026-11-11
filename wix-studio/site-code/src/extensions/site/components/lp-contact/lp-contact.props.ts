@@ -1,4 +1,4 @@
-import type { A11y, Direction } from '@wix/editor-react-types';
+import type { A11y, Direction, Link } from '@wix/editor-react-types';
 
 /** Un choix de la ligne « Votre demande » */
 export type Demande = {
@@ -32,8 +32,6 @@ export type LpContactProps = {
   adresseLigne2?: string;
   /** Téléphone affiché */
   telephone?: string;
-  /** Lien du téléphone */
-  telephoneLien?: string;
   /** Adresse e-mail */
   email?: string;
   /** Visites : texte avant le téléphone */
@@ -48,20 +46,20 @@ export type LpContactProps = {
   itineraireTexte?: string;
   /** Lien d’itinéraire : texte (anglais) */
   itineraireTexteEn?: string;
-  /** Lien d’itinéraire : adresse */
-  itineraireLien?: string;
+  /** Lien d’itinéraire */
+  itineraireLien?: Link;
   /** Description du plan pour les lecteurs d’écran */
   descriptionPlan?: string;
   /** Description du plan pour les lecteurs d’écran (anglais) */
   descriptionPlanEn?: string;
   /** Bouton Instagram : texte */
   instagramTexte?: string;
-  /** Bouton Instagram : adresse */
-  instagramLien?: string;
+  /** Bouton Instagram : lien */
+  instagramLien?: Link;
   /** Bouton Facebook : texte */
   facebookTexte?: string;
-  /** Bouton Facebook : adresse */
-  facebookLien?: string;
+  /** Bouton Facebook : lien */
+  facebookLien?: Link;
 
   /** Formulaire : légende des types de demande */
   legendeDemande?: string;
@@ -157,7 +155,6 @@ export const defaultProps = {
   adresseLigne1: '51 rue Lénine',
   adresseLigne2: '93170 Bagnolet',
   telephone: '+33 6 77 80 59 60',
-  telephoneLien: 'tel:+33677805960',
   email: 'contact@sculptures-fr.com',
   visitesTexte: 'Visites de l’atelier sur rendez-vous. Pour convenir d’une visite :',
   visitesTexteEn: 'Studio visits by appointment. To arrange a visit:',
@@ -165,13 +162,13 @@ export const defaultProps = {
   visitesTelephoneEn: '+33 6 77 80 59 60',
   itineraireTexte: 'Itinéraire vers l’atelier',
   itineraireTexteEn: 'Directions to the studio',
-  itineraireLien: 'https://www.google.com/maps/dir/?api=1&destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France',
+  itineraireLien: { href: 'https://www.google.com/maps/dir/?api=1&destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France', target: '_blank' },
   descriptionPlan: 'Plan : Bagnolet, à l’est de Paris, entre Montreuil, Romainville et Les Lilas',
   descriptionPlanEn: 'Map: Bagnolet, east of Paris, between Montreuil, Romainville and Les Lilas',
   instagramTexte: 'Instagram',
-  instagramLien: 'https://www.instagram.com/laurepolin/',
+  instagramLien: { href: 'https://www.instagram.com/laurepolin/', target: '_blank' },
   facebookTexte: 'Facebook',
-  facebookLien: 'https://www.facebook.com/sculptureslaure/',
+  facebookLien: { href: 'https://www.facebook.com/sculptureslaure/', target: '_blank' },
   legendeDemande: 'Votre demande',
   legendeDemandeEn: 'Your request',
   demandes: [

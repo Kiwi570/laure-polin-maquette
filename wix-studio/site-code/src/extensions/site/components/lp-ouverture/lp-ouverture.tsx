@@ -264,8 +264,8 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
             <div className={s['hero-texte']}>
               <p {...part('lpOuvertureTexte', 'lp-ouverture-texte', 'hero-texte-p')} data-entree="">{texte}</p>
               <div className={s.actions} data-entree="">
-                <a {...part('lpOuvertureBoutonPrincipal', 'lp-ouverture-bouton-principal', 'bouton', 'bouton--plein')} data-bouton="" href={boutonPrincipalLien}><span>{boutonPrincipalTexte}</span></a>
-                <a {...part('lpOuvertureBoutonSecondaire', 'lp-ouverture-bouton-secondaire', 'bouton')} data-bouton="" href={boutonSecondaireLien}><span>{boutonSecondaireTexte}</span></a>
+                <a {...part('lpOuvertureBoutonPrincipal', 'lp-ouverture-bouton-principal', 'bouton', 'bouton--plein')} data-bouton="" href={boutonPrincipalLien?.href || '#disponibles'} target={boutonPrincipalLien?.target}><span>{boutonPrincipalTexte}</span></a>
+                <a {...part('lpOuvertureBoutonSecondaire', 'lp-ouverture-bouton-secondaire', 'bouton')} data-bouton="" href={boutonSecondaireLien?.href || '#contact'} target={boutonSecondaireLien?.target}><span>{boutonSecondaireTexte}</span></a>
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
             </div>
           </div>
         </div>
-        <a {...part('lpOuvertureDefiler', 'lp-ouverture-defiler', 'indice')} href={lienDefiler} aria-label={ARIA.defiler} data-entree="">
+        <a {...part('lpOuvertureDefiler', 'lp-ouverture-defiler', 'indice')} href={lienDefiler?.href || '#manifeste'} target={lienDefiler?.target} aria-label={ARIA.defiler} data-entree="">
           <span>{texteDefiler}</span>
           <i aria-hidden="true" />
         </a>

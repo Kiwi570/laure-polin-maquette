@@ -1,4 +1,4 @@
-import type { A11y, Direction, Image } from '@wix/editor-react-types';
+import type { A11y, Direction, Image, Link } from '@wix/editor-react-types';
 
 export type LpOuvertureProps = {
   id: string;
@@ -18,20 +18,20 @@ export type LpOuvertureProps = {
   boutonPrincipalTexte?: string;
   /** Bouton plein : texte (anglais) */
   boutonPrincipalTexteEn?: string;
-  /** Bouton plein : adresse */
-  boutonPrincipalLien?: string;
+  /** Bouton plein : lien (vide : section #disponibles) */
+  boutonPrincipalLien?: Link;
   /** Bouton contour : texte */
   boutonSecondaireTexte?: string;
   /** Bouton contour : texte (anglais) */
   boutonSecondaireTexteEn?: string;
-  /** Bouton contour : adresse */
-  boutonSecondaireLien?: string;
+  /** Bouton contour : lien (vide : section #contact) */
+  boutonSecondaireLien?: Link;
   /** Lien « Défiler » en bas : texte */
   texteDefiler?: string;
   /** Lien « Défiler » en bas : texte (anglais) */
   texteDefilerEn?: string;
-  /** Lien « Défiler » : adresse (section suivante) */
-  lienDefiler?: string;
+  /** Lien « Défiler » (vide : section #manifeste) */
+  lienDefiler?: Link;
   /** Fond d’ardoise (écran horizontal) */
   fondArdoise?: Image;
   /** Fond d’ardoise (écran vertical, téléphone) */
@@ -63,13 +63,10 @@ export const defaultProps = {
   texteEn: 'Sculptures in carved slate, bronze and recycled tyre. Half-figurative, half-abstract, they are born in the studio in Bagnolet, just outside Paris.',
   boutonPrincipalTexte: 'Voir les œuvres disponibles',
   boutonPrincipalTexteEn: 'See the available works',
-  boutonPrincipalLien: '#disponibles',
   boutonSecondaireTexte: 'Visiter l’atelier',
   boutonSecondaireTexteEn: 'Visit the studio',
-  boutonSecondaireLien: '#contact',
   texteDefiler: 'Défiler',
   texteDefilerEn: 'Scroll',
-  lienDefiler: '#manifeste',
   fondArdoise: {
     url: 'https://static.wixstatic.com/media/2d5176_1b52ead1106b455195f467be7d080081~mv2.webp',
     uri: '2d5176_1b52ead1106b455195f467be7d080081~mv2.webp',

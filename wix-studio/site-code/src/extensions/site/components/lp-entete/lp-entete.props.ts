@@ -1,4 +1,4 @@
-import type { A11y, Direction, Image } from '@wix/editor-react-types';
+import type { A11y, Direction, Image, Link } from '@wix/editor-react-types';
 import type { ElementState } from '@wix/react-component-utils';
 
 /** Une salle du menu « Les œuvres » et du menu plein écran. */
@@ -11,8 +11,10 @@ export type Salle = {
   categorie?: string;
   /** Vignette : photo d’une œuvre de la salle */
   image?: Image;
-  /** Adresse de la salle si elle n’a pas de catégorie (sinon laissée vide) */
-  lien?: string;
+  /** Lien de la salle si elle n’a pas de catégorie */
+  lien?: Link;
+  /** Section de l’accueil visée, sans # (ex. collection), si ni catégorie ni lien */
+  ancre?: string;
 };
 
 export type LpEnteteProps = {
@@ -27,8 +29,8 @@ export type LpEnteteProps = {
   logoTexteAccessible?: string;
   /** Texte lu par les lecteurs d’écran sur le logo (anglais) */
   logoTexteAccessibleEn?: string;
-  /** Adresse de l’accueil */
-  lienAccueil?: string;
+  /** Lien du logo (vide : l’accueil du site) */
+  lienAccueil?: Link;
   /** Libellé du menu des salles */
   libelleOeuvres?: string;
   /** Libellé du menu des salles (anglais) */
@@ -47,26 +49,26 @@ export type LpEnteteProps = {
   libelleLivre?: string;
   /** Lien « Le livre » : libellé (anglais) */
   libelleLivreEn?: string;
-  /** Lien « Le livre » : adresse */
-  lienLivre?: string;
+  /** Lien « Le livre » (vide : section #livre de l’accueil) */
+  lienLivre?: Link;
   /** Lien « Expositions » : libellé */
   libelleExpositions?: string;
   /** Lien « Expositions » : libellé (anglais) */
   libelleExpositionsEn?: string;
-  /** Lien « Expositions » : adresse */
-  lienExpositions?: string;
+  /** Lien « Expositions » (vide : section #ou-voir de l’accueil) */
+  lienExpositions?: Link;
   /** Pastille « Contact » : libellé */
   libelleContact?: string;
   /** Pastille « Contact » : libellé (anglais) */
   libelleContactEn?: string;
-  /** Pastille « Contact » : adresse */
-  lienContact?: string;
+  /** Lien de la pastille « Contact » (vide : section #contact de l’accueil) */
+  lienContact?: Link;
   /** Titre au-dessus des salles dans le menu plein écran */
   titreMenuSalles?: string;
   /** Titre au-dessus des salles dans le menu plein écran (anglais) */
   titreMenuSallesEn?: string;
-  /** Adresse de la page panier */
-  lienPanier?: string;
+  /** Lien du bouton panier (vide : page panier Wix /cart-page) */
+  lienPanier?: Link;
   /** Texte en bas de l’ouverture animée */
   texteOuverture?: string;
   /** Texte en bas de l’ouverture animée (anglais) */
@@ -124,7 +126,6 @@ export const defaultProps = {
   },
   logoTexteAccessible: 'Laure Polin, sculptures : retour à l’accueil',
   logoTexteAccessibleEn: 'Laure Polin, sculptures: back to the home page',
-  lienAccueil: '/',
   libelleOeuvres: 'Les œuvres',
   libelleOeuvresEn: 'The works',
   salles: [
@@ -133,35 +134,31 @@ export const defaultProps = {
       titreEn: 'Slate',
       categorie: 'Ardoise',
       image: { url: 'https://static.wixstatic.com/media/2d5176_7c67d2220271445eac60f0802cc325af~mv2.webp', uri: '2d5176_7c67d2220271445eac60f0802cc325af~mv2.webp', alt: 'À contre-courant, sculpture en ardoise de Laure Polin' },
-      lien: '',
     },
     {
       titre: 'Bronze',
       titreEn: 'Bronze',
       categorie: 'Bronze',
       image: { url: 'https://static.wixstatic.com/media/2d5176_292c7afd2cdb43a2a514d893cba5cc4d~mv2.webp', uri: '2d5176_292c7afd2cdb43a2a514d893cba5cc4d~mv2.webp', alt: 'La danse du voile, sculpture en bronze de Laure Polin' },
-      lien: '',
     },
     {
       titre: 'Pneu recyclé',
       titreEn: 'Recycled tyre',
       categorie: 'Pneu recyclé',
       image: { url: 'https://static.wixstatic.com/media/2d5176_377fc0b5673f4a96b66fc46c50258d18~mv2.webp', uri: '2d5176_377fc0b5673f4a96b66fc46c50258d18~mv2.webp', alt: 'Le dé du chaos, sculpture en pneu recyclé de Laure Polin' },
-      lien: '',
     },
     {
       titre: 'Petits formats',
       titreEn: 'Small works',
       categorie: 'Petits formats',
       image: { url: 'https://static.wixstatic.com/media/2d5176_28c2cf2b2f584679a199743354a9477c~mv2.webp', uri: '2d5176_28c2cf2b2f584679a199743354a9477c~mv2.webp', alt: 'Profil, sculpture de Laure Polin' },
-      lien: '',
     },
     {
       titre: 'Collection privée',
       titreEn: 'Private collection',
       categorie: '',
       image: { url: 'https://static.wixstatic.com/media/2d5176_7c4c4ecc22064cb3ac1404d9adfdee29~mv2.webp', uri: '2d5176_7c4c4ecc22064cb3ac1404d9adfdee29~mv2.webp', alt: 'Cheveux au vent, sculpture de Laure Polin' },
-      lien: '/#collection',
+      ancre: 'collection',
     },
   ],
   motOeuvre: 'œuvre',
@@ -170,16 +167,12 @@ export const defaultProps = {
   motOeuvresEn: 'works',
   libelleLivre: 'Le livre',
   libelleLivreEn: 'The book',
-  lienLivre: '/#livre',
   libelleExpositions: 'Expositions',
   libelleExpositionsEn: 'Exhibitions',
-  lienExpositions: '/#ou-voir',
   libelleContact: 'Contact',
   libelleContactEn: 'Contact',
-  lienContact: '/#contact',
   titreMenuSalles: 'Les salles',
   titreMenuSallesEn: 'The rooms',
-  lienPanier: '/cart-page',
   texteOuverture: 'Sculptures, Bagnolet',
   texteOuvertureEn: 'Sculptures, Bagnolet, France',
   fondOuverture: {

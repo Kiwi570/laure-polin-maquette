@@ -389,7 +389,11 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
     };
   }, [ouvrirPanneau, portail]);
 
-  const infoDe = (sa: Salle, k: number): InfoSalle => ({ nombre: infos[k]?.nombre || 0, lien: sa.lien || infos[k]?.lien || '' });
+  const infoDe = (sa: Salle, k: number): InfoSalle => ({ nombre: infos[k]?.nombre || 0, lien: sa.lien?.href || infos[k]?.lien || (sa.ancre ? `/#${sa.ancre}` : '') });
+  const hrefAccueil = lien(lienAccueil?.href || '/');
+  const hrefLivre = lien(lienLivre?.href || '/#livre');
+  const hrefExpositions = lien(lienExpositions?.href || '/#ou-voir');
+  const hrefContact = lien(lienContact?.href || '/#contact');
   const compte = (n: number) => nombreOeuvres(n, motOeuvre, motOeuvres);
   const libellePanier = nombre ? gabarit(ARIA.panierArticles, { n: String(nombre), articles: nombre > 1 ? ARIA.articles : ARIA.article }) : ARIA.panier;
   const imgLogo = <img className={s['marque-logo']} src={logoSrc} srcSet={logoSrcset} sizes="(max-width: 940px) 68px, 80px" alt="" width={625} height={673} decoding="async" />;
@@ -410,7 +414,7 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
   const contenu = (
     <>
       <header ref={enteteRef} className={cx(s, 'entete', plein && 'est-plein', cache && !menu && 'est-cache')}>
-        <a {...part('lpEnteteLogo', 'lp-entete-logo', 'marque')} href={lien(lienAccueil)} aria-label={logoTexteAccessible}>{imgLogo}</a>
+        <a {...part('lpEnteteLogo', 'lp-entete-logo', 'marque')} href={hrefAccueil} aria-label={logoTexteAccessible}>{imgLogo}</a>
         <nav className={s.nav} aria-label={ARIA.navigation}>
           <div className={s['nav-oeuvres']} data-nav-oeuvres="">
             <button
@@ -443,13 +447,13 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
               })}
             </div>
           </div>
-          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lien(lienLivre)}>{libelleLivre}</a>
-          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={lien(lienExpositions)}>{libelleExpositions}</a>
-          <a {...part('lpEnteteContact', 'lp-entete-contact', 'nav-lien', 'nav-contact')} href={lien(lienContact)}>{libelleContact}</a>
+          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={hrefLivre}>{libelleLivre}</a>
+          <a {...part('lpEnteteLien', 'lp-entete-lien', 'nav-lien')} href={hrefExpositions}>{libelleExpositions}</a>
+          <a {...part('lpEnteteContact', 'lp-entete-contact', 'nav-lien', 'nav-contact')} href={hrefContact}>{libelleContact}</a>
         </nav>
         <div className={s.outils}>
           {langues(false)}
-          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lien(lienPanier || '/cart-page') || '/cart-page')}>
+          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lien(lienPanier?.href || '/cart-page') || '/cart-page')}>
             {ICO.sac}
             <span className={s.sr}>{libellePanier}</span>
             <span className={cx(s, 'pastille', nombre > 0 && 'on')} aria-hidden="true">{nombre}</span>
@@ -470,7 +474,7 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
         data-ouvert={menu ? '1' : undefined}
         {...inerte(!menu)}
       >
-        <a className={s['menu-logo']} href={lien(lienAccueil)} aria-label={logoTexteAccessible} onClick={() => ouvrirMenu(false)}>{imgLogo}</a>
+        <a className={s['menu-logo']} href={hrefAccueil} aria-label={logoTexteAccessible} onClick={() => ouvrirMenu(false)}>{imgLogo}</a>
         <button type="button" className={cx(s, 'outil fermer')} aria-label={ARIA.fermerMenu} onClick={() => ouvrirMenu(false)}>{ICO.croix}</button>
         <p {...part('lpEnteteMenuTitre', 'lp-entete-menu-titre', 'menu-titre', 'mini')}>{titreMenuSalles}</p>
         {salles.map((sa, k) => {
@@ -490,9 +494,9 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
           );
         })}
         <span className={s['menu-sep']} aria-hidden="true" />
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienLivre)} onClick={() => ouvrirMenu(false)}>{libelleLivre}</a>
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienExpositions)} onClick={() => ouvrirMenu(false)}>{libelleExpositions}</a>
-        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={lien(lienContact)} onClick={() => ouvrirMenu(false)}>{libelleContact}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={hrefLivre} onClick={() => ouvrirMenu(false)}>{libelleLivre}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={hrefExpositions} onClick={() => ouvrirMenu(false)}>{libelleExpositions}</a>
+        <a {...part('lpEnteteMenuLien', 'lp-entete-menu-lien', 'menu-second')} href={hrefContact} onClick={() => ouvrirMenu(false)}>{libelleContact}</a>
         {langues(true)}
       </div>
       <div className={s['empreinte-progression']} aria-hidden="true"><div className={s.trace} ref={traceRef} /></div>

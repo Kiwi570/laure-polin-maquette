@@ -31,7 +31,18 @@ export function useLangue(): { langue: Langue; lien: (href?: string) => string |
   const langue = langueDe(page, site);
   const b = base(site);
   const lien = (href?: string) => {
-    if (!href || langue !== 'en' || !href.startsWith('/') || href.startsWith('//')) return href;
+    if (!href || langue !== 'en') return href;
+    // lien absolu vers ce site (choisi dans le sélecteur de liens Wix) : même règle sur son chemin
+    if (/^https?:\/\//.test(href)) {
+      try {
+        const u = new URL(href); const ici = new URL(page || href);
+        if (u.origin !== ici.origin) return href;
+        const r = u.pathname.slice(b.length) || '/';
+        if (/^\/en(\/|$)/.test(r)) return href;
+        return `${u.origin}${b}${r === '/' ? '/en' : `/en${r}`}${u.search}${u.hash}`;
+      } catch (e) { return href; }
+    }
+    if (!href.startsWith('/') || href.startsWith('//')) return href;
     if (/^\/en(\/|$|#|\?)/.test(href)) return href;
     return href === '/' ? '/en' : href.startsWith('/#') ? `/en${href.slice(1)}` : `/en${href}`;
   };

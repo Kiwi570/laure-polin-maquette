@@ -9,7 +9,8 @@ import { SRS } from './constants';
 import { moteur, calme, animerClive, rafraichir } from '../../../../lp-commun/moteur';
 import { tailleWix } from '../../../../lp-commun/donnees';
 import { useLangue, traduire } from '../../../../lp-commun/langue';
-import { useEdition, cx, Strates } from '../../../../lp-commun/react';
+import { useEdition, cx, Strates, telDe } from '../../../../lp-commun/react';
+import type { Link } from '@wix/editor-react-types';
 import { FRANCE } from '../../../../lp-commun/formes';
 
 const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
@@ -47,8 +48,8 @@ const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
     return () => { ctx.revert(); const p = sec.querySelector<SVGPathElement>('[data-pays]'); if (p) { p.style.strokeDasharray = ''; p.style.strokeDashoffset = ''; } rafraichir(); };
   }, [edition]);
 
-  const lienExterne = (texteLien?: string, href?: string, sr: string = SR.nouvelOnglet, precision = '') => (
-    <a {...part('lpOuVoirLien', 'lp-ou-voir-lien', 'lien', 'mini')} href={href} target="_blank" rel="noopener">
+  const lienExterne = (texteLien?: string, l?: Link, sr: string = SR.nouvelOnglet, precision = '') => (
+    <a {...part('lpOuVoirLien', 'lp-ou-voir-lien', 'lien', 'mini')} href={l?.href} target={l?.target || '_blank'} rel="noopener">
       {texteLien}{precision ? <span className={s.sr}>{` ${precision}`}</span> : null}<span className={s.sr}>{sr}</span>
     </a>
   );
@@ -73,7 +74,7 @@ const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
             <div className={s.lieux}>
               <div className={s.lieu}>
                 <h3 {...part('lpOuVoirLieuTitre', 'lp-ou-voir-lieu-titre', 'lieu-titre')}>{props.atelierTitre}</h3><span className={s.passe}>{props.atelierPrecision}</span>
-                <p {...part('lpOuVoirLieuTexte', 'lp-ou-voir-lieu-texte', 'lieu-texte')}>{props.atelierAdresse}<br />{props.atelierVisites} <a className={cx(s, 'lien chiffres tel')} href={props.atelierTelephoneLien}>{props.atelierTelephone}</a>.</p>
+                <p {...part('lpOuVoirLieuTexte', 'lp-ou-voir-lieu-texte', 'lieu-texte')}>{props.atelierAdresse}<br />{props.atelierVisites} <a className={cx(s, 'lien chiffres tel')} href={telDe(props.atelierTelephone)}>{props.atelierTelephone}</a>.</p>
                 <p className={s['lieu-texte']}>{lienExterne(props.atelierItineraire, props.atelierItineraireLien, SR.googleMaps)}</p>
               </div>
               <div className={s.lieu}>

@@ -1,4 +1,4 @@
-import type { A11y, Direction, Image } from '@wix/editor-react-types';
+import type { A11y, Direction, Image, Link } from '@wix/editor-react-types';
 
 export type LpOuVoirProps = {
   id: string;
@@ -47,14 +47,12 @@ export type LpOuVoirProps = {
   atelierTelephone?: string;
   /** Atelier : téléphone affiché (anglais) */
   atelierTelephoneEn?: string;
-  /** Atelier : lien du téléphone */
-  atelierTelephoneLien?: string;
   /** Atelier : texte du lien d’itinéraire */
   atelierItineraire?: string;
   /** Atelier : texte du lien d’itinéraire (anglais) */
   atelierItineraireEn?: string;
-  /** Atelier : adresse du lien d’itinéraire */
-  atelierItineraireLien?: string;
+  /** Atelier : lien d’itinéraire */
+  atelierItineraireLien?: Link;
 
   /** Galerie : nom */
   galerieTitre?: string;
@@ -66,8 +64,8 @@ export type LpOuVoirProps = {
   galerieLienTexte?: string;
   /** Galerie : texte du lien (anglais) */
   galerieLienTexteEn?: string;
-  /** Galerie : adresse du lien */
-  galerieLien?: string;
+  /** Galerie : lien */
+  galerieLien?: Link;
   /** Galerie : texte */
   galerieTexte?: string;
   /** Galerie : texte (anglais) */
@@ -79,8 +77,8 @@ export type LpOuVoirProps = {
   plateformeLienTexte?: string;
   /** Plateforme : texte du lien (anglais) */
   plateformeLienTexteEn?: string;
-  /** Plateforme : adresse du lien */
-  plateformeLien?: string;
+  /** Plateforme : lien */
+  plateformeLien?: Link;
   /** Plateforme : texte */
   plateformeTexte?: string;
   /** Plateforme : texte (anglais) */
@@ -148,21 +146,20 @@ export const defaultProps = {
   atelierVisitesEn: 'Studio visits by appointment. To arrange a visit:',
   atelierTelephone: '06 77 80 59 60',
   atelierTelephoneEn: '+33 6 77 80 59 60',
-  atelierTelephoneLien: 'tel:+33677805960',
   atelierItineraire: 'Itinéraire vers l’atelier',
   atelierItineraireEn: 'Directions to the studio',
-  atelierItineraireLien: 'https://www.google.com/maps/dir/?api=1&destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France',
+  atelierItineraireLien: { href: 'https://www.google.com/maps/dir/?api=1&destination=51%20rue%20L%C3%A9nine%2C%2093170%20Bagnolet%2C%20France', target: '_blank' },
   galerieTitre: 'Galerie Majestic',
   galerieTitreEn: 'Majestic Gallery',
   galerieLienTexte: 'Voir la galerie',
   galerieLienTexteEn: 'See the gallery',
-  galerieLien: 'https://www.majestic-gallery.com/collections/laure-polin',
+  galerieLien: { href: 'https://www.majestic-gallery.com/collections/laure-polin', target: '_blank' },
   galerieTexte: 'Laure Polin en est artiste permanente ; ses sculptures y sont aussi en vente.',
   galerieTexteEn: 'Laure Polin is one of its permanent artists; her sculptures are also for sale there.',
   plateformeTitre: 'Rise Art',
   plateformeLienTexte: 'Voir la page',
   plateformeLienTexteEn: 'See the page',
-  plateformeLien: 'https://www.riseart.com/fr/artiste/130832/laure-polin',
+  plateformeLien: { href: 'https://www.riseart.com/fr/artiste/130832/laure-polin', target: '_blank' },
   plateformeTexte: 'Œuvres présentées sur la plateforme d’art contemporain en ligne.',
   plateformeTexteEn: 'Works shown on the online contemporary art platform.',
   exposTitre: 'Expositions et salons',

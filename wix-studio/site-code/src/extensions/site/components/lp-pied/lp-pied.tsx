@@ -9,7 +9,7 @@ import { ARIAS } from './constants';
 import { moteur, calme, rafraichir } from '../../../../lp-commun/moteur';
 import { categorie, tailleWix, srcsetWix } from '../../../../lp-commun/donnees';
 import { useLangue, traduire } from '../../../../lp-commun/langue';
-import { useEdition, cx } from '../../../../lp-commun/react';
+import { useEdition, cx, telDe } from '../../../../lp-commun/react';
 import { NOM } from '../../../../lp-commun/formes';
 
 const LpPied: FC<LpPiedProps> = (propsBrutes) => {
@@ -63,21 +63,21 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
           </svg>
         </div>
         <div className={s.bas}>
-          <a {...part('lpPiedLogo', 'lp-pied-logo', 'pied-logo')} href={lien(lienAccueil)} aria-label={logoTexteAccessible}>
+          <a {...part('lpPiedLogo', 'lp-pied-logo', 'pied-logo')} href={lien(lienAccueil?.href || '/')} target={lienAccueil?.target} aria-label={logoTexteAccessible}>
             <img className={s['marque-logo']} src={tailleWix(logoP, 240)} srcSet={srcsetWix(logoP, [111, 167, 223, 334])} sizes="96px" alt="" width={625} height={673} loading="lazy" decoding="async" />
           </a>
           <address {...part('lpPiedCoordonnees', 'lp-pied-coordonnees', 'pied-coord')}>
             {props.coordLigne1}<br />{props.coordLigne2}<br />
-            <a className={cx(s, 'lien chiffres tel')} href={props.telephoneLien}>{props.telephone}</a><br />
+            <a className={cx(s, 'lien chiffres tel')} href={telDe(props.telephone)}>{props.telephone}</a><br />
             <a className={s.lien} href={`mailto:${props.email}`}>{props.email}</a>
             <span className={s.reseaux}>
-              <a className={s.lien} href={props.instagramLien} target="_blank" rel="noopener">{props.instagramTexte}<span className={s.sr}>{ARIA.nouvelOnglet}</span></a>
-              <a className={s.lien} href={props.facebookLien} target="_blank" rel="noopener">{props.facebookTexte}<span className={s.sr}>{ARIA.nouvelOnglet}</span></a>
+              <a className={s.lien} href={props.instagramLien?.href} target={props.instagramLien?.target || '_blank'} rel="noopener">{props.instagramTexte}<span className={s.sr}>{ARIA.nouvelOnglet}</span></a>
+              <a className={s.lien} href={props.facebookLien?.href} target={props.facebookLien?.target || '_blank'} rel="noopener">{props.facebookTexte}<span className={s.sr}>{ARIA.nouvelOnglet}</span></a>
             </span>
           </address>
           <nav className={s.liens} aria-label={ARIA.liens}>
             {(liens || []).map((l, k) => (
-              <a key={`${l.texte}-${k}`} {...part('lpPiedLien', 'lp-pied-lien', 'lien')} href={lien(l.lien || liensCat[k]) || undefined}>{l.texte}</a>
+              <a key={`${l.texte}-${k}`} {...part('lpPiedLien', 'lp-pied-lien', 'lien')} href={lien(l.lien?.href || liensCat[k] || (l.ancre ? `/#${l.ancre}` : '')) || undefined} target={l.lien?.target}>{l.texte}</a>
             ))}
           </nav>
         </div>

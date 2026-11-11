@@ -37,3 +37,9 @@ export const nombreOeuvres = (n: number, un = 'œuvre', plusieurs = 'œuvres'): 
 /** classes de module à partir des noms de la maquette : cx(s, 'bouton bouton--plein') */
 export const cx = (s: Record<string, string>, ...noms: Array<string | false | null | undefined>): string =>
   noms.filter(Boolean).join(' ').split(/\s+/).filter(Boolean).map((n) => s[n] || '').filter(Boolean).join(' ');
+
+/** lien « tel: » à partir du numéro affiché (« 06 77 80 59 60 » ou « +33 6 77 80 59 60 ») */
+export const telDe = (numero?: string): string => {
+  const n = (numero || '').replace(/[^\d+]/g, '');
+  return `tel:${n.startsWith('0') ? `+33${n.slice(1)}` : n}`;
+};

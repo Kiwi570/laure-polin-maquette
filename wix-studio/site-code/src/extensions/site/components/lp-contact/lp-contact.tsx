@@ -10,7 +10,7 @@ import { moteur, calme, animerClive, rafraichir, aimants } from '../../../../lp-
 import { oeuvresDe, prix } from '../../../../lp-commun/donnees';
 import type { Oeuvre } from '../../../../lp-commun/donnees';
 import { useLangue, traduire } from '../../../../lp-commun/langue';
-import { useEdition, cx, Strates, gabarit } from '../../../../lp-commun/react';
+import { useEdition, cx, Strates, gabarit, telDe } from '../../../../lp-commun/react';
 import { PLAN } from '../../../../lp-commun/formes';
 
 type Manque = 'nom' | 'email' | 'message';
@@ -102,11 +102,11 @@ const LpContact: FC<LpContactProps> = (propsBrutes) => {
               <div className={s.coord}>
                 <span className={s.mini}>{props.etiquetteAtelier}</span>
                 <span {...part('lpContactAdresse', 'lp-contact-adresse', 'grand')}>{props.adresseLigne1}<br />{props.adresseLigne2}</span>
-                <a {...part('lpContactLien', 'lp-contact-lien', 'lien', 'chiffres', 'tel')} href={props.telephoneLien}>{props.telephone}</a>
+                <a {...part('lpContactLien', 'lp-contact-lien', 'lien', 'chiffres', 'tel')} href={telDe(props.telephone)}>{props.telephone}</a>
                 <a {...part('lpContactLien', 'lp-contact-lien', 'lien')} href={`mailto:${props.email}`}>{props.email}</a>
               </div>
-              <p className={s.visites}>{props.visitesTexte} <a className={cx(s, 'lien chiffres tel')} href={props.telephoneLien}>{props.visitesTelephone}</a>.</p>
-              <p className={s.para}><a {...part('lpContactLien', 'lp-contact-lien', 'lien', 'mini')} href={props.itineraireLien} target="_blank" rel="noopener">{props.itineraireTexte}<span className={s.sr}>{SR.googleMaps}</span></a></p>
+              <p className={s.visites}>{props.visitesTexte} <a className={cx(s, 'lien chiffres tel')} href={telDe(props.visitesTelephone)}>{props.visitesTelephone}</a>.</p>
+              <p className={s.para}><a {...part('lpContactLien', 'lp-contact-lien', 'lien', 'mini')} href={props.itineraireLien?.href} target={props.itineraireLien?.target || '_blank'} rel="noopener">{props.itineraireTexte}<span className={s.sr}>{SR.googleMaps}</span></a></p>
               <div {...part('lpContactPlan', 'lp-contact-plan', 'plan')} data-plan="">
                 <svg viewBox={plan.vb} role="img" aria-label={props.descriptionPlan}>
                   {PLAN.zones.map((zn, i) => <path key={`p${i}`} data-zone="" className={cx(s, zn.type === 'a' ? 'paris' : 'commune', zn.nom === 'Bagnolet' && 'ici')} d={zn.d} />)}
@@ -119,8 +119,8 @@ const LpContact: FC<LpContactProps> = (propsBrutes) => {
                 </svg>
               </div>
               <div className={s.actions}>
-                <a {...part('lpContactReseau', 'lp-contact-reseau', 'bouton')} data-bouton="" href={props.instagramLien} target="_blank" rel="noopener"><span>{props.instagramTexte}</span><span className={s.sr}>{SR.nouvelOnglet}</span></a>
-                <a {...part('lpContactReseau', 'lp-contact-reseau', 'bouton')} data-bouton="" href={props.facebookLien} target="_blank" rel="noopener"><span>{props.facebookTexte}</span><span className={s.sr}>{SR.nouvelOnglet}</span></a>
+                <a {...part('lpContactReseau', 'lp-contact-reseau', 'bouton')} data-bouton="" href={props.instagramLien?.href} target={props.instagramLien?.target || '_blank'} rel="noopener"><span>{props.instagramTexte}</span><span className={s.sr}>{SR.nouvelOnglet}</span></a>
+                <a {...part('lpContactReseau', 'lp-contact-reseau', 'bouton')} data-bouton="" href={props.facebookLien?.href} target={props.facebookLien?.target || '_blank'} rel="noopener"><span>{props.facebookTexte}</span><span className={s.sr}>{SR.nouvelOnglet}</span></a>
               </div>
             </div>
             <div className={s.droite}>
