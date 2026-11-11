@@ -142,15 +142,16 @@ const decoder = (s: string) => s
   .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
   .replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, '’')
   .trim();
-/** lit « <p><strong>Matière</strong> : … </p> » dans la section « Caractéristiques » */
+/** lit les lignes « Matière : … » de la section « Caractéristiques », quelle que soit la mise en forme
+   du libellé : Wix enregistre le gras en <span style="font-weight: 700">, l'éditeur peut écrire <strong> ou <b> */
 export function caracteristiques(html: string): Record<string, string> {
   const r: Record<string, string> = {};
   const re = /<p[^>]*>([\s\S]*?)<\/p>/gi;
   let m: RegExpExecArray | null;
   while ((m = re.exec(html))) {
-    const ligne = m[1];
-    const k = /<strong[^>]*>([\s\S]*?)<\/strong>\s*(?:&nbsp;| |\s)*:?(?:&nbsp;| |\s)*([\s\S]*)$/i.exec(ligne);
-    if (k) r[decoder(k[1]).toLowerCase()] = decoder(k[2]).replace(/^[:\s ]+/, '');
+    const ligne = decoder(m[1]).replace(/\u00a0/g, ' ');
+    const k = /^([^:]{1,40}?)\s*:\s*([\s\S]+)$/.exec(ligne);
+    if (k) r[k[1].trim().toLowerCase()] = k[2].trim();
   }
   return r;
 }

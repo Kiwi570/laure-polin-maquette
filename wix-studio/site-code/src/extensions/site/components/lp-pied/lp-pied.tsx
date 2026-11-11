@@ -82,7 +82,7 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
             ))}
           </nav>
         </div>
-        <p {...part('lpPiedNote', 'lp-pied-note', 'note')}>{note}</p>
+        {note ? <p {...part('lpPiedNote', 'lp-pied-note', 'note')}>{note}</p> : null}
       </footer>
       </div>
     </div>

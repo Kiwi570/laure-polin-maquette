@@ -88,7 +88,7 @@ export const defaultProps = {
     { texte: 'Contact', texteEn: 'Contact', categorie: '', ancre: 'contact' },
     { texte: 'Mentions légales et CGV', texteEn: 'Legal notice and terms of sale', categorie: '', ancre: '' },
   ],
-  note: 'Maquette de démonstration : le panier, le paiement et les formulaires sont simulés. Certaines ambiances sont des visuels provisoires, en attendant les images définitives.',
-  noteEn: 'Demonstration mock-up: the basket, payment and forms are simulated. Some background images are temporary, pending the final images.',
+  note: '',
+  noteEn: '',
   a11y: {},
 } as const satisfies Omit<LpPiedProps, 'id' | 'className'>;
