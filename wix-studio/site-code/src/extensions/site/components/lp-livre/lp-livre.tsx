@@ -33,7 +33,7 @@ const LpLivre: FC<LpLivreProps> = (propsBrutes) => {
 
   useEffect(() => {
     let vivant = true;
-    if (categorie) oeuvresDe(categorie).then((l) => { if (vivant) setLivre(l[0] || null); }).catch(() => undefined);
+    if (categorie) oeuvresDe(categorie).then((l) => { if (vivant) setLivre(l[0] || null); }).catch((): void => undefined);
     return () => { vivant = false; };
   }, [categorie]);
 

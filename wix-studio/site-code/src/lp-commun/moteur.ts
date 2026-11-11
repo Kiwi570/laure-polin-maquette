@@ -115,7 +115,7 @@ export function polices(): Promise<unknown> {
     document.fonts.load('italic 400 40px "Cormorant Garamond"'),
     document.fonts.load('400 16px "Inter Tight"'),
     document.fonts.load('500 16px "Inter Tight"'),
-  ]).catch(() => undefined).then(() => document.fonts.ready);
+  ]).catch((): void => undefined).then(() => document.fonts.ready);
 }
 
 /* Un ancêtre transformé, filtré ou « contenu » capture les éléments position: fixed

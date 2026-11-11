@@ -251,7 +251,7 @@ export function etatPanier(forcer = false): Promise<EtatPanier> {
   if (!c.panier || forcer) {
     c.panier = currentCartV2.getCurrentCart()
       .then(lireEtat)
-      .catch(() => ({ nombre: 0, ids: [] }))
+      .catch((): EtatPanier => ({ nombre: 0, ids: [] }))
       .then((e) => { window.__lpEtatPanier = e; window.dispatchEvent(new CustomEvent('lp:panier-etat', { detail: e })); return e; });
   }
   return c.panier;

@@ -81,7 +81,7 @@ const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
     const src = ph?.url ? tailleWix({ url: ph.url, uri: ph.uri || '', w: ph.width || 700, h: ph.height || 900 }, 700) : '';
     const contenu = (
       <>
-        <img src={src} alt={copie ? '' : (ph?.alt || o.titre || '')} width={ph?.width} height={ph?.height} loading="lazy" decoding="async" />
+        <img src={src} alt={copie ? '' : (ph?.alt || o.titre || '')} width={ph?.width} height={ph?.height} loading={ph?.width && ph?.height ? 'lazy' : 'eager'} decoding="async" />
         <span className={s.legende}><strong className={s['legende-titre']}>{o.titre}</strong><br />{legendeStatut}</span>
       </>
     );

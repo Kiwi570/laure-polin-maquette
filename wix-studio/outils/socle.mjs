@@ -57,7 +57,7 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 .racine h1, .racine h2, .racine h3 { font-family: var(--f-display); font-weight: 400; margin: 0; letter-spacing: -.01em; color: var(--craie); }
 .racine h2 { font-size: var(--t-3xl); line-height: .95; }
 .racine h3 { font-size: var(--t-xl); line-height: 1.1; }
-:where(.racine) figure { margin: 0; }
+:where(.racine) figure { margin: 1em 40px; }
 :where(.racine) dl, :where(.racine) dd { margin: 0; }
 .fallbackDirection:not([dir]) { direction: var(--wix-opt-in-direction); }
 .sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -111,13 +111,39 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 }
 /* socle:fin */`;
 
+// ne garde, pour chaque composant, que les règles du socle dont toutes les classes servent dans son TSX
+// (sinon la génération du manifeste signale des classes « absentes du rendu initial »)
+const blocs = (css) => {
+  const out = []; let i = 0;
+  while (i < css.length) {
+    const o = css.indexOf('{', i); if (o < 0) break;
+    let n = 1; let j = o + 1;
+    while (j < css.length && n) { if (css[j] === '{') n++; else if (css[j] === '}') n--; j++; }
+    out.push({ sel: css.slice(i, o).trim(), corps: css.slice(o + 1, j - 1) });
+    i = j;
+  }
+  return out;
+};
+const filtrer = (css, mots) => blocs(css).map(({ sel, corps }) => {
+  const propre = sel.replace(/\/\*[\s\S]*?\*\//g, '').trim();
+  if (propre.startsWith('@font-face')) return `${sel} {${corps}}`;
+  if (propre.startsWith('@media')) { const dedans = filtrer(corps, mots); return dedans.trim() ? `${sel} {\n${dedans}\n}` : ''; }
+  const classes = [...propre.matchAll(/\.([A-Za-z][\w-]*)/g)].map((m) => m[1]).filter((c) => c !== 'racine' && c !== 'fallbackDirection');
+  return classes.every((c) => mots.has(c)) ? `${sel} {${corps}}` : '';
+}).filter(Boolean).join('\n');
+
 for (const nom of readdirSync(dossier)) {
   if (!nom.startsWith('lp-') || nom === 'lp-test-code') continue;
   const f = join(dossier, nom, `${nom}.module.css`);
   let css;
   try { css = readFileSync(f, 'utf8'); } catch (e) { continue; }
+  const tsx = readdirSync(join(dossier, nom)).filter((f) => f.endsWith('.tsx')).map((f) => readFileSync(join(dossier, nom, f), 'utf8')).join('\n');
+  const mots = new Set([...tsx.matchAll(/'([^'\n]*)'|\bs\.(\w+)|\bs\['([\w-]+)'\]/g)].flatMap((m) => (m[1] ?? m[2] ?? m[3] ?? '').split(/\s+/)).filter(Boolean));
+  if (/<Strates/.test(tsx)) ['strate', 'fente', 'clive'].forEach((m) => mots.add(m));
+  const debut = SOCLE.indexOf('\n') + 1; const fin = SOCLE.lastIndexOf('\n');
+  const socle = `${SOCLE.slice(0, debut)}${filtrer(SOCLE.slice(debut, fin), mots)}\n${SOCLE.slice(fin + 1)}`;
   const re = /\/\* socle:debut[\s\S]*?socle:fin \*\//;
-  css = re.test(css) ? css.replace(re, SOCLE) : `${SOCLE}\n\n${css}`;
+  css = re.test(css) ? css.replace(re, socle) : `${socle}\n\n${css}`;
   writeFileSync(f, css);
   console.log('socle →', nom);
 }

@@ -31,7 +31,7 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
     let vivant = true;
     (liens || []).forEach((l, k) => {
       if (!l.categorie) return;
-      categorie(l.categorie).then((c) => { if (vivant && c) setLiensCat((v) => ({ ...v, [k]: c.lien })); }).catch(() => undefined);
+      categorie(l.categorie).then((c) => { if (vivant && c) setLiensCat((v) => ({ ...v, [k]: c.lien })); }).catch((): void => undefined);
     });
     return () => { vivant = false; };
   }, [liens]);

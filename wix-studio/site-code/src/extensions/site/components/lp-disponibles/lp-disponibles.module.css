@@ -31,7 +31,7 @@
   overflow-x: clip;
 }
 @media (max-width: 940px) {
-  .racine { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
+.racine { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
 }
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { box-sizing: border-box; }
 :where(.racine) img, :where(.racine) svg, :where(.racine) canvas, :where(.racine) video { display: block; max-width: 100%; }
@@ -45,18 +45,11 @@
 .racine h1, .racine h2, .racine h3 { font-family: var(--f-display); font-weight: 400; margin: 0; letter-spacing: -.01em; color: var(--craie); }
 .racine h2 { font-size: var(--t-3xl); line-height: .95; }
 .racine h3 { font-size: var(--t-xl); line-height: 1.1; }
-:where(.racine) figure { margin: 0; }
+:where(.racine) figure { margin: 1em 40px; }
 :where(.racine) dl, :where(.racine) dd { margin: 0; }
 .fallbackDirection:not([dir]) { direction: var(--wix-opt-in-direction); }
-.sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.display { font-family: var(--f-display); font-weight: 300; line-height: .86; letter-spacing: -.02em; }
 .lead { font-family: var(--f-display); font-size: clamp(1.45rem, 2.4vw, 2.1rem); line-height: 1.3; font-weight: 400; max-width: 34ch; }
-.petit { font-size: var(--t-s); color: var(--craie-2); }
-.mini { font-size: var(--t-xs); color: var(--graphite); }
 .chiffres { font-variant-numeric: tabular-nums lining-nums; }
-.lien { position: relative; display: inline-block; padding-bottom: 2px; }
-.lien::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; transition: transform .5s var(--ease); }
-.lien:hover::after, .lien:focus-visible::after { transform: scaleX(1); }
 .bouton {
   --c: var(--craie);
   position: relative; display: inline-flex; align-items: center; gap: .65em;
@@ -74,12 +67,7 @@
 .bouton--plein:hover, .bouton--plein:focus-visible { color: var(--ardoise-0); border-color: var(--cuivre); }
 .bouton[disabled] { opacity: .45; pointer-events: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.section { position: relative; padding: clamp(96px, 14vh, 180px) var(--marge); }
 .contenu { width: var(--col); margin: 0 auto; }
-.rang { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 32px); }
-.fond-image { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
-.fond-image img { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; left: 0; max-width: none; }
-.fond-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ardoise-1) 0%, transparent 25%, transparent 70%, var(--ardoise-1) 100%); }
 .intertitre { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(40px, 6vw, 80px); }
 .intertitre p { max-width: 42ch; color: var(--craie-2); margin: 0; }
 .clive { position: relative; display: inline-block; }
@@ -89,13 +77,8 @@
 .cartel { font-size: var(--t-xs); color: var(--craie-2); line-height: 1.5; }
 .cartel strong { display: block; font-family: var(--f-display); font-size: 1.25rem; font-weight: 500; color: var(--craie); line-height: 1.15; margin-bottom: 2px; }
 .cartel .prix { color: var(--cuivre-clair); font-variant-numeric: tabular-nums; }
-.tel { white-space: nowrap; }
-@media (max-width: 860px) {
-  .lien { display: inline-flex; align-items: center; min-height: 44px; padding-bottom: 0; }
-  .lien::after { bottom: calc(50% - .85em); }
-}
 @media (prefers-reduced-motion: reduce) {
-  :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+:where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
 /* socle:fin */
 

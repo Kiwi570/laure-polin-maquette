@@ -177,7 +177,7 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
     let vivant = true;
     salles.forEach((sa, k) => {
       if (!sa.categorie) return;
-      categorie(sa.categorie).then((c) => { if (vivant && c) setInfos((v) => ({ ...v, [k]: { nombre: c.nombre, lien: c.lien } })); }).catch(() => undefined);
+      categorie(sa.categorie).then((c) => { if (vivant && c) setInfos((v) => ({ ...v, [k]: { nombre: c.nombre, lien: c.lien } })); }).catch((): void => undefined);
     });
     return () => { vivant = false; };
   }, [salles]);
@@ -212,7 +212,7 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
     };
     window.addEventListener('lp:panier-etat', surEtat);
     window.addEventListener('lp:panier', surAjout);
-    if (!edition) etatPanier().then((e) => setNombre(e.nombre)).catch(() => undefined);
+    if (!edition) etatPanier().then((e) => setNombre(e.nombre)).catch((): void => undefined);
     return () => { window.removeEventListener('lp:panier-etat', surEtat); window.removeEventListener('lp:panier', surAjout); window.clearTimeout(minuterie); };
   }, [edition, messageAjout, messageDeja, messageErreur]);
 

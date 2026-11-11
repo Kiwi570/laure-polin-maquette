@@ -68,7 +68,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
   useEffect(() => {
     let vivant = true;
     if (!categorieDiaporama) return undefined;
-    oeuvresDe(categorieDiaporama).then((l) => { if (vivant) setOeuvres(l.filter((o) => o.photos.length)); }).catch(() => undefined);
+    oeuvresDe(categorieDiaporama).then((l) => { if (vivant) setOeuvres(l.filter((o) => o.photos.length)); }).catch((): void => undefined);
     return () => { vivant = false; };
   }, [categorieDiaporama]);
 

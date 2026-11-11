@@ -55,19 +55,19 @@ const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
       if (!vivant) return;
       setOeuvres(l);
       l.forEach((o) => { if (o.photos[0]) couleursPhoto(o.photos[0].url).then((c) => { if (vivant) setCouleurs((v) => ({ ...v, [o.id]: c })); }); });
-    }).catch(() => undefined);
+    }).catch((): void => undefined);
     return () => { vivant = false; };
   }, [nomCategorie]);
   useEffect(() => {
     let vivant = true;
-    Promise.all(fins.map((f) => (f.c ? categorie(f.c).catch(() => null) : Promise.resolve(null)))).then((cs) => { if (vivant) setLiensFin(cs.map((c) => c?.lien || '')); });
+    Promise.all(fins.map((f) => (f.c ? categorie(f.c).catch((): null => null) : Promise.resolve(null)))).then((cs) => { if (vivant) setLiensFin(cs.map((c) => c?.lien || '')); });
     return () => { vivant = false; };
   }, [cleFins]);
   useEffect(() => {
     if (edition) return undefined;
     const maj = (e: Event) => setPanier((e as CustomEvent<EtatPanier>).detail.ids);
     window.addEventListener('lp:panier-etat', maj);
-    etatPanier().then((e) => setPanier(e.ids)).catch(() => undefined);
+    etatPanier().then((e) => setPanier(e.ids)).catch((): void => undefined);
     return () => window.removeEventListener('lp:panier-etat', maj);
   }, [edition]);
 
@@ -101,6 +101,9 @@ const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
       if (mode !== 'calme') animerClive(sec.querySelector('[data-clive]'), { strates: 4, ecart: 70 });
       if (!cartes.length) return;
       if (mode !== 'bureau') {
+        // les cartes arrivent après le bloc final : le défilement natif (aimanté) repart du début
+        const sc = sec.querySelector<HTMLElement>('[data-piste-scroll]');
+        if (sc) sc.scrollLeft = 0;
         io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { actifRef.current = cartes.indexOf(en.target as HTMLElement); teinter(en.target as HTMLElement); } }), { root: mode === 'etroit' ? sec.querySelector('[data-piste-scroll]') : null, threshold: 0.6 });
         cartes.forEach((c) => io?.observe(c));
         return;
