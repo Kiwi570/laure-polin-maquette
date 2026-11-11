@@ -15,6 +15,7 @@ wix-studio/
   harness/                   banc d’essai Vite + React 18 (SDK Wix simulés avec data/oeuvres.js)
   outils/socle.mjs           recopie le socle CSS commun dans chaque <composant>.module.css
   outils/echafaudage.mjs     réécrit component.tsx / *.extension.ts (id et type donnés par `wix generate`)
+  outils/libelles.mjs        libellés français des réglages (<nom>.libelles.ts, surcharge data.*.displayName)
 ```
 
 ## Les composants
@@ -35,6 +36,9 @@ wix-studio/
 Chaque texte visible a sa version anglaise « … (anglais) » (`…En`), préremplie avec l’anglais de la maquette.
 Les images éditoriales (logo, ardoises, portrait, ambiances, pages du livre, affiche, vignettes du menu,
 60 photos de la collection) sont dans le Gestionnaire de médias du site et sont les valeurs par défaut.
+
+Après une modification : `node outils/socle.mjs && node outils/libelles.mjs`, puis dans le site-code
+`wix build && wix generate manifest` (les fichiers `*.generated.ts` sont ceux produits par la CLI).
 
 ## Données Wix
 
