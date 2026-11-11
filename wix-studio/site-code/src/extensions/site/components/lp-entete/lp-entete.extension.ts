@@ -4,6 +4,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-entete.generated';
 import { defaultProps } from './lp-entete.props';
+import { libelles } from './lp-entete.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -19,6 +20,7 @@ export default extensions.editorReactComponent({
   description: 'Barre d’en-tête fixe du site : logo, menu des salles, panier, menu plein écran sur mobile, ouverture animée et défilement doux.',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

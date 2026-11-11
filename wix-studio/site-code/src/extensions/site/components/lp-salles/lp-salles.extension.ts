@@ -4,6 +4,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-salles.generated';
 import { defaultProps } from './lp-salles.props';
+import { libelles } from './lp-salles.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -19,6 +20,7 @@ export default extensions.editorReactComponent({
   description: 'Les quatre salles de l’accueil en panneaux plein écran, avec titres animés et trois œuvres par salle.',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

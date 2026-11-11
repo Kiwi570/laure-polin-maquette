@@ -4,6 +4,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-ouverture.generated';
 import { defaultProps } from './lp-ouverture.props';
+import { libelles } from './lp-ouverture.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -19,6 +20,7 @@ export default extensions.editorReactComponent({
   description: 'Ouverture de l’accueil : fond d’ardoise éclairé, grand titre, texte, boutons et diaporama des œuvres avec cartel.',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

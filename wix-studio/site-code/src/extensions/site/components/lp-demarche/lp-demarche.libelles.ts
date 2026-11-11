@@ -1,0 +1,27 @@
+// Généré par wix-studio/outils/libelles.mjs à partir des commentaires de lp-demarche.props.ts
+export const libelles = {
+  data: {
+    portrait: { displayName: "Portrait de l’artiste (recadré 4:5)" },
+    portraitAltEn: { displayName: "Portrait de l’artiste (recadré 4:5) — texte alternatif en…" },
+    legende: { displayName: "Légende sous le portrait" },
+    legendeEn: { displayName: "Légende sous le portrait (anglais)" },
+    titreCache: { displayName: "Titre de la section, lu par les lecteurs d’écran seulement" },
+    titreCacheEn: { displayName: "Titre de la section, lu par les lecteurs d’écran seulemen…" },
+    paragraphe1: { displayName: "Premier paragraphe" },
+    paragraphe1En: { displayName: "Premier paragraphe (anglais)" },
+    paragraphe2: { displayName: "Deuxième paragraphe" },
+    paragraphe2En: { displayName: "Deuxième paragraphe (anglais)" },
+    paragraphe3: { displayName: "Troisième paragraphe" },
+    paragraphe3En: { displayName: "Troisième paragraphe (anglais)" },
+    geste1: { displayName: "Ligne en grand italique : premier geste (lettres qui s’as…" },
+    geste1En: { displayName: "Ligne en grand italique : premier geste (lettres qui s’as…" },
+    geste2: { displayName: "Deuxième geste (sort du flou)" },
+    geste2En: { displayName: "Deuxième geste (sort du flou) (anglais)" },
+    geste3: { displayName: "Troisième geste (secousse)" },
+    geste3En: { displayName: "Troisième geste (secousse) (anglais)" },
+    paragraphe4: { displayName: "Quatrième paragraphe" },
+    paragraphe4En: { displayName: "Quatrième paragraphe (anglais)" },
+    signature: { displayName: "Signature sous le texte" },
+    signatureEn: { displayName: "Signature sous le texte (anglais)" },
+  },
+};

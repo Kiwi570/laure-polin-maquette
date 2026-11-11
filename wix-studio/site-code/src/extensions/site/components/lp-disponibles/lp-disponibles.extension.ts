@@ -4,6 +4,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-disponibles.generated';
 import { defaultProps } from './lp-disponibles.props';
+import { libelles } from './lp-disponibles.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -19,6 +20,7 @@ export default extensions.editorReactComponent({
   description: 'Œuvres disponibles du moment en défilement horizontal, avec cartels, prix et ajout au panier.',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

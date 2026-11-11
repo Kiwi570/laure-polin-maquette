@@ -4,6 +4,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-collection.generated';
 import { defaultProps } from './lp-collection.props';
+import { libelles } from './lp-collection.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -19,6 +20,7 @@ export default extensions.editorReactComponent({
   description: 'Deux bandeaux défilants des œuvres en collection privée.',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

@@ -1,0 +1,26 @@
+// Généré par wix-studio/outils/libelles.mjs à partir des commentaires de lp-disponibles.props.ts
+export const libelles = {
+  data: {
+    titre: { displayName: "Titre de la section" },
+    titreEn: { displayName: "Titre de la section (anglais)" },
+    texte: { displayName: "Texte à côté du titre" },
+    texteEn: { displayName: "Texte à côté du titre (anglais)" },
+    categorie: { displayName: "Catégorie Wix Stores des œuvres montrées (nom exact, dans…" },
+    statutVendue: { displayName: "Mention d’une œuvre vendue (stock épuisé)" },
+    statutVendueEn: { displayName: "Mention d’une œuvre vendue (anglais)" },
+    finTexte: { displayName: "Bloc final : phrase" },
+    finTexteEn: { displayName: "Bloc final : phrase (anglais)" },
+    fin1Texte: { displayName: "Bloc final, bouton 1 (plein) : texte" },
+    fin1TexteEn: { displayName: "Bloc final, bouton 1 (plein) : texte (anglais)" },
+    fin1Categorie: { displayName: "Bloc final, bouton 1 : catégorie de la salle" },
+    fin2Texte: { displayName: "Bloc final, bouton 2 : texte" },
+    fin2TexteEn: { displayName: "Bloc final, bouton 2 : texte (anglais)" },
+    fin2Categorie: { displayName: "Bloc final, bouton 2 : catégorie de la salle" },
+    fin3Texte: { displayName: "Bloc final, bouton 3 : texte" },
+    fin3TexteEn: { displayName: "Bloc final, bouton 3 : texte (anglais)" },
+    fin3Categorie: { displayName: "Bloc final, bouton 3 : catégorie de la salle" },
+    fin4Texte: { displayName: "Bloc final, bouton 4 : texte" },
+    fin4TexteEn: { displayName: "Bloc final, bouton 4 : texte (anglais)" },
+    fin4Categorie: { displayName: "Bloc final, bouton 4 : catégorie de la salle" },
+  },
+};

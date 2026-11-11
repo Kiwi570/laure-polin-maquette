@@ -44,6 +44,7 @@ import { withEditorElementDefaults } from '@wix/react-component-utils';
 import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './${nom}.generated';
 import { defaultProps } from './${nom}.props';
+import { libelles } from './${nom}.libelles';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -59,6 +60,7 @@ export default extensions.editorReactComponent({
   description: '${description}',
   editorElement: deepmerge(
     editorElementWithDefaults,
+    libelles,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,
