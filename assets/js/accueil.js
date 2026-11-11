@@ -542,6 +542,10 @@ const lancer = () => {
   animerDispo();
   construireCarte();
   construirePlan();
+  // les sections epinglees (salles, disponibles) sont creees ici, apres les animations placees plus bas
+  // dans la page (livre, titres...) : on remet tout dans l'ordre de la page pour que leurs positions
+  // tiennent compte du defilement ajoute par les epinglages (sinon, sur ordinateur, elles se jouent trop tot)
+  ScrollTrigger.sort();
   ScrollTrigger.refresh();
 };
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(lancer); else lancer();
