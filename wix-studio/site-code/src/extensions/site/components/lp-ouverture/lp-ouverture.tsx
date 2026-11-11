@@ -114,7 +114,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
     const barres = Array.from(points.querySelectorAll<HTMLElement>('[data-point] i'));
     const imgDe = (k: number) => diapos[k]?.querySelector('img') as HTMLImageElement | null;
     const N = oeuvres.length;
-    const couleurs: Array<{ fond: string; couleur: string } | null> = oeuvres.map(() => null);
+    const couleurs: Array<{ fond: string; couleur: string } | null> = oeuvres.map((): null => null);
     const ratioDe = (k: number) => { const p = oeuvres[k].photos[0]; return p.w / p.h; };
     const fondDe = (k: number) => couleurs[k]?.fond || '#d9d9d9';
     const lireCouleur = (k: number) => couleursPhoto(oeuvres[k].photos[0].url).then((c) => { couleurs[k] = c; return c; });
@@ -232,13 +232,23 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
   }, [oeuvres, edition, autoPlay]);
 
   const basculerPause = () => { const on = !pauseManuelle; setPauseManuelle(on); ctrl.current?.pause(on); };
-  const surTouche = (ev: React.KeyboardEvent) => {
+  const surTouche = (ev: KeyboardEvent) => {
     if (ev.key !== 'ArrowRight' && ev.key !== 'ArrowLeft' || !oeuvres.length) return;
     ev.preventDefault();
     const n = (actif + (ev.key === 'ArrowRight' ? 1 : -1) + oeuvres.length) % oeuvres.length;
     ctrl.current?.aller(n);
     pointsRef.current?.querySelectorAll<HTMLElement>('[data-point]')[n]?.focus();
   };
+  // clavier : flèches gauche et droite depuis les commandes du diaporama (écouteur posé comme dans accueil.js)
+  const toucheRef = useRef(surTouche);
+  toucheRef.current = surTouche;
+  useEffect(() => {
+    const el = pointsRef.current;
+    if (!el) return undefined;
+    const f = (ev: KeyboardEvent) => toucheRef.current(ev);
+    el.addEventListener('keydown', f);
+    return () => el.removeEventListener('keydown', f);
+  }, []);
   const cartelO = oeuvres[cartelIdx] || null;
 
   return (
@@ -294,7 +304,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
             </div>
             <div className={s['hero-pied']} data-entree="">
               <p {...part('lpOuvertureCartel', 'lp-ouverture-cartel', 'cartel', 'chiffres')} ref={cartelRef} aria-live={lecture ? 'off' : 'polite'} aria-atomic="false"><Cartel o={cartelO} langue={langue} /></p>
-              <div className={s['hero-points']} ref={pointsRef} onKeyDown={surTouche}>
+              <div className={s['hero-points']} ref={pointsRef}>
                 <button
                   type="button"
                   {...part('lpOuverturePause', 'lp-ouverture-pause', 'hero-pause')}
@@ -304,6 +314,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
                 >
                   <svg viewBox="0 0 16 16" aria-hidden="true"><path className={s.p} d="M5 3v10M11 3v10" stroke="currentColor" strokeWidth="1.6" /><path className={s.l} d="M5 3l8 5-8 5z" fill="currentColor" /></svg>
                 </button>
+                {!oeuvres.length ? <span hidden><button type="button" {...part('lpOuverturePoint', 'lp-ouverture-point', 'hero-point')} tabIndex={-1}><i /></button></span> : null}
                 {oeuvres.map((o, k) => (
                   <button
                     key={o.id}

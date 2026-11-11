@@ -371,6 +371,24 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
     return () => { document.removeEventListener('keydown', surTouche); document.removeEventListener('click', surClicDehors); };
   });
 
+  /* écouteurs posés comme dans base.js (survol du menu des salles, focus dans l'en-tête) */
+  const panneauRef = useRef(panneau);
+  panneauRef.current = panneau;
+  useEffect(() => {
+    const entete = enteteRef.current; const nav = entete?.querySelector<HTMLElement>('[data-nav-oeuvres]');
+    if (!entete || !nav) return undefined;
+    const surFocus = () => setCache(false);
+    const entree = () => { if (!pointeurFin()) return; if (!panneauRef.current) parSurvol.current = true; ouvrirPanneau(true); };
+    const sortie = () => { if (!pointeurFin()) return; window.clearTimeout(tempo.current); tempo.current = window.setTimeout(() => ouvrirPanneau(false), 220); };
+    const perte = (e: FocusEvent) => { if (!nav.contains(e.relatedTarget as Node)) ouvrirPanneau(false); };
+    entete.addEventListener('focusin', surFocus);
+    nav.addEventListener('pointerenter', entree); nav.addEventListener('pointerleave', sortie); nav.addEventListener('focusout', perte);
+    return () => {
+      entete.removeEventListener('focusin', surFocus);
+      nav.removeEventListener('pointerenter', entree); nav.removeEventListener('pointerleave', sortie); nav.removeEventListener('focusout', perte);
+    };
+  }, [ouvrirPanneau, portail]);
+
   const infoDe = (sa: Salle, k: number): InfoSalle => ({ nombre: infos[k]?.nombre || 0, lien: sa.lien || infos[k]?.lien || '' });
   const compte = (n: number) => nombreOeuvres(n, motOeuvre, motOeuvres);
   const libellePanier = nombre ? gabarit(ARIA.panierArticles, { n: String(nombre), articles: nombre > 1 ? ARIA.articles : ARIA.article }) : ARIA.panier;
@@ -391,16 +409,10 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
 
   const contenu = (
     <>
-      <header ref={enteteRef} className={cx(s, 'entete', plein && 'est-plein', cache && !menu && 'est-cache')} onFocus={() => setCache(false)}>
+      <header ref={enteteRef} className={cx(s, 'entete', plein && 'est-plein', cache && !menu && 'est-cache')}>
         <a {...part('lpEnteteLogo', 'lp-entete-logo', 'marque')} href={lien(lienAccueil)} aria-label={logoTexteAccessible}>{imgLogo}</a>
         <nav className={s.nav} aria-label={ARIA.navigation}>
-          <div
-            className={s['nav-oeuvres']}
-            data-nav-oeuvres=""
-            onPointerEnter={() => { if (!pointeurFin()) return; if (!panneau) parSurvol.current = true; ouvrirPanneau(true); }}
-            onPointerLeave={() => { if (!pointeurFin()) return; window.clearTimeout(tempo.current); tempo.current = window.setTimeout(() => ouvrirPanneau(false), 220); }}
-            onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) ouvrirPanneau(false); }}
-          >
+          <div className={s['nav-oeuvres']} data-nav-oeuvres="">
             <button
               type="button"
               {...part('lpEnteteMenuOeuvres', 'lp-entete-menu-oeuvres', 'nav-bouton')}

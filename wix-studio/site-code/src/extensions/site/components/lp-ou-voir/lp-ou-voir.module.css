@@ -99,4 +99,3 @@
 .expo-passee { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; align-items: center; color: var(--graphite); font-size: var(--t-s); }
 .expo-passee img { width: 100%; height: auto; border: 1px solid var(--ardoise-3); filter: grayscale(.4); opacity: .8; }
 .expo-passee strong { display: block; font-family: var(--f-display); font-size: 1.25rem; font-weight: 500; color: var(--craie-2); line-height: 1.15; margin-bottom: 2px; }
-@media (max-width: 860px) { .plan-ici { font-size: 14px; } }

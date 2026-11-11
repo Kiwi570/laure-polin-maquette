@@ -169,6 +169,13 @@ const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
         </div>
         <div className={s['piste-scroll']} data-piste-scroll="">
           <div className={s['piste-h']} ref={pisteRef}>
+            {!oeuvres.length ? (
+              <span hidden>
+                <article {...part('lpDisponiblesCarte', 'lp-disponibles-carte', 'oeuvre-carte')}>
+                  <div className={s.cartel}><div><strong /><span className={s.prix} /><span className={s.etat} /></div><button type="button" tabIndex={-1} {...part('lpDisponiblesAjout', 'lp-disponibles-ajout', 'ajout')}>{ICO.plus}</button></div>
+                </article>
+              </span>
+            ) : null}
             {oeuvres.map((o) => {
               const ph = o.photos[0];
               const k = 0.48 + 0.52 * Math.pow((o.hauteur || 40) / hMax, 0.6);

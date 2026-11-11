@@ -95,7 +95,6 @@
 .intertitre h2 { color: var(--craie); }
 .piste-h { display: flex; align-items: flex-end; gap: clamp(40px, 7vw, 120px); padding: 40px var(--marge) clamp(70px, 10vh, 120px); width: max-content; }
 .piste-h .fin { flex: none; width: min(420px, 70vw); align-self: center; display: grid; gap: 18px; }
-.piste-h .fin .lead { margin: 0; }
 .oeuvre-carte { position: relative; flex: none; display: grid; justify-items: center; align-content: end; gap: 0; }
 .oeuvre-carte .socle-zone { position: relative; display: grid; justify-items: center; align-items: end; isolation: isolate; }
 .oeuvre-carte img.oeuvre { width: auto; object-fit: contain; filter: drop-shadow(0 28px 26px rgba(0,0,0,.5)); transition: transform 1s var(--ease); transform-origin: 50% 100%; max-width: none; }

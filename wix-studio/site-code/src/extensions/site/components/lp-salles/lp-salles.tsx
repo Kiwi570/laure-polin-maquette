@@ -205,6 +205,9 @@ const LpSalles: FC<LpSallesProps> = (propsBrutes) => {
                     </div>
                   </div>
                   <div className={s.trio} data-trio="">
+                    {!trio.length ? (
+                      <span hidden><a {...part('lpSallesOeuvre', 'lp-salles-oeuvre', 'trio-lien')}><span className={s.cartel}><strong /><span className={cx(s, 'dims-l chiffres')} /><span className={cx(s, 'prix chiffres')} /></span></a></span>
+                    ) : null}
                     {trio.map((o) => {
                       const ph = o.photos[0];
                       return (
