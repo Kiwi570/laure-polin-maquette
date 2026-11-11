@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.wix/
+harness/dist/
+site-code/node_modules

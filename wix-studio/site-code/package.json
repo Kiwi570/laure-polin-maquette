@@ -1,0 +1,40 @@
+{
+  "name": "@site/site-code",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "wix dev",
+    "build": "wix build",
+    "wix": "wix",
+    "preview": "wix preview",
+    "promote": "wix promote",
+    "release": "wix release",
+    "generate": "wix generate",
+    "env": "wix env pull"
+  },
+  "dependencies": {
+    "@wix/categories": "^1.0.230",
+    "@wix/ecom": "^1.0.2667",
+    "@wix/react-component-utils": "^1.17.0",
+    "@wix/react-component-schema": "^1.8.0",
+    "@wix/stores": "^1.0.991",
+    "@wix/wix-code-diagnostics-plugin": "^1.1.8",
+    "clsx": "^2.1.1",
+    "deepmerge-ts": "^8.0.2",
+    "gsap": "3.15.0",
+    "lenis": "1.3.27",
+    "ogl": "1.0.11",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1",
+    "@wix/cli": "^1.2.10",
+    "@wix/custom-extensions": "^1.0.6",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@wix/editor-react-types": "^1.0.8"
+  },
+  "private": true,
+  "exports": {}
+}
