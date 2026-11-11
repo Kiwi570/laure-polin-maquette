@@ -56,6 +56,7 @@ const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-ou-voir', s.racine, s.fallbackDirection, (edition) && s.calme, className)}>
+      <div className={s.jetons}>
       <section className={cx(s, 'section ou-voir')} id="ou-voir" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s.contenu}>
           <div className={s.intertitre}>
@@ -102,6 +103,7 @@ const LpOuVoir: FC<LpOuVoirProps> = (propsBrutes) => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };

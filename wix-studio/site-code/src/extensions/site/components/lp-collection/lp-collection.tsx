@@ -94,6 +94,7 @@ const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-collection', s.racine, s.fallbackDirection, statique && s.calme, className)} data-pause-button-visibility={pauseButtonVisibility}>
+      <div className={s.jetons}>
       <section className={cx(s, 'section collection')} id="collection" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s.contenu}>
           <div className={s.intertitre}>
@@ -123,6 +124,7 @@ const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
             : <svg className={s.icone} viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3l8 5-8 5z" fill="currentColor" /></svg>}
         </button>
       </section>
+      </div>
     </div>
   );
 };

@@ -168,6 +168,7 @@ const LpSalles: FC<LpSallesProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-salles', s.racine, s.fallbackDirection, statique && s.calme, className)}>
+      <div className={s.jetons}>
       <section className={s.matieres} id="matieres" ref={secRef} aria-label={ARIA.section}>
         <div className={s.piste} data-piste="">
           <nav {...part('lpSallesIndex', 'lp-salles-index', 'index-matieres')} data-index="" aria-label={ARIA.index}>
@@ -228,6 +229,7 @@ const LpSalles: FC<LpSallesProps> = (propsBrutes) => {
           })}
         </div>
       </section>
+      </div>
     </div>
   );
 };

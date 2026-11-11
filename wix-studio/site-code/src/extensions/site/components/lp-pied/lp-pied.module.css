@@ -5,6 +5,13 @@
 @font-face { font-family: "Inter Tight"; src: url("../../../../lp-commun/polices/inter-tight-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
 .racine {
   --display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  overflow-x: clip;
+}
+.jetons {
+  display: contents;
   color-scheme: dark;
   --ardoise-0: #101317; --ardoise-1: #171b20; --ardoise-2: #20262d; --ardoise-3: #2c333b; --ardoise-4: #3c444e;
   --graphite: #8a929b; --craie: #ece8e0; --craie-2: #c8c3b9; --cuivre: #c98048; --cuivre-clair: #e3a676; --mica: #a7b8c7; --teinte: #171b20;
@@ -17,10 +24,6 @@
   --rayon: 2px;
   --ease: cubic-bezier(.2, .7, .1, 1);
   --logo-h: 84px; --logo-h-compact: 64px; --header-h: 104px; --header-h-compact: 80px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  background: transparent;
   color: var(--craie);
   font-family: var(--f-texte);
   font-size: var(--t-m);
@@ -28,10 +31,9 @@
   font-feature-settings: "kern", "liga";
   -webkit-font-smoothing: antialiased;
   text-align: start;
-  overflow-x: clip;
 }
 @media (max-width: 940px) {
-.racine { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
+.jetons { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
 }
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { box-sizing: border-box; }
 :where(.racine) img, :where(.racine) svg, :where(.racine) canvas, :where(.racine) video { display: block; max-width: 100%; }

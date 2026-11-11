@@ -17,6 +17,13 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 @font-face { font-family: "Inter Tight"; src: url("${P}inter-tight-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
 .racine {
   --display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  overflow-x: clip;
+}
+.jetons {
+  display: contents;
   color-scheme: dark;
   --ardoise-0: #101317; --ardoise-1: #171b20; --ardoise-2: #20262d; --ardoise-3: #2c333b; --ardoise-4: #3c444e;
   --graphite: #8a929b; --craie: #ece8e0; --craie-2: #c8c3b9; --cuivre: #c98048; --cuivre-clair: #e3a676; --mica: #a7b8c7; --teinte: #171b20;
@@ -29,10 +36,6 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
   --rayon: 2px;
   --ease: cubic-bezier(.2, .7, .1, 1);
   --logo-h: 84px; --logo-h-compact: 64px; --header-h: 104px; --header-h-compact: 80px;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0;
-  background: transparent;
   color: var(--craie);
   font-family: var(--f-texte);
   font-size: var(--t-m);
@@ -40,10 +43,9 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
   font-feature-settings: "kern", "liga";
   -webkit-font-smoothing: antialiased;
   text-align: start;
-  overflow-x: clip;
 }
 @media (max-width: 940px) {
-  .racine { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
+  .jetons { --logo-h: 72px; --logo-h-compact: 60px; --header-h: 88px; --header-h-compact: 72px; }
 }
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { box-sizing: border-box; }
 :where(.racine) img, :where(.racine) svg, :where(.racine) canvas, :where(.racine) video { display: block; max-width: 100%; }
@@ -70,16 +72,15 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 .lien::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor; transform: scaleX(.25); transform-origin: left; transition: transform .5s var(--ease); }
 .lien:hover::after, .lien:focus-visible::after { transform: scaleX(1); }
 .bouton {
-  --c: var(--craie);
   position: relative; display: inline-flex; align-items: center; gap: .65em;
-  padding: .95em 1.5em; border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
-  color: var(--c); font-size: var(--t-s); font-weight: 500; letter-spacing: .01em; border-radius: 999px;
+  padding: .95em 1.5em; border: 1px solid color-mix(in srgb, var(--craie) 45%, transparent);
+  color: var(--craie); font-size: var(--t-s); font-weight: 500; letter-spacing: .01em; border-radius: 999px;
   overflow: hidden; isolation: isolate; transition: color .45s var(--ease), border-color .45s;
   will-change: transform;
   pointer-events: auto;
 }
-.bouton::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--c); transform: translateY(101%); border-radius: inherit; transition: transform .5s var(--ease); }
-.bouton:hover, .bouton:focus-visible { color: var(--ardoise-0); border-color: var(--c); }
+.bouton::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--craie); transform: translateY(101%); border-radius: inherit; transition: transform .5s var(--ease); }
+.bouton:hover, .bouton:focus-visible { color: var(--ardoise-0); border-color: var(--craie); }
 .bouton:hover::before, .bouton:focus-visible::before { transform: translateY(0); }
 .bouton--plein { background: var(--craie); color: var(--ardoise-0); border-color: var(--craie); }
 .bouton--plein::before { background: var(--cuivre); }
@@ -139,6 +140,7 @@ for (const nom of readdirSync(dossier)) {
   try { css = readFileSync(f, 'utf8'); } catch (e) { continue; }
   const tsx = readdirSync(join(dossier, nom)).filter((f) => f.endsWith('.tsx')).map((f) => readFileSync(join(dossier, nom, f), 'utf8')).join('\n');
   const mots = new Set([...tsx.matchAll(/'([^'\n]*)'|\bs\.(\w+)|\bs\['([\w-]+)'\]/g)].flatMap((m) => (m[1] ?? m[2] ?? m[3] ?? '').split(/\s+/)).filter(Boolean));
+  mots.add('jetons');
   if (/<Strates/.test(tsx)) ['strate', 'fente', 'clive'].forEach((m) => mots.add(m));
   const debut = SOCLE.indexOf('\n') + 1; const fin = SOCLE.lastIndexOf('\n');
   const socle = `${SOCLE.slice(0, debut)}${filtrer(SOCLE.slice(debut, fin), mots)}\n${SOCLE.slice(fin + 1)}`;

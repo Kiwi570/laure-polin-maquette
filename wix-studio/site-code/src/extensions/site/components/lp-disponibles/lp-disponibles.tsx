@@ -160,6 +160,7 @@ const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-disponibles', s.racine, s.fallbackDirection, mode === 'calme' && s.calme, className)}>
+      <div className={s.jetons}>
       <section className={s['salle-h']} id="disponibles" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={cx(s, 'tete contenu')} ref={teteRef}>
           <div className={s.intertitre}>
@@ -232,6 +233,7 @@ const LpDisponibles: FC<LpDisponiblesProps> = (propsBrutes) => {
           <span className={s['hud-barre']}><i data-hud-barre="" /></span>
         </div>
       </section>
+      </div>
     </div>
   );
 };

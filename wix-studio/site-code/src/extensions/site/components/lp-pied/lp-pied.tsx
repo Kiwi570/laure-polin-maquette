@@ -56,6 +56,7 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-pied', s.racine, s.fallbackDirection, statique && s.calme, className)}>
+      <div className={s.jetons}>
       <footer className={s.pied} ref={piedRef}>
         <div {...part('lpPiedNom', 'lp-pied-nom', 'grand-nom')} data-grand-nom="">
           <svg viewBox={`-20 0 ${NOM.w + 40} ${NOM.h}`} role="img" aria-label={nomAccessible}>
@@ -83,6 +84,7 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
         </div>
         <p {...part('lpPiedNote', 'lp-pied-note', 'note')}>{note}</p>
       </footer>
+      </div>
     </div>
   );
 };

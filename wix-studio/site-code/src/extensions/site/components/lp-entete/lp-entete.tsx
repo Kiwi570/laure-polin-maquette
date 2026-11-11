@@ -510,7 +510,9 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
   const classes = clsx('lp-entete', s.racine, s.fallbackDirection, (edition || statique) && s.calme, edition && s.edition, className);
   return (
     <div id={id} dir={direction} className={classes} ref={racineRef}>
-      {portail ? createPortal(<div className={clsx(s.racine, statique && s.calme)} dir={direction}>{contenu}</div>, portail) : contenu}
+      <div className={s.jetons}>
+      {portail ? createPortal(<div className={clsx(s.racine, statique && s.calme)} dir={direction}><div className={s.jetons}>{contenu}</div></div>, portail) : contenu}
+      </div>
     </div>
   );
 };

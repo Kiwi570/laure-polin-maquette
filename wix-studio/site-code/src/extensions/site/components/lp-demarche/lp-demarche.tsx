@@ -49,6 +49,7 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-demarche', s.racine, s.fallbackDirection, (edition || statique) && s.calme, className)}>
+      <div className={s.jetons}>
       <section className={cx(s, 'section manifeste')} id="manifeste" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={cx(s, 'contenu rang')}>
           <figure className={s.portrait}>
@@ -74,6 +75,7 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };

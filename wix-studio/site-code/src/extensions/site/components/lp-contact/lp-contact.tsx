@@ -91,6 +91,7 @@ const LpContact: FC<LpContactProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-contact', s.racine, s.fallbackDirection, className)}>
+      <div className={s.jetons}>
       <section className={cx(s, 'section atelier')} id="contact" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s.contenu}>
           <div className={s.intertitre}>
@@ -173,6 +174,7 @@ const LpContact: FC<LpContactProps> = (propsBrutes) => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };

@@ -253,6 +253,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-ouverture', s.racine, s.fallbackDirection, className)} data-pause-button-visibility={pauseButtonVisibility}>
+      <div className={s.jetons}>
       <section className={s.hero} id="hero" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s['gl-repli']} ref={repliRef} aria-hidden="true" style={fondUrl ? { backgroundImage: `url("${fondUrl}")` } : undefined} />
         <div className={s['hero-grille']} data-grille="">
@@ -337,6 +338,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
           <i aria-hidden="true" />
         </a>
       </section>
+      </div>
     </div>
   );
 };

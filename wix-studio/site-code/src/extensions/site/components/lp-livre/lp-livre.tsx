@@ -61,6 +61,7 @@ const LpLivre: FC<LpLivreProps> = (propsBrutes) => {
 
   return (
     <div id={id} dir={direction} className={clsx('lp-livre', s.racine, s.fallbackDirection, className)}>
+      <div className={s.jetons}>
       <section className={cx(s, 'section livre')} id="livre" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={cx(s, 'contenu rang')}>
           <div className={s['scene-livre']}>
@@ -94,6 +95,7 @@ const LpLivre: FC<LpLivreProps> = (propsBrutes) => {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 };
