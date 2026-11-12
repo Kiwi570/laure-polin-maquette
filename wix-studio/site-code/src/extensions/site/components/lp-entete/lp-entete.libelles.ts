@@ -23,7 +23,7 @@ export const libelles = {
     lienContact: { displayName: "Lien de la pastille « Contact » (vide : section #contact…" },
     titreMenuSalles: { displayName: "Titre au-dessus des salles dans le menu plein écran" },
     titreMenuSallesEn: { displayName: "Titre au-dessus des salles dans le menu plein écran (angl…" },
-    lienPanier: { displayName: "Lien du bouton panier (vide : page panier Wix /cart-page)" },
+    lienPanier: { displayName: "Lien du bouton panier (vide : page panier du site)" },
     texteOuverture: { displayName: "Texte en bas de l’ouverture animée" },
     texteOuvertureEn: { displayName: "Texte en bas de l’ouverture animée (anglais)" },
     fondOuverture: { displayName: "Image d’ardoise des feuillets de l’ouverture" },

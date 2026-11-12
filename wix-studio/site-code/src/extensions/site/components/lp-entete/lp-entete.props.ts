@@ -67,7 +67,7 @@ export type LpEnteteProps = {
   titreMenuSalles?: string;
   /** Titre au-dessus des salles dans le menu plein écran (anglais) */
   titreMenuSallesEn?: string;
-  /** Lien du bouton panier (vide : page panier Wix /cart-page) */
+  /** Lien du bouton panier (vide : page panier du site, /page-panier) */
   lienPanier?: Link;
   /** Texte en bas de l’ouverture animée */
   texteOuverture?: string;

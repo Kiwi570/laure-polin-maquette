@@ -453,7 +453,7 @@ const LpEntete: FC<LpEnteteProps> = (propsBrutes) => {
         </nav>
         <div className={s.outils}>
           {langues(false)}
-          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lien(lienPanier?.href || '/cart-page') || '/cart-page')}>
+          <button ref={panierRef} type="button" {...part('lpEntetePanier', 'lp-entete-panier', 'outil')} onClick={() => allerVers(lien(lienPanier?.href || '/page-panier') || '/page-panier')}>
             {ICO.sac}
             <span className={s.sr}>{libellePanier}</span>
             <span className={cx(s, 'pastille', nombre > 0 && 'on')} aria-hidden="true">{nombre}</span>
