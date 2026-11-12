@@ -17,6 +17,8 @@ Site `ca0a24d3-3cf9-41b8-84f0-74cc11208b23` · application compagnon `34aae9b7-e
 | 12/11 11:59 | **T1** `5a732ba6-7de3-4f09-9453-0a892c934d87` | **SUCCEEDED** — révision `59ef58d7-…`, override `63200ad3-…` |
 | 12/11 12:06 | **T2** `ea9d7ab5-70c3-43fe-8b47-4d5e0b636398` | **SUCCEEDED** — révision `d1f93424-…`, override `3ae20e63-…` |
 | 12/11 12:09 | **T3** `50eca834-83ae-4d7f-a7bd-ec7d625b8bdf` | **SUCCEEDED** — révision `3bc5373b-…`, override `4f6c3f70-…` |
+| 12/11 12:52 | **Pilote d'édition directe** `febd61d7-26ac-46d7-a914-f03ba7edb7ea` (premier paragraphe et portrait de « La démarche ») | **SUCCEEDED** — révision `50580192-…`, override `273d62ba-…` ; 0 écart de type |
+| 12/11 13:00 | **Lien panier** `0007a2c5-0d8f-4fd8-bf9f-7eddfaeec665` (en-tête : `/cart-page` → `/page-panier`) | **SUCCEEDED** — révision `af72e23c-…`, override `44a14861-…` ; 0 écart de type ; manifeste : seul le libellé du champ change ; 24 pages inchangées |
 
 ## 2. Cause prouvée
 
@@ -67,7 +69,9 @@ Règle de travail : avant chaque import, comparer les types du manifeste constru
   `./context/*`, que les modules Wix `wixMembersArea` / `wixPayments` importent : l'aperçu de développement ne
   démarre pas avec les pages membres. Aucune page n'est retirée pour contourner ce défaut.
 - Liens du pied : désormais des champs « adresse web » (type `webUrl` enregistré) et non le sélecteur de liens Wix.
-- Parties sélectionnables (`selectable: false`) : l'édition par double-clic sur un texte ou une image reste à faire.
+- Édition directe : pilote importé sur deux éléments de « La démarche » (procédure : `VERIFICATION-EDITEUR.md`) ;
+  généralisation en attente de la validation dans l'éditeur.
+- Pied : « Mentions légales et CGV » n'a pas de destination (aucune page de mentions ni de conditions de vente).
 - Formulaire de contact : n'envoie rien (il l'indique) ; à brancher sur Wix Forms.
 - Site **publié** (révision 3, ancien prototype) : publication antérieure, pas de mon fait ; rien n'a été republié.
 - Archive du code stocké : médiathèque, `archives/2d5176_e798d122b4814eb7ad39b4fad2626f6d.zip` (à supprimer en fin de travaux).
