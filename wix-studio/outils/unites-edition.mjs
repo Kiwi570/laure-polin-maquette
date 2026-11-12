@@ -13,9 +13,12 @@ import { fileURLToPath } from 'node:url';
 const ici = dirname(fileURLToPath(import.meta.url));
 const dossier = join(ici, '../site-code/src/extensions/site/components');
 
-export const transformer = (css) => css
+// Les déclarations de variables CSS (--nom: …) ne sont pas touchées : le générateur de manifeste en déduit
+// un cssPropertyType (« length »…) que Wix rend immuable une fois enregistré ; les surcharger à part si besoin.
+const unites = (css) => css
   .replace(/(\d*\.?\d+)svh\b/g, 'calc($1 * var(--u-svh, 1svh))')
   .replace(/(\d*\.?\d+)vh\b/g, (m, n, i, s) => (s[i - 1] === 's' ? m : `calc(${n} * var(--u-vh, 1vh))`));
+export const transformer = (css) => css.replace(/(--[\w-]+\s*:[^;}]*)|([^]*?)(?=--[\w-]+\s*:|$)/g, (m, decl, autre) => (decl !== undefined ? decl : unites(autre || '')));
 
 export const REGLES_EDITION = `/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
 .edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
