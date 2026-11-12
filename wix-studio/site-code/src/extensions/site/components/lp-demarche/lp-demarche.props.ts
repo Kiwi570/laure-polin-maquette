@@ -54,7 +54,10 @@ export type LpDemarcheProps = {
   signatureEn?: string;
 
   elementProps?: {
-    lpDemarchePortrait?: { className?: string };
+    /** Portrait de l’artiste : photo (médiathèque Wix) et sa description en anglais */
+    lpDemarchePortrait?: { className?: string; image?: Image; altEn?: string };
+    /** Premier paragraphe : texte et texte anglais */
+    lpDemarcheParagraphe1?: { className?: string; texte?: string; texteEn?: string };
     lpDemarcheLegende?: { className?: string };
     lpDemarcheParagraphe?: { className?: string };
     lpDemarcheGestes?: { className?: string };

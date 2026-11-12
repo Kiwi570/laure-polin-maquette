@@ -14,6 +14,9 @@ import Pied from '../../site-code/src/extensions/site/components/lp-pied/compone
 
 // ?edition=1 : simule le mode conception de l'éditeur Wix
 const edition = new URLSearchParams(location.search).get('edition') === '1';
+// ?parties=1 : simule des valeurs saisies dans les parties éditables (ce que Wix transmet dans elementProps)
+const parties = new URLSearchParams(location.search).get('parties') === '1';
+const elementPropsTest: Record<string, unknown> = parties ? { demarche: { lpDemarcheParagraphe1: { texte: 'TEXTE DE TEST du premier paragraphe.', texteEn: 'TEST TEXT of the first paragraph.' }, lpDemarchePortrait: { image: { uri: 'wix:image://v1/2d5176_62e49987f983435883da059ca7224503~mv2.webp/logo.webp#originWidth=334&originHeight=360', alt: 'Image de test' }, altEn: 'Test image' } } } : {};
 type C = React.ComponentType<{ id: string }>;
 const ordre: Array<[string, C]> = [
   ['entete', Entete as unknown as C], ['ouverture', Ouverture as unknown as C], ['demarche', Demarche as unknown as C],
@@ -22,6 +25,6 @@ const ordre: Array<[string, C]> = [
 ];
 createRoot(document.getElementById('app') as HTMLElement).render(
   <EditionContext.Provider value={edition}>
-    {ordre.map(([id, Comp]) => <Comp key={id} id={`comp-${id}`} />)}
+    {ordre.map(([id, Comp]) => (elementPropsTest[id] ? <Comp key={id} id={`comp-${id}`} {...({ elementProps: elementPropsTest[id] } as object)} /> : <Comp key={id} id={`comp-${id}`} />))}
   </EditionContext.Provider>,
 );

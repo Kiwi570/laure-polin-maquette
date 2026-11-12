@@ -5,6 +5,7 @@ import { deepmerge } from 'deepmerge-ts';
 import { editorElement } from './lp-demarche.generated';
 import { defaultProps } from './lp-demarche.props';
 import { libelles } from './lp-demarche.libelles';
+import { parties } from './lp-demarche.parties';
 import componentUrl from './component.tsx?url';
 import componentPreviewUrl from './component.preview.tsx?url';
 
@@ -21,6 +22,7 @@ export default extensions.editorReactComponent({
   editorElement: deepmerge(
     editorElementWithDefaults,
     libelles,
+    parties,
     {
       layout: {
         resizeDirection: LAYOUT.RESIZE_DIRECTION.horizontal,

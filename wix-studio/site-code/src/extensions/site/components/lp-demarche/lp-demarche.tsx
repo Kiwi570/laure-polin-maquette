@@ -9,6 +9,7 @@ import { moteur, calme, rafraichir } from '../../../../lp-commun/moteur';
 import { tailleWix, srcsetWix } from '../../../../lp-commun/donnees';
 import { useLangue, traduire } from '../../../../lp-commun/langue';
 import { useEdition, cx } from '../../../../lp-commun/react';
+import { domDePartie, texteDePartie, imageDePartie } from '../../../../lp-commun/parties';
 
 const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
   const { langue, lien } = useLangue();
@@ -19,10 +20,12 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
   const [statique, setStatique] = useState(false);
   useEffect(() => { setStatique(edition || calme()); }, [edition]);
   const part = (cle: keyof NonNullable<LpDemarcheProps['elementProps']>, globale: string, ...cls: Array<string | false>) => ({
-    ...(elementProps?.[cle] || {}),
+    ...domDePartie(elementProps?.[cle]),
     className: clsx(globale, cx(s, ...cls), elementProps?.[cle]?.className),
   });
-  const p = portrait?.url ? { url: portrait.url, uri: portrait.uri || '', w: portrait.width || 1600, h: portrait.height || 1066 } : null;
+  // parties éditables : la donnée de la partie, sinon le champ du bloc (déjà traduit), sinon la valeur par défaut
+  const texteP1 = texteDePartie(elementProps?.lpDemarcheParagraphe1, langue, paragraphe1);
+  const p = imageDePartie(elementProps?.lpDemarchePortrait, langue, portrait, portrait?.alt);
 
   useEffect(() => {
     const sec = secRef.current;
@@ -43,7 +46,7 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
     }, sec);
     rafraichir();
     return () => { ctx.revert(); rafraichir(); };
-  }, [edition, paragraphe1, paragraphe2, paragraphe3, paragraphe4, geste1, geste2, geste3]);
+  }, [edition, texteP1, paragraphe2, paragraphe3, paragraphe4, geste1, geste2, geste3]);
 
   const motsSpans = (t?: string) => (t || '').split(/(\s+)/).map((m, i) => (m.trim() ? <span key={i} className={s.mot} data-mot="">{m}</span> : m));
 
@@ -54,13 +57,13 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
         <div className={cx(s, 'contenu rang')}>
           <figure className={s.portrait}>
             <div {...part('lpDemarchePortrait', 'lp-demarche-portrait', 'cadre')}>
-              {p ? <img data-parallaxe="" src={tailleWix(p, 800)} srcSet={srcsetWix(p)} sizes="(max-width: 860px) 92vw, 40vw" alt={portrait?.alt || ''} loading="lazy" width={p.w} height={p.h} /> : null}
+              {p ? <img data-parallaxe="" src={tailleWix(p, 800)} srcSet={srcsetWix(p)} sizes="(max-width: 860px) 92vw, 40vw" alt={p.alt} loading="lazy" width={p.w} height={p.h} /> : null}
             </div>
             <figcaption {...part('lpDemarcheLegende', 'lp-demarche-legende', 'mini')}>{legende}</figcaption>
           </figure>
           <div className={s.texte}>
             <h2 className={s.sr} id={`${id}-titre`}>{titreCache}</h2>
-            <p {...part('lpDemarcheParagraphe', 'lp-demarche-paragraphe', 'para')} data-mots="">{motsSpans(paragraphe1)}</p>
+            <p {...part('lpDemarcheParagraphe1', 'lp-demarche-paragraphe-1', 'para')} data-mots="">{motsSpans(texteP1)}</p>
             <p {...part('lpDemarcheParagraphe', 'lp-demarche-paragraphe', 'para')} data-mots="">{motsSpans(paragraphe2)}</p>
             <p {...part('lpDemarcheParagraphe', 'lp-demarche-paragraphe', 'para')} data-mots="">{motsSpans(paragraphe3)}</p>
             <div {...part('lpDemarcheGestes', 'lp-demarche-gestes', 'gestes')} data-gestes="">
