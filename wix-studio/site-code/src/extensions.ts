@@ -18,6 +18,8 @@ import lpOuVoir from './extensions/site/components/lp-ou-voir/lp-ou-voir.extensi
 
 import lpContact from './extensions/site/components/lp-contact/lp-contact.extension.ts';
 
+import lpTestCode from './extensions/site/components/lp-test-code/lp-test-code.extension.ts';
+
 import lpPied from './extensions/site/components/lp-pied/lp-pied.extension.ts';
 
-export default app().use(lpEntete).use(lpOuverture).use(lpDemarche).use(lpSalles).use(lpDisponibles).use(lpCollection).use(lpLivre).use(lpOuVoir).use(lpContact).use(lpPied);
+export default app().use(lpEntete).use(lpOuverture).use(lpDemarche).use(lpSalles).use(lpDisponibles).use(lpCollection).use(lpLivre).use(lpOuVoir).use(lpContact).use(lpPied).use(lpTestCode);

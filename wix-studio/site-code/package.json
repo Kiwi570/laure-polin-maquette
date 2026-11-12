@@ -15,8 +15,8 @@
   "dependencies": {
     "@wix/categories": "^1.0.230",
     "@wix/ecom": "^1.0.2667",
-    "@wix/react-component-utils": "^1.17.0",
     "@wix/react-component-schema": "^1.8.0",
+    "@wix/react-component-utils": "^1.17.0",
     "@wix/stores": "^1.0.991",
     "@wix/wix-code-diagnostics-plugin": "^1.1.8",
     "clsx": "^2.1.1",
@@ -31,10 +31,22 @@
     "@types/react-dom": "^18.3.1",
     "@wix/cli": "^1.2.10",
     "@wix/custom-extensions": "^1.0.6",
+    "@wix/editor-react-types": "^1.0.8",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "@wix/editor-react-types": "^1.0.8"
+    "react-dom": "18.3.1"
   },
   "private": true,
-  "exports": {}
+  "exports": {
+    "./LpCollection": "./src/extensions/site/components/lp-collection/component.tsx",
+    "./LpContact": "./src/extensions/site/components/lp-contact/component.tsx",
+    "./LpDemarche": "./src/extensions/site/components/lp-demarche/component.tsx",
+    "./LpDisponibles": "./src/extensions/site/components/lp-disponibles/component.tsx",
+    "./LpEntete": "./src/extensions/site/components/lp-entete/component.tsx",
+    "./LpLivre": "./src/extensions/site/components/lp-livre/component.tsx",
+    "./LpOuVoir": "./src/extensions/site/components/lp-ou-voir/component.tsx",
+    "./LpOuverture": "./src/extensions/site/components/lp-ouverture/component.tsx",
+    "./LpPied": "./src/extensions/site/components/lp-pied/component.tsx",
+    "./LpSalles": "./src/extensions/site/components/lp-salles/component.tsx",
+    "./LpTestCode": "./src/extensions/site/components/lp-test-code/component.tsx"
+  }
 }

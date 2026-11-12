@@ -1,4 +1,4 @@
-import type { A11y, Direction, Image, Link } from '@wix/editor-react-types';
+import type { A11y, Direction, Image, WebUrl } from '@wix/editor-react-types';
 
 /** Un lien du pied de page */
 export type LienPied = {
@@ -9,7 +9,7 @@ export type LienPied = {
   /** Catégorie Wix Stores (nom exact) : l’adresse de sa page est utilisée */
   categorie?: string;
   /** Lien choisi (si pas de catégorie) */
-  lien?: Link;
+  lien?: WebUrl;
   /** Section de l’accueil visée, sans # (ex. contact), si ni catégorie ni lien */
   ancre?: string;
 };
@@ -29,7 +29,7 @@ export type LpPiedProps = {
   /** Texte lu par les lecteurs d’écran sur le logo (anglais) */
   logoTexteAccessibleEn?: string;
   /** Lien du logo (vide : l’accueil du site) */
-  lienAccueil?: Link;
+  lienAccueil?: WebUrl;
   /** Coordonnées, première ligne */
   coordLigne1?: string;
   /** Coordonnées, deuxième ligne */
@@ -41,11 +41,11 @@ export type LpPiedProps = {
   /** Instagram : texte */
   instagramTexte?: string;
   /** Instagram : lien */
-  instagramLien?: Link;
+  instagramLien?: WebUrl;
   /** Facebook : texte */
   facebookTexte?: string;
   /** Facebook : lien */
-  facebookLien?: Link;
+  facebookLien?: WebUrl;
   /** Liens de droite */
   liens: Array<LienPied>;
   /** Note en bas */
@@ -76,9 +76,9 @@ export const defaultProps = {
   telephone: '+33 6 77 80 59 60',
   email: 'contact@sculptures-fr.com',
   instagramTexte: 'Instagram',
-  instagramLien: { href: 'https://www.instagram.com/laurepolin/', target: '_blank' },
+  instagramLien: 'https://www.instagram.com/laurepolin/',
   facebookTexte: 'Facebook',
-  facebookLien: { href: 'https://www.facebook.com/sculptureslaure/', target: '_blank' },
+  facebookLien: 'https://www.facebook.com/sculptureslaure/',
   liens: [
     { texte: 'Ardoise', texteEn: 'Slate', categorie: 'Ardoise' },
     { texte: 'Bronze', texteEn: 'Bronze', categorie: 'Bronze' },
