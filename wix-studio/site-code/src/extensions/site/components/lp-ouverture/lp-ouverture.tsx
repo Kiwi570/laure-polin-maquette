@@ -252,7 +252,7 @@ const LpOuverture: FC<LpOuvertureProps> = (propsBrutes) => {
   const cartelO = oeuvres[cartelIdx] || null;
 
   return (
-    <div id={id} dir={direction} className={clsx('lp-ouverture', s.racine, s.fallbackDirection, className)} data-pause-button-visibility={pauseButtonVisibility}>
+    <div id={id} dir={direction} className={clsx('lp-ouverture', s.racine, s.fallbackDirection, edition && s.edition, className)} data-pause-button-visibility={pauseButtonVisibility}>
       <div className={s.jetons}>
       <section className={s.hero} id="hero" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s['gl-repli']} ref={repliRef} aria-hidden="true" style={fondUrl ? { backgroundImage: `url("${fondUrl}")` } : undefined} />

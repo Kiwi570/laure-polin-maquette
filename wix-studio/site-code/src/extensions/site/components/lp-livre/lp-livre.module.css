@@ -68,7 +68,7 @@
 .bouton--plein:hover, .bouton--plein:focus-visible { color: var(--ardoise-0); border-color: var(--cuivre); }
 .bouton[disabled] { opacity: .45; pointer-events: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.section { position: relative; padding: clamp(96px, 14vh, 180px) var(--marge); }
+.section { position: relative; padding: clamp(96px, calc(14 * var(--u-vh, 1vh)), 180px) var(--marge); }
 .contenu { width: var(--col); margin: 0 auto; }
 .rang { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 32px); }
 .clive { position: relative; display: inline-block; }
@@ -78,11 +78,16 @@
 @media (prefers-reduced-motion: reduce) {
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) {
+.edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); }
+}
 /* socle:fin */
 
 /* lp-livre — assets/css/site.css : livre */
 .livre .rang { align-items: center; }
-.livre .scene-livre { grid-column: 1 / span 6; perspective: 1800px; display: grid; place-items: center; min-height: 70svh; }
+.livre .scene-livre { grid-column: 1 / span 6; perspective: 1800px; display: grid; place-items: center; min-height: calc(70 * var(--u-svh, 1svh)); }
 .livre-3d { position: relative; width: min(380px, 70vw); aspect-ratio: 2204 / 2498; transform-style: preserve-3d; transform: rotateY(-24deg) rotateX(8deg); }
 .livre-3d .page, .livre-3d .couv { position: absolute; inset: 0; backface-visibility: hidden; transform-origin: left center; box-shadow: 0 40px 60px -20px rgba(0,0,0,.7); }
 .livre-3d .couv { transform-style: preserve-3d; z-index: 3; }
@@ -99,4 +104,4 @@
 .livre .credits dd { margin: 0; }
 .prix-grand { font-family: var(--f-display); font-size: 2.4rem; margin: 0; }
 .livre .infos .lead { margin: 0 0 1em; }
-@media (max-width: 860px) { .livre .scene-livre, .livre .infos { grid-column: 1 / -1; } .livre .scene-livre { min-height: 56svh; } }
+@media (max-width: 860px) { .livre .scene-livre, .livre .infos { grid-column: 1 / -1; } .livre .scene-livre { min-height: calc(56 * var(--u-svh, 1svh)); } }

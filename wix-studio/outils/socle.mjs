@@ -87,7 +87,7 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 .bouton--plein:hover, .bouton--plein:focus-visible { color: var(--ardoise-0); border-color: var(--cuivre); }
 .bouton[disabled] { opacity: .45; pointer-events: none; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.section { position: relative; padding: clamp(96px, 14vh, 180px) var(--marge); }
+.section { position: relative; padding: clamp(96px, calc(14 * var(--u-vh, 1vh)), 180px) var(--marge); }
 .contenu { width: var(--col); margin: 0 auto; }
 .rang { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(16px, 2.2vw, 32px); }
 .fond-image { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
@@ -110,6 +110,9 @@ const SOCLE = `/* socle:debut — jetons, polices et classes communes de la maqu
 @media (prefers-reduced-motion: reduce) {
   :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) { .edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); } }
 /* socle:fin */`;
 
 // ne garde, pour chaque composant, que les règles du socle dont toutes les classes servent dans son TSX

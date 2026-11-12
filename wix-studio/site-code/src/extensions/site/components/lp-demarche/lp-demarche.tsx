@@ -48,7 +48,7 @@ const LpDemarche: FC<LpDemarcheProps> = (propsBrutes) => {
   const motsSpans = (t?: string) => (t || '').split(/(\s+)/).map((m, i) => (m.trim() ? <span key={i} className={s.mot} data-mot="">{m}</span> : m));
 
   return (
-    <div id={id} dir={direction} className={clsx('lp-demarche', s.racine, s.fallbackDirection, (edition || statique) && s.calme, className)}>
+    <div id={id} dir={direction} className={clsx('lp-demarche', s.racine, s.fallbackDirection, (edition || statique) && s.calme, edition && s.edition, className)}>
       <div className={s.jetons}>
       <section className={cx(s, 'section manifeste')} id="manifeste" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={cx(s, 'contenu rang')}>

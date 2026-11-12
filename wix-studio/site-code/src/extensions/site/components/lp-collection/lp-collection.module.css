@@ -50,7 +50,7 @@
 :where(.racine) figure { margin: 1em 40px; }
 :where(.racine) dl, :where(.racine) dd { margin: 0; }
 .fallbackDirection:not([dir]) { direction: var(--wix-opt-in-direction); }
-.section { position: relative; padding: clamp(96px, 14vh, 180px) var(--marge); }
+.section { position: relative; padding: clamp(96px, calc(14 * var(--u-vh, 1vh)), 180px) var(--marge); }
 .contenu { width: var(--col); margin: 0 auto; }
 .intertitre { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(40px, 6vw, 80px); }
 .intertitre p { max-width: 42ch; color: var(--craie-2); margin: 0; }
@@ -60,6 +60,11 @@
 .fente { position: absolute; left: -2%; right: -2%; height: 1px; background: linear-gradient(90deg, transparent, var(--cuivre-clair), transparent); opacity: 0; }
 @media (prefers-reduced-motion: reduce) {
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) {
+.edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); }
 }
 /* socle:fin */
 
@@ -78,7 +83,7 @@
 @media (hover: none) { .vignette .legende { opacity: 1; transform: none; } }
 /* bouton pause des bandeaux (ajouté : un défilement automatique doit pouvoir être arrêté) */
 .pause:global(.lp-collection-pause--hover), .pause:hover { color: var(--craie); border-color: var(--craie-2); }
-.pause { position: absolute; inset-inline-end: var(--marge); bottom: clamp(40px, 7vh, 90px); width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--ardoise-4); color: var(--craie-2); background: color-mix(in srgb, var(--ardoise-0) 60%, transparent); transition: color .3s, border-color .3s, opacity .3s; pointer-events: auto; }
+.pause { position: absolute; inset-inline-end: var(--marge); bottom: clamp(40px, calc(7 * var(--u-vh, 1vh)), 90px); width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--ardoise-4); color: var(--craie-2); background: color-mix(in srgb, var(--ardoise-0) 60%, transparent); transition: color .3s, border-color .3s, opacity .3s; pointer-events: auto; }
 .pause:focus-visible { outline: 2px solid var(--cuivre-clair); outline-offset: 3px; }
 .icone { width: 14px; height: 14px; }
 .racine[data-pause-button-visibility="showOnHover"] .pause { opacity: 0; pointer-events: none; }

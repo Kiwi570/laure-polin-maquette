@@ -63,10 +63,15 @@
 @media (prefers-reduced-motion: reduce) {
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) {
+.edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); }
+}
 /* socle:fin */
 
 /* lp-pied — assets/css/site.css : pied de page */
-.pied { position: relative; padding: clamp(80px, 12vh, 140px) var(--marge) 48px; border-top: 1px solid var(--ardoise-3); overflow: hidden; }
+.pied { position: relative; padding: clamp(80px, calc(12 * var(--u-vh, 1vh)), 140px) var(--marge) 48px; border-top: 1px solid var(--ardoise-3); overflow: hidden; }
 .pied .grand-nom { font-family: var(--f-display); font-weight: 300; font-size: clamp(3.6rem, 16vw, 16rem); line-height: .8; letter-spacing: -.02em; white-space: nowrap; color: var(--ardoise-3); }
 .pied .grand-nom svg { width: 100%; height: auto; overflow: visible; }
 .pied .grand-nom path { fill: transparent; stroke: var(--craie-2); stroke-width: 1.4; vector-effect: non-scaling-stroke; }

@@ -81,20 +81,25 @@
 @media (prefers-reduced-motion: reduce) {
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) {
+.edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); }
+}
 /* socle:fin */
 
 /* lp-disponibles — assets/css/site.css : salle horizontale, cartes d'œuvre, repère */
 .salle-h { position: relative; overflow: hidden; background: var(--teinte); transition: background 1.2s var(--ease); }
-.salle-h .tete { padding: clamp(96px, 14vh, 160px) var(--marge) 0; }
+.salle-h .tete { padding: clamp(96px, calc(14 * var(--u-vh, 1vh)), 160px) var(--marge) 0; }
 @media (min-width: 861px) {
-  .racine:not(.calme) .salle-h { height: 100svh; display: flex; flex-direction: column; }
+  .racine:not(.calme) .salle-h { height: calc(100 * var(--u-svh, 1svh)); display: flex; flex-direction: column; }
   .racine:not(.calme) .salle-h .tete { padding-top: calc(var(--header-h) + 28px); flex: none; }
   .racine:not(.calme) .salle-h .tete .intertitre { margin-bottom: 0; }
   .racine:not(.calme) .salle-h .piste-scroll { flex: 1; min-height: 0; display: flex; }
   .racine:not(.calme) .salle-h .piste-h { height: 100%; padding-top: 20px; padding-bottom: 92px; }
 }
 .intertitre h2 { color: var(--craie); }
-.piste-h { display: flex; align-items: flex-end; gap: clamp(40px, 7vw, 120px); padding: 40px var(--marge) clamp(70px, 10vh, 120px); width: max-content; }
+.piste-h { display: flex; align-items: flex-end; gap: clamp(40px, 7vw, 120px); padding: 40px var(--marge) clamp(70px, calc(10 * var(--u-vh, 1vh)), 120px); width: max-content; }
 .piste-h .fin { flex: none; width: min(420px, 70vw); align-self: center; display: grid; gap: 18px; }
 .oeuvre-carte { position: relative; flex: none; display: grid; justify-items: center; align-content: end; gap: 0; }
 .oeuvre-carte .socle-zone { position: relative; display: grid; justify-items: center; align-items: end; isolation: isolate; }

@@ -78,11 +78,16 @@
 @media (prefers-reduced-motion: reduce) {
 :where(.racine) *, :where(.racine) *::before, :where(.racine) *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
 }
+/* Mode conception (classe .edition) : hauteurs d'écran bornées, fonction de la largeur de l'iframe de l'éditeur */
+.edition { --u-svh: clamp(7px, 0.5625vw, 9.5px); --u-vh: clamp(7px, 0.5625vw, 9.5px); }
+@media (max-width: 860px) {
+.edition { --u-svh: clamp(6px, 2.1vw, 9px); --u-vh: clamp(6px, 2.1vw, 9px); }
+}
 /* socle:fin */
 
 /* lp-salles — assets/css/site.css : trois matières (+ petits formats), index des salles */
 .matieres { padding: 0; position: relative; }
-.matieres .piste { position: relative; height: 100svh; overflow: hidden; }
+.matieres .piste { position: relative; height: calc(100 * var(--u-svh, 1svh)); overflow: hidden; }
 .matiere { position: absolute; inset: 0; display: grid; align-items: center; overflow: hidden; isolation: isolate; }
 .matiere .fond-image::after { background: radial-gradient(80% 90% at 30% 50%, rgba(16,19,23,.35), rgba(16,19,23,.9)); }
 .matiere .contenu { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.3fr); gap: 32px; align-items: center; position: relative; z-index: 2; }
@@ -91,7 +96,7 @@
 .matiere .infos { display: grid; gap: 16px; margin-top: 24px; max-width: 40ch; }
 .matiere .infos p { margin: 0; color: var(--craie-2); }
 .matiere .nombre { font-family: var(--f-display); font-size: var(--t-2xl); }
-.trio { display: flex; align-items: flex-end; justify-content: center; gap: clamp(8px, 2vw, 32px); height: min(62svh, 620px); }
+.trio { display: flex; align-items: flex-end; justify-content: center; gap: clamp(8px, 2vw, 32px); height: min(calc(62 * var(--u-svh, 1svh)), 620px); }
 .trio a { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; flex: 1 1 0; min-width: 0; }
 .trio img { max-height: calc(100% - 4.4em); width: auto; max-width: 100%; object-fit: contain; box-shadow: 0 30px 40px -18px rgba(0,0,0,.7), 0 0 0 1px rgba(236,232,224,.06); transition: transform .8s var(--ease); }
 .trio a:hover img { transform: translateY(-10px); }
@@ -110,9 +115,9 @@
 @media (max-width: 1200px) { .trio .cartel .dims-l { display: none; } }
 @media (max-width: 860px) {
   .matieres .piste { height: auto; }
-  .matiere { position: relative; inset: auto; min-height: 100svh; padding: 110px var(--marge) 80px; }
+  .matiere { position: relative; inset: auto; min-height: calc(100 * var(--u-svh, 1svh)); padding: 110px var(--marge) 80px; }
   .matiere .contenu { grid-template-columns: 1fr; width: 100%; }
-  .trio { height: 46svh; }
+  .trio { height: calc(46 * var(--u-svh, 1svh)); }
   .matiere .contenu { padding-right: 0; }
 }
 
@@ -128,5 +133,5 @@
 
 /* « réduire les animations » et éditeur : tout reste accessible sans épinglage */
 .calme .matieres .piste { height: auto; overflow: visible; }
-.calme .matiere { position: relative; inset: auto; min-height: 100svh; }
+.calme .matiere { position: relative; inset: auto; min-height: calc(100 * var(--u-svh, 1svh)); }
 .calme .index-matieres { display: none; }

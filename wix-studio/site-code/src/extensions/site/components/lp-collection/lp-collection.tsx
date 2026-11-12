@@ -93,7 +93,7 @@ const LpCollection: FC<LpCollectionProps> = (propsBrutes) => {
   };
 
   return (
-    <div id={id} dir={direction} className={clsx('lp-collection', s.racine, s.fallbackDirection, statique && s.calme, className)} data-pause-button-visibility={pauseButtonVisibility}>
+    <div id={id} dir={direction} className={clsx('lp-collection', s.racine, s.fallbackDirection, statique && s.calme, edition && s.edition, className)} data-pause-button-visibility={pauseButtonVisibility}>
       <div className={s.jetons}>
       <section className={cx(s, 'section collection')} id="collection" ref={secRef} aria-labelledby={`${id}-titre`}>
         <div className={s.contenu}>

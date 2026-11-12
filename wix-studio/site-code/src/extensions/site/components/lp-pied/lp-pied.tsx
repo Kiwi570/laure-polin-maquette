@@ -55,7 +55,7 @@ const LpPied: FC<LpPiedProps> = (propsBrutes) => {
   }, [edition]);
 
   return (
-    <div id={id} dir={direction} className={clsx('lp-pied', s.racine, s.fallbackDirection, statique && s.calme, className)}>
+    <div id={id} dir={direction} className={clsx('lp-pied', s.racine, s.fallbackDirection, statique && s.calme, edition && s.edition, className)}>
       <div className={s.jetons}>
       <footer className={s.pied} ref={piedRef}>
         <div {...part('lpPiedNom', 'lp-pied-nom', 'grand-nom')} data-grand-nom="">

@@ -167,7 +167,7 @@ const LpSalles: FC<LpSallesProps> = (propsBrutes) => {
   const fondUrl = (f?: { url: string; uri?: string }) => (f?.url ? tailleWix({ url: f.url, uri: f.uri || '', w: 1920, h: 1080 }, 1920) : '');
 
   return (
-    <div id={id} dir={direction} className={clsx('lp-salles', s.racine, s.fallbackDirection, statique && s.calme, className)}>
+    <div id={id} dir={direction} className={clsx('lp-salles', s.racine, s.fallbackDirection, statique && s.calme, edition && s.edition, className)}>
       <div className={s.jetons}>
       <section className={s.matieres} id="matieres" ref={secRef} aria-label={ARIA.section}>
         <div className={s.piste} data-piste="">
